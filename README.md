@@ -8,6 +8,13 @@ NSM Reports allows users to run customisable reports on any data in the CP. Repo
 * Reports can be emailed to users when run as CRON jobs
 * Reports are generated and saved on the server
 
+## Images
+
+* [Report index](http://cl.ly/093h1O35093p2n201l0q)
+* [Report details w/ browser output](http://cl.ly/191h110z1Z08401h1d02)
+* [Report details w/ save as preset inputs](http://cl.ly/2m2h0z240i3f1x0b3x08)
+* [Report details w/ save as preset inputs](http://cl.ly/3B3f0T1f06421C1p2t0P)
+
 ## Developers
 
 Let me know what you think of the base nsm_reports class and the implementation of third_party reports.
@@ -21,15 +28,3 @@ Let me know what you think of the base nsm_reports class and the implementation 
 * Member data
 * Channel stats
 * Third party addon data
-
-![Report Index](http%3A%2F%2Fcl.ly%2F093h1O35093p2n201l0q%2FScreen_shot_2011-03-07_at_7.44.43_PM.png)    
-Report index
-
-![Report Details](http%3A%2F%2Fcl.ly%2F191h110z1Z08401h1d02%2FScreen_shot_2011-03-07_at_7.58.39_PM.png)    
-Report details w/ browser output
-
-![Report Details](http%3A%2F%2Fcl.ly%2F2m2h0z240i3f1x0b3x08%2FScreen_shot_2011-03-07_at_7.57.57_PM.png)    
-Report details w/ save as preset inputs
-
-![Saved Reports](http%3A%2F%2Fcl.ly%2F3B3f0T1f06421C1p2t0P%2FScreen_shot_2011-03-07_at_7.59.56_PM.png)    
-Report details w/ save as preset inputs
