@@ -98,6 +98,9 @@ class Nsm_reports_mcp {
 		$saved_report_info = false;
 		
 		$saved_report_id = $this->EE->input->get('save_id');
+		if($this->EE->input->post('saved_report_id')){
+			$saved_report_id = $this->EE->input->post('saved_report_id');
+		}
 		if($saved_report_id > 0){
 			if(!$saved_report = Nsm_saved_report::findById($saved_report_id)){
 				die("No auto report found");
@@ -105,9 +108,13 @@ class Nsm_reports_mcp {
 			$config = array_merge($default_config, $saved_report->config);
 			$saved_report_info = "Now using saved report configuration '".$saved_report->title."' (ID ".$saved_report->id."). ".
 									"Any changes made to the configuration will not be saved until you change the Action to 'Save' and submit the form.";
-		}else{
+		}
+		
+		if($this->EE->input->post('report')){
 			$config = $this->EE->input->post('report');
 		}
+		
+		$selected_form_action = $this->EE->input->post('action');
 		
 		$report->setConfig($config);
 		$report_config_html = $report->configHTML();
@@ -120,6 +127,7 @@ class Nsm_reports_mcp {
 			'saved_report_id' => $saved_report_id,
 			'report_config_html' => $report_config_html,
 			'preview_html' => $preview_html,
+			'selected_form_action' => $selected_form_action,
 			'saved_reports_url' => BASE . AMP . $this->cp_url . AMP .'method=saved_reports'
 		);
 
@@ -255,10 +263,13 @@ class Nsm_reports_mcp {
 	/**
 	 * Saves a report configuration as a preset and stores options in the database.
 	 * If parameter 'save_as_new' is set to true the method will ignore update actions.
+	 * Some basic form validation takes place in this method and if an error occurs then
+	 *   return the output of the Nsm_reports::configure method and pass the form validation
+	 *   error message as the $error parameter.
 	 *
 	 * @access public
 	 * @param bool $save_as_new If TRUE then data will always be inserted and never updated
-	 * @return void Method will always redirect to new page
+	 * @return string|void Return Code Igniter View if form validation is false else redirect to new page
 	 **/
 	public function save($save_as_new = false)
 	{
@@ -266,6 +277,19 @@ class Nsm_reports_mcp {
 		$report = $this->EE->input->post('report_name');
 		$config = $this->EE->input->post('report');
 		$saved_report_id = $this->EE->input->post('saved_report_id');
+		
+		/* 
+			Perform form validation here.
+			We can assume that the user is saving the report so checking for the
+			  form action is unneeded.
+		*/
+		$this->EE->load->library('form_validation');
+		$this->EE->form_validation->set_rules('report[_save_report_name]', 'Preset Name', 'required');
+		
+		if($this->EE->form_validation->run() == false){
+			$validation_errors = validation_errors();
+			return $this->configure('', $validation_errors);
+		}
 		
 		$data = array(
 			'title' => $config['_save_report_name'],
@@ -461,6 +485,7 @@ class Nsm_reports_mcp {
 		$this->EE->cp->set_right_nav($nav);
 
 		$this->EE->load->library($this->addon_id."_addon", NULL, $this->addon_id);
+		$this->EE->cp->add_to_foot('<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js" charset="utf-8"></script>');
 		$this->EE->nsm_reports->addJS('cp.js');
 
 		return "<div class='mor'>{$out}</div>";

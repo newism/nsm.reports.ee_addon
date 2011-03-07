@@ -60,9 +60,9 @@
 				<select id="nsm_reports-generate-report-action" name="action">
 					<option id="nsm_reports-generate-report-action-generate" value="generate">Generate report</option>
 					<?php if($saved_report_id) : ?>
-						<option id="nsm_reports-generate-report-action-save" value="save">Update saved preset</option>
+						<option id="nsm_reports-generate-report-action-save" value="save"<?= ($selected_form_action == 'save' ? ' selected="selected"' : '') ?>>Update saved preset</option>
 					<?php endif; ?>
-					<option id="nsm_reports-generate-report-action-new" value="new">Save as new preset</option>
+					<option id="nsm_reports-generate-report-action-new" value="new"<?= ($selected_form_action == 'new' ? ' selected="selected"' : '') ?>>Save as new preset</option>
 				</select>
 			</td>
 		</tr>
