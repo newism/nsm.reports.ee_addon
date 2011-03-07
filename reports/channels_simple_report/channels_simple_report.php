@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage		Channels_simple_report
- * @version 1.0.0
+ * @version 1.0.1
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
@@ -63,7 +63,7 @@ class Channels_simple_report extends Nsm_report_base {
 	 * @access public
 	 * @static
 	 **/
-	public static $version = '1.0.0';
+	public static $version = '1.0.1';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
