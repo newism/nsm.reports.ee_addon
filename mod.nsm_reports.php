@@ -4,7 +4,7 @@
  * NSM Reports Tag methods
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.1
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
