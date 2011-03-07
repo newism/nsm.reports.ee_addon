@@ -4,7 +4,7 @@
  * NSM Reports CP 
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.1
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -101,38 +101,39 @@ class Nsm_reports_mcp {
 		if(!$report = $this->EE->nsm_reports_model->find($report_class)){
 			die("No report found");
 		}
-		
-		$default_config = array(
+
+		$config = array(
 			'_output' => 'browser',
 			'_send_to_email_address' => '',
 			'_save_report_name' => '',
 			'_save_report_description' => ''
 		);
-		
+
 		$saved_report_info = false;
-		
+
 		$saved_report_id = $this->EE->input->get('save_id');
 		if($this->EE->input->post('saved_report_id')){
 			$saved_report_id = $this->EE->input->post('saved_report_id');
 		}
+
 		if($saved_report_id > 0){
 			if(!$saved_report = Nsm_saved_report::findById($saved_report_id)){
 				die("No auto report found");
 			}
-			$config = array_merge($default_config, $saved_report->config);
+			$config = array_merge($config, $saved_report->config);
 			$saved_report_info = "Now using saved report configuration '".$saved_report->title."' (ID ".$saved_report->id."). ".
 									"Any changes made to the configuration will not be saved until you change the Action to 'Save' and submit the form.";
 		}
-		
+
 		if($this->EE->input->post('report')){
 			$config = $this->EE->input->post('report');
 		}
-		
+
 		$selected_form_action = $this->EE->input->post('action');
-		
+
 		$report->setConfig($config);
 		$report_config_html = $report->configHTML();
-		
+
 		$data = array(
 			'report' => $report,
 			'error' => $error,
@@ -152,9 +153,9 @@ class Nsm_reports_mcp {
 						'report_name'=>$report_class,
 						'saved_report_id'=>$saved_report_id
 					)
-				) . 
-					$out . 
-				form_close();
+				)
+				. $out 
+				. form_close();
 		return $this->_renderLayout("report_config", $out, array('report_title' => $report::$title));
 	}
 	
@@ -359,9 +360,8 @@ class Nsm_reports_mcp {
 		
 		$reports = $this->EE->nsm_reports_model->find_all();
 		$reports_classes = array_keys($reports);
-		
 		$saved_reports = array();
-		
+
 		$get_saved_reports = Nsm_saved_report::findAll();
 		if($get_saved_reports){
 			foreach($get_saved_reports as $saved_report_key => $saved_report){

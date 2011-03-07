@@ -5,7 +5,7 @@
  * This file is responsible for displaying the user-configurable settings for the NSM Multi Language extension in the ExpressionEngine control panel.
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.1
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
@@ -42,7 +42,7 @@ $EE =& get_instance();
 		<h2>Download configuration</h2>
 		<table>
 			<tbody>
-				<tr>
+				<tr class="even">
 					<th scope="row">Generated Reports Path 
 						<div class="note">
 							This is the server path that will be used to store generated reports.
