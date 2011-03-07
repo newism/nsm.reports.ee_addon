@@ -2,7 +2,7 @@
 /**
  * EasySigns Commerce Model 
  *
- * @package			EasysignsCommerce
+ * @package			NsmReports
  * @version			0.0.1
  * @author			Leevi Graham <http://leevigraham.com>
  * @copyright 		Copyright (c) 2007-2010 Newism <http://newism.com.au>
