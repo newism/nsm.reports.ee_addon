@@ -17,7 +17,7 @@
  *
  * @package NsmReports
  */
-class Nsm_report {
+class Nsm_report_base {
 	
 	/**
 	 * Displays the report name in the control panel
