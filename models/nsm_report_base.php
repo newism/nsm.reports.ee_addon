@@ -3,19 +3,21 @@
 /**
  * NSM Reports Base Class
  *
- * @package			NsmReports
- * @version			0.0.1
- * @author			Leevi Graham <http://leevigraham.com>
- * @copyright 		Copyright (c) 2007-2011 Newism <http://newism.com.au>
- * @license 		Commercial - please see LICENSE file included with this distribution
- * @link			http://expressionengine-addons.com/nsm-reports
- * @see				http://expressionengine.com/public_beta/docs/development/modules.html
+ * @package NsmReports
+ * @version 0.0.3
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @license Commercial - please see LICENSE file included with this distribution
+ * @link http://expressionengine-addons.com/nsm-reports
+ * @see http://expressionengine.com/public_beta/docs/development/modules.html
  */
 
 /**
  * Base model for NSM Reports
+ *
+ * @package NsmReports
  */
-class Nsm_report {
+class Nsm_report_base {
 	
 	/**
 	 * Displays the report name in the control panel
@@ -461,8 +463,6 @@ class Nsm_report {
 	 * @param array $email_config An array containing all configuration options related to the email functionality.
 	 * @param array $attachments An integer-based collection of arrays with keys 'name' and 'path' used to define email attachments.
 	 * @return bool Method success status
-	 * @since 0.0.2
-	 * @version 0.0.2
 	 **/
 	public function email_report($email_config = array(), $attachments = array())
 	{

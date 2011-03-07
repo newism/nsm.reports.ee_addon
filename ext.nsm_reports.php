@@ -3,15 +3,23 @@
 /**
  * NSM Reports Extension
  *
- * @package			NsmReports
- * @version			0.0.1
- * @author			Leevi Graham <http://leevigraham.com>
- * @copyright 		Copyright (c) 2007-2010 Newism <http://newism.com.au>
- * @license 		Commercial - please see LICENSE file included with this distribution
- * @link			http://expressionengine-addons.com/nsm-reports
- * @see 			http://expressionengine.com/public_beta/docs/development/extensions.html
+ * @package NsmReports
+ * @version 1.0.0
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au>
+ * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
+ * @license Commercial - please see LICENSE file included with this distribution
+ * @link http://expressionengine-addons.com/nsm-reports
+ * @see http://expressionengine.com/public_beta/docs/development/extensions.html
  */
 
+/**
+ * Reports extension
+ *
+ * No hooks are used at present, this class manages the extension settings only.
+ *
+ * @package NsmReports
+ */
 class Nsm_reports_ext
 {
 	public $version			= '1.0.0';
@@ -119,7 +127,7 @@ class Nsm_reports_ext
 	{
 		$EE =& get_instance();
 		$EE->lang->loadfile($this->addon_id);
-		$EE->load->library($this->addon_id."_addon", NULL, $this->addon_id);
+		$EE->load->library($this->addon_id."_helper");
 
 		// Create the variable array
 		$vars = array(
@@ -159,9 +167,9 @@ class Nsm_reports_ext
 		$vars["data"] = $data;
 
 		// $js = "console.log('nsm_reports JS Loaded from ".__CLASS__.":" . __LINE__ ."')";
-		// $EE->nsm_reports->addJS($js, array("file"=>FALSE));
+		// $EE->nsm_reports->addCpJs($js, array("file"=>FALSE));
 		// We can also Load JS Files
-		// $EE->nsm_reports->addJS('extension_settings.js');
+		// $EE->nsm_reports->addCpJs('extension_settings.js');
 
 		// Return the view.
 		return $EE->load->view('extension/settings', $vars, TRUE);

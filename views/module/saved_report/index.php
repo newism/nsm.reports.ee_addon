@@ -1,4 +1,19 @@
-
+<?php
+/**
+ * Code Igniter View of Config Presets List page in Control Panel
+ *
+ * This file is used when Nsm_reports_mcp::saved_reports() is called and returns a table of all 
+ *   saved report configurations to the user with a form to choose presets to delete.
+ *
+ * @package NsmReports
+ * @version 1.0.0
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @license Commercial - please see LICENSE file included with this distribution
+ * @link http://expressionengine-addons.com/nsm-reports
+ * @see http://expressionengine.com/public_beta/docs/development/modules.html
+ */
+?>
 <div class="tg">
 	<table class="data">
 		<thead>
