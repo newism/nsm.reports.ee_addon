@@ -461,8 +461,8 @@ class Nsm_report {
 	 * @param array $email_config An array containing all configuration options related to the email functionality.
 	 * @param array $attachments An integer-based collection of arrays with keys 'name' and 'path' used to define email attachments.
 	 * @return bool Method success status
-	 * @since $ID:version
-	 * @version $ID:version
+	 * @since 0.0.2
+	 * @version 0.0.2
 	 **/
 	public function email_report($email_config = array(), $attachments = array())
 	{
