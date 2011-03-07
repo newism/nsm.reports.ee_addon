@@ -153,9 +153,9 @@ class Nsm_reports_mcp {
 						'report_name'=>$report_class,
 						'saved_report_id'=>$saved_report_id
 					)
-				) . 
-					$out . 
-				form_close();
+				)
+				. $out 
+				. form_close();
 		return $this->_renderLayout("report_config", $out, array('report_title' => $report::$title));
 	}
 	
