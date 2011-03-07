@@ -18,7 +18,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  * Load required classes
  */
 if(!class_exists('Nsm_reports_ext')){ include(PATH_THIRD."nsm_reports/ext.nsm_reports.php"); }
-if(!class_exists('Nsm_report')){ include(PATH_THIRD."nsm_reports/models/nsm_report.php"); }
+if(!class_exists('Nsm_report_base')){ include(PATH_THIRD."nsm_reports/models/nsm_report_base.php"); }
 if(!class_exists('Nsm_saved_report')){ include(PATH_THIRD."nsm_reports/models/nsm_saved_report.php"); }
 
 /**

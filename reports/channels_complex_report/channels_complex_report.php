@@ -18,7 +18,7 @@
  *
  * @package NsmReports
  */
-class Channels_complex_report extends Nsm_report {
+class Channels_complex_report extends Nsm_report_base {
 	
 	 /**
 	 * Displays the report name in the control panel
