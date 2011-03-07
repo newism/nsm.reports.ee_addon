@@ -1,7 +1,7 @@
 <?php
-
 /**
  * View for Control Panel Settings Form
+ * 
  * This file is responsible for displaying the user-configurable settings for the NSM Multi Language extension in the ExpressionEngine control panel.
  *
  * @package NsmReports
@@ -9,7 +9,7 @@
  * @author Leevi Graham <http://leevigraham.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
  * @license Commercial - please see LICENSE file included with this distribution
- **/
+ */
 
 $EE =& get_instance();
 

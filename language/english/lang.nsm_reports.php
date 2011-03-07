@@ -11,6 +11,12 @@
  * @link			http://expressionengine-addons.com/nsm-reports
  * @see				http://expressionengine.com/public_beta/docs/development/modules.html#lang_file
  */
+
+/**
+ * The module's language file
+ *
+ * @var array
+ */
 $lang = array(
 
 	/* Module */

@@ -29,6 +29,7 @@ $plugin_info = array(
 	'pi_usage' => "Refer to the included README"
 );
 
+/*
 class Nsm_reports {
 
 	/**

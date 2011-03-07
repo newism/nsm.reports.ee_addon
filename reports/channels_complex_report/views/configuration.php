@@ -1,8 +1,19 @@
-<? /*
-	CONFIGURATION FORM EXAMPLE:
-	This form demonstrates adding a new input field to filter channels by channel_id and status.
-	
-*/ ?>
+<?php
+/**
+ * CONFIGURATION FORM EXAMPLE
+ * 
+ * This file is used as the Code Igniter View in Channels_complex_report::configHTML()
+ * 
+ * This form demonstrates adding a new input field to filter channels by channel_id and status.
+ *
+ * @package NsmReports
+ * @subpackage Channels_complex_report
+ * @version 1.0.0
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @copyright Copyright (c) 2007-2010 Newism
+ * @license Commercial - please see LICENSE file included with this distribution
+ */
+?>
 <tr>
 	<th scope="row">Channel</th>
 	<td>

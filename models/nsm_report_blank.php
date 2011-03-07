@@ -1,7 +1,14 @@
 <?php
 /**
+ * @package NsmReports
  * @ignore
 */
+
+/**
+ * Dummy 
+ *
+ * @package NsmReports
+ */
 class NSM_REPORTS_REPLACE_CLASS_NAME extends Nsm_report {
 	
 	public static $title = "NSM_REPORTS_REPLACE_TITLE";

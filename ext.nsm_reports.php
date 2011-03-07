@@ -12,6 +12,13 @@
  * @see 			http://expressionengine.com/public_beta/docs/development/extensions.html
  */
 
+/**
+ * Reports extension
+ *
+ * No hooks are used at present, this class manages the extension settings only.
+ *
+ * @package NsmReports
+ */
 class Nsm_reports_ext
 {
 	public $version			= '1.0.0';
@@ -119,7 +126,7 @@ class Nsm_reports_ext
 	{
 		$EE =& get_instance();
 		$EE->lang->loadfile($this->addon_id);
-		$EE->load->library($this->addon_id."_addon", NULL, $this->addon_id);
+		$EE->load->library($this->addon_id."_helper");
 
 		// Create the variable array
 		$vars = array(
@@ -159,9 +166,9 @@ class Nsm_reports_ext
 		$vars["data"] = $data;
 
 		// $js = "console.log('nsm_reports JS Loaded from ".__CLASS__.":" . __LINE__ ."')";
-		// $EE->nsm_reports->addJS($js, array("file"=>FALSE));
+		// $EE->nsm_reports->addCpJs($js, array("file"=>FALSE));
 		// We can also Load JS Files
-		// $EE->nsm_reports->addJS('extension_settings.js');
+		// $EE->nsm_reports->addCpJs('extension_settings.js');
 
 		// Return the view.
 		return $EE->load->view('extension/settings', $vars, TRUE);

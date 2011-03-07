@@ -12,6 +12,11 @@
  * @see				http://expressionengine.com/public_beta/docs/development/modules.html#update_file
  */
 
+/**
+ * Module Install/Uninstall/Update management object
+ *
+ * @package NsmReports
+ */
 class Nsm_reports_upd
 {
 	public $version = '1.0.0';

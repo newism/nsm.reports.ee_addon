@@ -1,8 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-if(!class_exists('Nsm_reports_ext')){ include(PATH_THIRD."nsm_reports/ext.nsm_reports.php"); }
-if(!class_exists('Nsm_report')){ include(PATH_THIRD."nsm_reports/models/nsm_report.php"); }
-if(!class_exists('Nsm_saved_report')){ include(PATH_THIRD."nsm_reports/models/nsm_saved_report.php"); }
+<?php
 
 /**
  * NSM Reports CP 
@@ -15,9 +11,20 @@ if(!class_exists('Nsm_saved_report')){ include(PATH_THIRD."nsm_reports/models/ns
  * @link			http://expressionengine-addons.com/nsm-reports
  * @see				http://expressionengine.com/public_beta/docs/development/modules.html#control_panel_file
  */
+ 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * The Module Control Panel class 
+ * Load required classes
+ */
+if(!class_exists('Nsm_reports_ext')){ include(PATH_THIRD."nsm_reports/ext.nsm_reports.php"); }
+if(!class_exists('Nsm_report')){ include(PATH_THIRD."nsm_reports/models/nsm_report.php"); }
+if(!class_exists('Nsm_saved_report')){ include(PATH_THIRD."nsm_reports/models/nsm_saved_report.php"); }
+
+/**
+ * The Module Control Panel class
+ *
+ * @package NsmReports 
  */
 class Nsm_reports_mcp {
 	
@@ -497,9 +504,9 @@ class Nsm_reports_mcp {
 		}
 		$this->EE->cp->set_right_nav($nav);
 
-		$this->EE->load->library($this->addon_id."_addon", NULL, $this->addon_id);
+		$this->EE->load->library($this->addon_id."_helper");
 		$this->EE->cp->add_to_foot('<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js" charset="utf-8"></script>');
-		$this->EE->nsm_reports->addJS('cp.js');
+		$this->EE->nsm_reports_helper->addCpJs('cp.js');
 
 		return "<div class='mor'>{$out}</div>";
 	}

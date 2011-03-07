@@ -1,3 +1,18 @@
+<?php
+/**
+ * Code Igniter View of report preview page in Control Panel
+ *
+ * This file is used as the default View for a report preview and is used during the Nsm_report::outputBrowser() method.
+ *
+ * @package			NsmReports
+ * @version			0.0.1
+ * @author			Leevi Graham <http://leevigraham.com>
+ * @copyright 		Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @license 		Commercial - please see LICENSE file included with this distribution
+ * @link			http://expressionengine-addons.com/nsm-reports
+ * @see				http://expressionengine.com/public_beta/docs/development/modules.html
+ */
+?>
 <div class="tg">
 	<h2>Preview</h2>
 	<table class="data col_sortable NSM_Stripeable">

@@ -4,6 +4,7 @@
  * NSM Reports Complex Example Class
  *
  * @package			NsmReports
+ * @subpackage		Channels_complex_report
  * @version			0.0.1
  * @author			Leevi Graham <http://leevigraham.com>
  * @copyright 		Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -12,10 +13,16 @@
  * @see				http://expressionengine.com/public_beta/docs/development/modules.html
  */
 
+/**
+ * Report object
+ *
+ * @package NsmReports
+ */
 class Channels_complex_report extends Nsm_report {
 	
 	 /**
 	 * Displays the report name in the control panel
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -24,6 +31,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Basic description of the report
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -32,6 +40,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Name and/or company of the report's creator
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -40,6 +49,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * A URL to the report's documentation (optional)
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -48,6 +58,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -56,6 +67,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -64,6 +76,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Valid report output types
+	 *
 	 * @var array
 	 * @access public
 	 * @static
@@ -78,6 +91,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Stores the generated SQL statement used by the report
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -86,6 +100,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * The file-path where the report is located and is used for including report views
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -94,6 +109,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * The file-path where the report output can be stored on the server
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -102,6 +118,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Stores any report errors that are encountered and saved at report run
+	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
 	 * @static
@@ -110,6 +127,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * Default report configuration options with '_output' as a minumum entry
+	 *
 	 * @var array
 	 * @access protected
 	 * @static
@@ -122,6 +140,7 @@ class Channels_complex_report extends Nsm_report {
 	
 	/**
 	 * PHP5 constructor function.
+	 * 
 	 * Prepares instance of ExpressionEngine for object scope and sets report path
 	 * Report classes extending this class should always call the parent's constructor
 	 *

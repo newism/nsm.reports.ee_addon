@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * EasySigns Commerce Model 
+ * NSM Reports - Saved Configuration Preset
  *
  * @package			NsmReports
  * @version			0.0.1
@@ -10,23 +10,132 @@
  * @link			http://expressionengine-addons.com/easysigns-commerce
  * @see				http://codeigniter.com/user_guide/general/models.html
  **/
+
+/**
+ * Model for Saved Report Configurations
+ *
+ * Used to represent an instance of a saved configuration preset.
+ * Model refers to its properties using $this and has methods to CRUD the instance.
+ * Also includes static 'helper' methods to retrieve and delete preset collections.
+ *
+ * @package NsmReports
+ */
 class Nsm_saved_report {
 	
+	/**
+	 * Preset configuration Database Identifier
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $id = "";
+	
+	/**
+	 * Preset configuration name
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $title = "";
+	
+	/**
+	 * Description of preset configuration
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $description = "";
+	
+	/**
+	 * The security key to be used to access the preset
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $access_key = "";
-	public $created_at = "";
-	public $updated_at = "";
-	public $lastrun_at = "";
+	
+	/**
+	 * Unix-timestamp of the creation date
+	 *
+	 * @var int
+	 * @access public
+	 **/
+	public $created_at = 0;
+	
+	/**
+	 * Unix-timestamp of the last update
+	 *
+	 * @var int
+	 * @access public
+	 **/
+	public $updated_at = 0;
+	
+	/**
+	 * Unix-timestamp of the last time that the preset was run
+	 *
+	 * @var int
+	 * @access public
+	 **/
+	public $lastrun_at = 0;
+	
+	/**
+	 * The class name of the module that the preset is assigned to
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $report = "";
+	
+	/**
+	 * Email Recipient of generated reports
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $email_address = "";
-	public $chart_data = 0;
+	
+	/**
+	 * Active status of preset
+	 *
+	 * @var bool
+	 * @access public
+	 **/
 	public $active = 0;
+	
+	/**
+	 * Output type of generated reports
+	 *
+	 * @var string
+	 * @access public
+	 **/
 	public $output = "";
+	
+	/**
+	 * Preset configuration options as json-decoded array
+	 *
+	 * @var array
+	 * @access public
+	 **/
 	public $config = array();
+	
+	/**
+	 * Number of times that the report preset has been run
+	 *
+	 * @var int
+	 * @access public
+	 **/
 	public $run_count = 0;
-
+	
+	
+	/**
+	 * PHP5 constructor function.
+	 *
+	 * Creates an instance of the object and assigns any values that have been passed to the constructor to the object
+	 *
+	 * @access public
+	 * @param array $data Information to be assigned to the object instance
+	 * @return void
+	 **/
 	public function __construct($data = array()) {
 		if(count($data) > 0){
 			$this->setData($data);
@@ -45,7 +154,12 @@ class Nsm_saved_report {
 		return $this->title;
 	}
 	
-	// adds auto report to database
+	/**
+	 * Inserts the instance into the database.
+	 *
+	 * @access public
+	 * @return int Inserted ID of preset
+	 **/
 	public function add()
 	{
 		$EE =& get_instance();
@@ -53,7 +167,12 @@ class Nsm_saved_report {
 		return $EE->db->insert_id();
 	}
 
-	// updates the database entry
+	/**
+	 * Updates the saved preset details in the database with the new values.
+	 *
+	 * @access public
+	 * @return int Number of affected rows (should be '1' if successful)
+	 **/
 	public function update()
 	{
 		$EE =& get_instance();
@@ -61,7 +180,12 @@ class Nsm_saved_report {
 		return $EE->db->affected_rows();
 	}
 	
-	// deletes the database entry
+	/**
+	 * Deletes the preset from the database
+	 *
+	 * @access public
+	 * @return int Number of affected rows (should be '1' if successful)
+	 **/
 	public function delete()
 	{
 		$EE =& get_instance();
@@ -70,8 +194,11 @@ class Nsm_saved_report {
 	}
 	
 	/**
-	 * Prepares object data for update insert
+	 * Prepares object data for update/insert commands
 	 *
+	 * Only array keys that are present in the model's database table are included
+	 *
+	 * @access private
 	 * @return array The modified data
 	 */
 	private function _prepareData(){
@@ -108,7 +235,13 @@ class Nsm_saved_report {
 	}
 
 	/**
-	 * Sets the object data
+	 * Assigns applicable data from array to the object
+	 *
+	 * Only array keys that correspond to properties of the model are processed 
+	 *
+	 * @access public
+	 * @param array $data Data to be assigned to the object
+	 * @return void
 	 */
 	public function setData($data = array()) {
 		if(count($data) > 0){
@@ -128,8 +261,13 @@ class Nsm_saved_report {
 		}
 	}
 	
-	
-	// returns all auto report objects
+	/**
+	 * Finds all saved report presets and returns them as an array of object instances
+	 *
+	 * @access public
+	 * @static
+	 * @return array Collection of configuration presets
+	 **/
 	public static function findAll()
 	{
 		$EE =& get_instance();
@@ -145,7 +283,15 @@ class Nsm_saved_report {
 		return $auto_reports;
 	}
 	
-	// returns auto report objects where matching id and access key
+	/**
+	 * Returns report preset objects matching the id and access key
+	 *
+	 * @access public
+	 * @static
+	 * @param int $id The ID to find from the database
+	 * @param string $key Access key of preset
+	 * @return array Collection of configuration presets
+	 **/
 	public static function findByIdKey($id, $key)
 	{
 		$EE =& get_instance();
@@ -162,7 +308,14 @@ class Nsm_saved_report {
 		return $auto_report;
 	}
 	
-	// returns auto report objects where matching id
+	/**
+	 * Returns a single instance of a configuration preset from the database matching the ID
+	 *
+	 * @access public
+	 * @static
+	 * @param int $id The ID to find from the database
+	 * @return object Populated instance of Nsm_saved_report
+	 **/
 	public static function findById($id)
 	{
 		$EE =& get_instance();
@@ -179,7 +332,15 @@ class Nsm_saved_report {
 		return $auto_report;
 	}
 	
-	// returns auto report objects where matching id
+	/**
+	 * Returns array of report preset objects that appear in the array parameter
+	 *
+	 * @access public
+	 * @static
+	 * @param array $ids Integer-based array of IDs to filter by
+	 * @param string $key Access key of preset
+	 * @return array Collection of configuration presets
+	 **/
 	public static function findByIds($ids)
 	{
 		$EE =& get_instance();
@@ -198,7 +359,14 @@ class Nsm_saved_report {
 		return $saved_reports;
 	}
 	
-	// returns auto report objects where matching id
+	/**
+	 * Deletes preset configurations from database where the IDs match the parameter array
+	 *
+	 * @access public
+	 * @static
+	 * @param array $ids The IDs of presets to be deleted from the database
+	 * @return bool Status of database operation
+	 **/
 	public static function deleteByIds($ids)
 	{
 		$EE =& get_instance();
@@ -210,15 +378,17 @@ class Nsm_saved_report {
 	}
 	
 	/**
-	 * The model table
+	 * The name of the database table this model uses
 	 * 
+	 * @static
 	 * @var string
 	 */
 	private static $table_name = "nsm_reports_saved_reports";
 
 	/**
-	 * The model table fields
+	 * The fields that appear in database table
 	 * 
+	 * @static
 	 * @var array
 	 */
 	private static $table_fields = array(
@@ -239,7 +409,13 @@ class Nsm_saved_report {
 	);
 
 	/**
-	 * Create the model table
+	 * Create the model's table in the database
+	 * 
+	 * This method is called during the installation process of the module
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
 	 */
 	public static function createTable()
 	{
