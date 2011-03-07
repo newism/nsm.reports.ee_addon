@@ -12,6 +12,8 @@
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
+ * @todo Display human readable output in table
+ * @todo Convert date using CI Methods
  */
 ?>
 <div class="tg">
