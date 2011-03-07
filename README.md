@@ -22,14 +22,14 @@ Let me know what you think of the base nsm_reports class and the implementation 
 * Channel stats
 * Third party addon data
 
-![Report Index](http://cl.ly/093h1O35093p2n201l0q/Screen_shot_2011-03-07_at_7.44.43_PM.png)    
+![Report Index](http%3A%2F%2Fcl.ly%2F093h1O35093p2n201l0q%2FScreen_shot_2011-03-07_at_7.44.43_PM.png)    
 Report index
 
-![Report Details](http://cl.ly/191h110z1Z08401h1d02/Screen_shot_2011-03-07_at_7.58.39_PM.png)    
+![Report Details](http%3A%2F%2Fcl.ly%2F191h110z1Z08401h1d02%2FScreen_shot_2011-03-07_at_7.58.39_PM.png)    
 Report details w/ browser output
 
-![Report Details](http://cl.ly/2m2h0z240i3f1x0b3x08/Screen_shot_2011-03-07_at_7.57.57_PM.png)    
+![Report Details](http%3A%2F%2Fcl.ly%2F2m2h0z240i3f1x0b3x08%2FScreen_shot_2011-03-07_at_7.57.57_PM.png)    
 Report details w/ save as preset inputs
 
-![Saved Reports](http://cl.ly/3B3f0T1f06421C1p2t0P/Screen_shot_2011-03-07_at_7.59.56_PM.png)    
+![Saved Reports](http%3A%2F%2Fcl.ly%2F3B3f0T1f06421C1p2t0P%2FScreen_shot_2011-03-07_at_7.59.56_PM.png)    
 Report details w/ save as preset inputs
