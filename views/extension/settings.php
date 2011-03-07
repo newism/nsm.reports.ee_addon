@@ -42,7 +42,7 @@ $EE =& get_instance();
 		<h2>Download configuration</h2>
 		<table>
 			<tbody>
-				<tr>
+				<tr class="even">
 					<th scope="row">Generated Reports Path 
 						<div class="note">
 							This is the server path that will be used to store generated reports.

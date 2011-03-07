@@ -26,7 +26,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr class="even">
 				<th scope="row"><?= $report::$title ?></th>
 				<td><?= $report::$notes ?></td>
 				<td><?= $report::$author ?></td>

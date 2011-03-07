@@ -32,7 +32,8 @@
 			<?php else : ?>
 			<?php 
 				$i = 0;
-				foreach ($reports as $report_class => $report) : 
+				foreach ($reports as $report_class => $report) :
+				$i++;
 				$class = ($i%2) ? "even" : "odd";
 			?>
 			<tr class="<?=$class;?>">
