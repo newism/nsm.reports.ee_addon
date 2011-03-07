@@ -1,0 +1,27 @@
+<? /*
+	CONFIGURATION FORM EXAMPLE:
+	This form demonstrates adding a new input field to filter channels by channel_id and status.
+	
+*/ ?>
+<tr>
+	<th scope="row">Channel</th>
+	<td>
+		<select name="report[channel_filter]">
+			<option value=""<?= ($config['channel_filter']==''?' selected="selected"':''); ?>>Any</option>
+			<?php foreach($channels as $row) : ?>
+				<option value="<?=$row['channel_id'] ?>"<?= ($config['channel_filter']==$row['channel_id']?' selected="selected"':''); ?>><?=$row['title'] ?></option>
+			<?php endforeach; ?>
+		</select>
+	</td>
+</tr>
+<tr>
+	<th scope="row">Status</th>
+	<td>
+		<select name="report[status_filter]">
+			<option value=""<?= ($config['status_filter']==''?' selected="selected"':''); ?>>Any</option>
+			<?php foreach($status_options as $row) : ?>
+				<option value="<?=$row['status'] ?>"<?= ($config['status_filter']==$row['status']?' selected="selected"':''); ?>><?=ucwords($row['status']) ?></option>
+			<?php endforeach; ?>
+		</select>
+	</td>
+</tr>
