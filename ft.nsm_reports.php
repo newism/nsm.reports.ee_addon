@@ -10,6 +10,7 @@
  * @license 		Commercial - please see LICENSE file included with this distribution
  * @link			http://expressionengine-addons.com/nsm-reports
  * @see				http://expressionengine.com/public_beta/docs/development/fieldtypes.html
+ * @ignore
  */
 
 class Nsm_reports_ft extends EE_Fieldtype

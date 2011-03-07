@@ -3,6 +3,7 @@
 /**
  * NSM Reports Tab
  *
+ * @ignore
  * @package			NsmReports
  * @version			0.0.1
  * @author			Leevi Graham <http://leevigraham.com>

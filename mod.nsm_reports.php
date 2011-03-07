@@ -7,6 +7,7 @@ if(!class_exists('Nsm_saved_report')){ include(PATH_THIRD."nsm_reports/models/ns
 /**
  * NSM Reports Tag methods
  *
+ * @ignore
  * @package			NsmReports
  * @version			0.0.1
  * @author			Leevi Graham <http://leevigraham.com>

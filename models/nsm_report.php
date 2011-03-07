@@ -12,10 +12,14 @@
  * @see				http://expressionengine.com/public_beta/docs/development/modules.html
  */
 
+/**
+ * Base model for NSM Reports
+ */
 class Nsm_report {
 	
 	/**
 	 * Displays the report name in the control panel
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -24,6 +28,7 @@ class Nsm_report {
 	
 	/**
 	 * Basic description of the report
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -32,6 +37,7 @@ class Nsm_report {
 	
 	/**
 	 * Name and/or company of the report's creator
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -40,6 +46,7 @@ class Nsm_report {
 	
 	/**
 	 * A URL to the report's documentation (optional)
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -48,6 +55,7 @@ class Nsm_report {
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -56,6 +64,7 @@ class Nsm_report {
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -64,6 +73,7 @@ class Nsm_report {
 	
 	/**
 	 * Valid report output types
+	 *
 	 * @var array
 	 * @access public
 	 * @static
@@ -78,6 +88,7 @@ class Nsm_report {
 	
 	/**
 	 * Stores the generated SQL statement used by the report
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -86,6 +97,7 @@ class Nsm_report {
 	
 	/**
 	 * The file-path where the report is located and is used for including report views
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -94,6 +106,7 @@ class Nsm_report {
 	
 	/**
 	 * The file-path where the report output can be stored on the server
+	 *
 	 * @var string
 	 * @access public
 	 * @static
@@ -102,6 +115,7 @@ class Nsm_report {
 	
 	/**
 	 * Stores any report errors that are encountered and saved at report run
+	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
 	 * @static
@@ -110,6 +124,7 @@ class Nsm_report {
 	
 	/**
 	 * Default report configuration options with '_output' as a minumum entry
+	 *
 	 * @var array
 	 * @access protected
 	 * @static
@@ -120,6 +135,7 @@ class Nsm_report {
 	
 	/**
 	 * PHP5 constructor function.
+	 *
 	 * Prepares instance of ExpressionEngine for object scope and sets report path
 	 * Report classes extending this class should always call the parent's constructor
 	 *
@@ -135,6 +151,7 @@ class Nsm_report {
 	
 	/**
 	 * PHP5 toString function.
+	 *
 	 * Returns a string version of class instance
 	 *
 	 * @access public
@@ -444,6 +461,8 @@ class Nsm_report {
 	 * @param array $email_config An array containing all configuration options related to the email functionality.
 	 * @param array $attachments An integer-based collection of arrays with keys 'name' and 'path' used to define email attachments.
 	 * @return bool Method success status
+	 * @since $ID:version
+	 * @version $ID:version
 	 **/
 	public function email_report($email_config = array(), $attachments = array())
 	{

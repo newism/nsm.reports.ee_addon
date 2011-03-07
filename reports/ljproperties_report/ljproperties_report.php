@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @ignore
+*/
 class Ljproperties_report extends Nsm_report {
 
 	public static $title = 'Property List';

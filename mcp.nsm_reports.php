@@ -16,10 +16,14 @@ if(!class_exists('Nsm_saved_report')){ include(PATH_THIRD."nsm_reports/models/ns
  * @see				http://expressionengine.com/public_beta/docs/development/modules.html#control_panel_file
  */
 
+/**
+ * The Module Control Panel class 
+ */
 class Nsm_reports_mcp {
 	
 	/**
 	 * Stores module navigation links as basic array
+	 *
 	 * @var array
 	 * @access private
 	 **/
@@ -27,6 +31,7 @@ class Nsm_reports_mcp {
 	
 	/**
 	 * PHP5 constructor function.
+	 *
 	 * Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings
 	 *    and prepares required file-system paths.
 	 *
@@ -71,6 +76,7 @@ class Nsm_reports_mcp {
 	
 	/**
 	 * Generates the report summary and configuration form for the selected report.
+	 *
 	 * Method also allows pre-generated report results and/or a report error to be
 	 *   passed as parameters.
 	 * If a save_id has been added to the page request then the report will be configured to
@@ -146,6 +152,7 @@ class Nsm_reports_mcp {
 	
 	/**
 	 * Manages program flow for submitted data sent from method Nsm_reports_mcp::configure.
+	 *
 	 * Form input 'action' determines what action should be taken next.
 	 *
 	 * @access public
@@ -168,7 +175,9 @@ class Nsm_reports_mcp {
 	}
 	
 	/**
-	 * Generates a report result-set and performs one of the following actions:
+	 * Generates a report result-set and performs an action depending on conditions
+	 *
+	 * Actions that can happen include:
 	 *   -  renders results to browser by passing generated report as a parameter to Nsm_reports_mcp::configure
 	 *   -  saves report data as a zip-file and emails download link to selected email address 
 	 *   -  forces a download of the report in the browser using the output format that has been chosen
@@ -262,6 +271,7 @@ class Nsm_reports_mcp {
 	
 	/**
 	 * Saves a report configuration as a preset and stores options in the database.
+	 *
 	 * If parameter 'save_as_new' is set to true the method will ignore update actions.
 	 * Some basic form validation takes place in this method and if an error occurs then
 	 *   return the output of the Nsm_reports::configure method and pass the form validation
@@ -328,6 +338,7 @@ class Nsm_reports_mcp {
 	
 	/**
 	 * Displays all saved report presets and displays them as a table.
+	 *
 	 * Method checks that report exists before showing the associated presets.
 	 * Form showed on page manages presets to be included in delete command.
 	 *
@@ -417,6 +428,7 @@ class Nsm_reports_mcp {
 
 	/**
 	 * Security checkpoint for downloading generated reports.
+	 *
 	 * First checks that user is logged in and is a member of can_download group (set in extension settings).
 	 * Then gets all files in generated reports directory and iterates over files.
 	 * On each file compare the requested file hash against the md5 hash of the file.
@@ -461,6 +473,7 @@ class Nsm_reports_mcp {
 	
 	/**
 	 * Manages View display for Expression Engine control panel.
+	 *
 	 * Uses parameters to build the control panel page and associated navigation items.
 	 *
 	 * @access public

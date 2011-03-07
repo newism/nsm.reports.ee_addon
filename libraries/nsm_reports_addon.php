@@ -43,8 +43,8 @@ class Nsm_reports_addon {
 	 * 
 	 * @access public
 	 * @return void
-	 * @var $css string The CSS filepath or content
-	 * @var $options array The options for this include
+	 * @param $css string The CSS filepath or content
+	 * @param $options array The options for this include
 	 */
 	public function addCSS($css, $options = array())
 	{
@@ -60,8 +60,8 @@ class Nsm_reports_addon {
 	 * 
 	 * @access public
 	 * @return void
-	 * @var $js string The JS filepath or content
-	 * @var $options array The options for this include
+	 * @param $js string The JS filepath or content
+	 * @param $options array The options for this include
 	 */
 	public function addJS($js, $options = array())
 	{
@@ -77,8 +77,8 @@ class Nsm_reports_addon {
 	 * 
 	 * @access public
 	 * @return void
-	 * @var $content string The CSS/JS content or filepath
-	 * @var $options array The options for this include
+	 * @param $content string The CSS/JS content or filepath
+	 * @param $options array The options for this include
 	 */
 	public function addThemeAsset($content, $options)
 	{

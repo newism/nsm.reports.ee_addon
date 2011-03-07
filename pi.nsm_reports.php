@@ -3,8 +3,9 @@
 /**
  * NSM Reports Plugin
  * 
- * Generally a module is better to use than a plugin if if it has not CP backend
- *
+ * Generally a module is better to use than a plugin if it has no CP backend
+ * 
+ * @ignore
  * @package			NsmReports
  * @version			0.0.1
  * @author			Leevi Graham <http://leevigraham.com>
@@ -28,7 +29,7 @@ $plugin_info = array(
 	'pi_usage' => "Refer to the included README"
 );
 
-class Nsm_reports{
+class Nsm_reports {
 
 	/**
 	 * The return string
@@ -37,7 +38,7 @@ class Nsm_reports{
 	 */
 	var $return_data = "";
 
-	function Nsm_reports()
+	public function __construct()
 	{
 		$EE =& get_instance();
 		$this->return_data = "NSM Reports Output";

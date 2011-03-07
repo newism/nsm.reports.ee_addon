@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @ignore
+*/
 class Basic_report extends Nsm_report {
 
 	public static $title = 'Basic channel entries report';
