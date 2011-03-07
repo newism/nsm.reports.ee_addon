@@ -28,30 +28,42 @@ class Nsm_reports_model extends CI_Model
 	 * @var string
 	 * @access protected
 	 **/
-	protected $folder_path = '';
+	protected $report_path = '';
 	
 	/**
 	 * PHP5 constructor function.
 	 *
-	 * Sets the folder_path of the model during object construction
+	 * Sets the report_path of the model during object construction to a default location
 	 *
 	 * @access public
 	 * @return void
 	 **/
 	public function __construct()
 	{
-		$this->folder_path = PATH_THIRD.'nsm_reports/reports';
+		$this->report_path = PATH_THIRD.'nsm_reports/reports';
 	}
 	
 	/**
-	 * Returns the folder path that the object is using
+	 * Sets the folder path that the object is using
+	 *
+	 * @access public
+	 * @param string $report_path The file-path where reports are located
+	 * @return void
+	 */
+	public function set_report_path($report_path)
+	{
+		$this->report_path = $report_path;
+	}
+	
+	/**
+	 * Returns the report path that the object is using
 	 *
 	 * @access public
 	 * @return string File-path of reports directory
 	 */
-	public function get_folder_path()
+	public function get_report_path()
 	{
-		return $this->folder_path;
+		return $this->report_path;
 	}
 	
 	/**
@@ -62,14 +74,14 @@ class Nsm_reports_model extends CI_Model
 	 */
 	public function find_all()
 	{
-		$report_folders = directory_map($this->folder_path);
+		$report_folders = directory_map($this->report_path);
 		$reports = false;
 		foreach ($report_folders as $folder => $files)
 		{
 			if(substr($folder, 0, 1) == "-"){ continue; }
 			
-			if(file_exists($this->folder_path."/".$folder."/".$folder.EXT)){
-				require($this->folder_path."/".$folder."/".$folder.EXT);
+			if(file_exists($this->report_path."/".$folder."/".$folder.EXT)){
+				require($this->report_path."/".$folder."/".$folder.EXT);
 				$class = ucfirst($folder);
 				$reports[$class] = array(
 					'title' => $class::$title,
@@ -94,7 +106,7 @@ class Nsm_reports_model extends CI_Model
 	 */
 	public function find($report)
 	{
-		$file_path = $this->folder_path."/".$report."/".$report.EXT;
+		$file_path = $this->report_path."/".$report."/".$report.EXT;
 		if(!$report || !file_exists($file_path)){ return false; }
 		require_once $file_path;
 		return new $report;

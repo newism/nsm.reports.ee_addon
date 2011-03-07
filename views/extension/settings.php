@@ -43,6 +43,17 @@ $EE =& get_instance();
 		<table>
 			<tbody>
 				<tr>
+					<th scope="row">Report Path 
+						<div class="note">
+							This is the server path that will be used to store the reports.
+							If this is not set it will default to the 'reports' sub-directory of this add-on.
+						</div>
+					</th>
+					<td>
+						<input type="text" name="<?= $input_prefix ?>[report_path]" value="<?= $data['report_path'] ?>"/>
+					</td>
+				</tr>
+				<tr class="odd">
 					<th scope="row">Generated Reports Path 
 						<div class="note">
 							This is the server path that will be used to store generated reports.
@@ -53,7 +64,7 @@ $EE =& get_instance();
 						<input type="text" name="<?= $input_prefix ?>[generated_reports_path]" value="<?= $data['generated_reports_path'] ?>"/>
 					</td>
 				</tr>
-				<tr class="odd">
+				<tr>
 					<th scope="row">Which groups are allowed to download reports?</th>
 					<td>
 						<?php foreach($member_groups as $count => $member_group) : 

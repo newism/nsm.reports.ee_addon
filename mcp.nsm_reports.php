@@ -41,7 +41,10 @@ class Nsm_reports_mcp {
 	 * PHP5 constructor function.
 	 *
 	 * Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings
-	 *    and prepares required file-system paths.
+	 *   and prepares required file-system paths.
+	 *
+	 * If there has been no 'report_path' directory set in the extension settings the 'reports' sub-directory
+	 *   in this add-on is used as a default location.
 	 *
 	 * @access public
 	 * @return void
@@ -52,9 +55,18 @@ class Nsm_reports_mcp {
 		$this->addon_id = strtolower(substr(__CLASS__, 0, -4));
 		$this->cp_url = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->addon_id.AMP;
 		$this->cache_path = APPPATH.'cache/' . $this->addon_id . "/" ;
-		$this->EE->load->model('nsm_reports_model');
+		
 		$NsmReportsExt = new Nsm_reports_ext();
 		$this->settings = $NsmReportsExt->settings;
+		$this->report_path = $this->settings['report_path'];
+		
+		$this->EE->load->model('nsm_reports_model');
+		
+		if($this->report_path !== ''){
+			$this->EE->nsm_reports_model->set_report_path($this->report_path);
+		}else{
+			$this->report_path = $this->EE->nsm_reports_model->get_report_path();
+		}
 	}
 	
 	/**

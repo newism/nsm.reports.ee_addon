@@ -36,7 +36,8 @@ class Nsm_reports_ext
 
 	public $default_site_settings = array(
 		'enabled' => TRUE,
-		'generated_reports_path' => ''
+		'generated_reports_path' => '',
+		'report_path' => ''
 	);
 
 	public $default_channel_settings = array();
