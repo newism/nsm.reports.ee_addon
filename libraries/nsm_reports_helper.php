@@ -4,14 +4,14 @@
  * 
  * Usage:
  * 
- * $this->EE->load->library("{$this->addon_id}_addon", null, $this->addon_id);
+ * $this->EE->load->library("{$this->addon_id}_addon");
  *
  * #  Add the custom field stylesheet to the header 
- * $this->EE->nsm_reports->addCSS('custom_field.css');
+ * $this->EE->nsm_reports_helper->addCpCss('custom_field.css');
  * 
  * # Load the JS for the iframe
- * $this->EE->nsm_reports->addJS('custom_field.js');
- * $this->EE->nsm_reports->addJS('../lib/jquery.cookie.js');
+ * $this->EE->nsm_reports_helper->addCpJs('custom_field.js');
+ * $this->EE->nsm_reports_helper->addCpJs('../lib/jquery.cookie.js');
  * 
  * @package			NsmReports
  * @version			0.0.1
@@ -21,7 +21,12 @@
  * @link			http://expressionengine-addons.com/nsm-reports
  */
 
-class Nsm_reports_addon {
+/**
+ * Extends EE Control Panel functions
+ *
+ * @package NsmReports
+ */
+class Nsm_reports_helper {
 
 	/**
 	 * The addon ID
@@ -46,13 +51,13 @@ class Nsm_reports_addon {
 	 * @param $css string The CSS filepath or content
 	 * @param $options array The options for this include
 	 */
-	public function addCSS($css, $options = array())
+	public function addCpCss($css, $options = array())
 	{
 		$options = array_merge(array(
 			"where" => "head",
 			"type" => "css",
 		), $options);
-		$this->addThemeAsset($css, $options);
+		$this->addCpThemeAsset($css, $options);
 	}
 
 	/**
@@ -63,13 +68,13 @@ class Nsm_reports_addon {
 	 * @param $js string The JS filepath or content
 	 * @param $options array The options for this include
 	 */
-	public function addJS($js, $options = array())
+	public function addCpJs($js, $options = array())
 	{
 		$options = array_merge(array(
 			"where" => "foot",
 			"type" => "js",
 		), $options);
-		$this->addThemeAsset($js, $options);
+		$this->addCpThemeAsset($js, $options);
 	}
 
 	/**
@@ -80,7 +85,7 @@ class Nsm_reports_addon {
 	 * @param $content string The CSS/JS content or filepath
 	 * @param $options array The options for this include
 	 */
-	public function addThemeAsset($content, $options)
+	public function addCpThemeAsset($content, $options)
 	{
 		$EE =& get_instance();
 
