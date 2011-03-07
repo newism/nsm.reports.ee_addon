@@ -10,6 +10,7 @@
  * @subpackage Channels_complex_report
  * @version 1.0.0
  * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
  * @license Commercial - please see LICENSE file included with this distribution
  */

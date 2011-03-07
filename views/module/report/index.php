@@ -4,13 +4,13 @@
  *
  * This file is used when Nsm_reports_mcp::index() is called and returns a table of all reports found in reports directory to the user.
  *
- * @package			NsmReports
- * @version			0.0.1
- * @author			Leevi Graham <http://leevigraham.com>
- * @copyright 		Copyright (c) 2007-2011 Newism <http://newism.com.au>
- * @license 		Commercial - please see LICENSE file included with this distribution
- * @link			http://expressionengine-addons.com/nsm-reports
- * @see				http://expressionengine.com/public_beta/docs/development/modules.html
+ * @package NsmReports
+ * @version 1.0.0
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @license Commercial - please see LICENSE file included with this distribution
+ * @link http://expressionengine-addons.com/nsm-reports
+ * @see http://expressionengine.com/public_beta/docs/development/modules.html
  */
 ?>
 <div class="tg">

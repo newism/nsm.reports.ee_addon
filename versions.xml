@@ -2,13 +2,14 @@
 /**
  * XML Changelog for NSM Reports
  *
- * @package			NsmReports
- * @version			0.0.1
- * @author			Leevi Graham <http://leevigraham.com>
- * @copyright 		Copyright (c) 2007-2010 Newism <http://newism.com.au>
- * @license 		Commercial - please see LICENSE file included with this distribution
- * @link			http://expressionengine-addons.com/nsm-reports
- * @see				http://expressionengine-addons.com/nsm-addon-updater
+ * @package NsmReports
+ * @version 1.0.0
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au>
+ * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
+ * @license Commercial - please see LICENSE file included with this distribution
+ * @link http://expressionengine-addons.com/nsm-reports
+ * @see http://expressionengine-addons.com/nsm-addon-updater
  */
 -->
 <?xml version="1.0" encoding="utf-8"?>
@@ -18,9 +19,9 @@
 		<link>https://github.com/newism/nsm.example_addon.ee_addon/versions.xml</link>
 		<description>Most recent changes with links to updates.</description>
 		<item>
-			<title>Version 0.0.1</title>
-			<ee_addon:version>0.0.1</ee_addon:version>
-			<link>https://github.com/newism/nsm.example_addon.ee_addon/tree/0.0.1</link>
+			<title>Version 1.0.0</title>
+			<ee_addon:version>1.0.0</ee_addon:version>
+			<link>https://github.com/newism/nsm.example_addon.ee_addon/tree/1.0.0</link>
 			<pubDate>Thursday, 25 Feb 2010 11:43:55 +1100</pubDate>
 			<description><![CDATA[
 				<ul>
@@ -28,7 +29,7 @@
 				</ul>
 			]]>
 			</description>
-			<enclosure url="https://github.com/newism/nsm.example_addon.ee_addon/zipball/0.0.1" length="16261" type="application/zip" />
+			<enclosure url="https://github.com/newism/nsm.example_addon.ee_addon/zipball/1.0.0" length="16261" type="application/zip" />
 		 </item>
 	</channel>
 </rss>
