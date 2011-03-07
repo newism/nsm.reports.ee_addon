@@ -41,7 +41,7 @@ class Nsm_reports_helper {
 	 * Constructs the class and sets the addon id
 	 */
 	public function __construct(){
-		$this->addon_id = strtolower(substr(__CLASS__, 0, -6));
+		$this->addon_id = strtolower(substr(__CLASS__, 0, -7));
 	}
 
 	/**
