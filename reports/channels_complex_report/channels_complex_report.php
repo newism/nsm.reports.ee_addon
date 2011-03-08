@@ -4,10 +4,10 @@
  * NSM Reports Complex Example Class
  *
  * @package NsmReports
- * @subpackage		Channels_complex_report
+ * @subpackage Channels_complex_report
  * @version 1.0.1
- * @author 			Leevi Graham <http://leevigraham.com.au>
- * @author 			Iain Saxon <iain.saxon@newism.com.au>
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
@@ -51,7 +51,7 @@ class Channels_complex_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $docs_url = 'http://google.com';
+	protected $docs_url = 'http://www.newism.com.au';
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
@@ -82,6 +82,18 @@ class Channels_complex_report extends Nsm_report_base {
 									'html' => 'HyperText Markup Language (HTML)',
 									'xml' => 'eXtensible Markup Language (XML)'
 								);
+	
+	/**
+	 * Default report configuration options with '_output' as a minumum entry
+	 *
+	 * @var array
+	 * @access protected
+	 **/
+	protected $config = array(
+		'_output' => 'browser',
+		'channel_filter' => false,
+		'status_filter' => false
+	);
 	
 	/**
 	 * Stores the generated SQL statement used by the report
@@ -115,17 +127,6 @@ class Channels_complex_report extends Nsm_report_base {
 	 **/
 	public $error = false;
 	
-	/**
-	 * Default report configuration options with '_output' as a minumum entry
-	 *
-	 * @var array
-	 * @access protected
-	 **/
-	protected $config = array(
-		'_output' => 'browser',
-		'channel_filter' => false,
-		'status_filter' => false
-	);
 	
 	/**
 	 * PHP5 constructor function.
