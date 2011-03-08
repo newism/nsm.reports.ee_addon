@@ -175,10 +175,10 @@ class Channels_complex_report extends Nsm_report_base {
 	}
 	
 	/**
-	 * Generates the SQL query string and returns the results as an Active-Record object
+	 * Generates the SQL query string and returns the results as an array
 	 * 
 	 * @access public
-	 * @return object DB Result object
+	 * @return array Array of database results
 	 */
 	public function generateResults()
 	{
@@ -215,21 +215,21 @@ class Channels_complex_report extends Nsm_report_base {
 		if ($query == false){
 			return false;
 		}
-		return $query;
+		return $query->result_array();
 	}
 	
 	/**
 	 * Renders a View from the report results to display in the browser
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputBrowser($query)
+	public function outputBrowser($results)
 	{
 		$rows = array();
 		
-		foreach($query->result_array() as $entry_i => $entry){
+		foreach($results as $entry_i => $entry){
 			$rows[$entry_i] = $entry;
 			$rows[$entry_i]['entry_url'] = BASE.AMP.'C=content_publish&M=entry_form&channel_id='.$entry['channel_id'].'&entry_id='.$entry['id'];
 		}
@@ -250,15 +250,17 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds HTML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputHTML($query)
+	public function outputHTML($results)
 	{
 		$html = "";
 		
 		$columns = "";
 		$rows = "";
+		
+		$num_rows = count($results);
 		
 		$columns .= '<th scope="col">ID</th>';
 		$columns .= '<th scope="col">Title</th>';
@@ -266,7 +268,7 @@ class Channels_complex_report extends Nsm_report_base {
 		$columns .= '<th scope="col">Status</th>';
 		$columns .= '<th scope="col">Channel</th>';
 		
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$rows .= '<tr>';
 			$rows .= 	'<th scope="row">' . $row['id'] . '</th>';
 			$rows .= 	'<td>' . $row['name'] . '</td>';
@@ -276,7 +278,7 @@ class Channels_complex_report extends Nsm_report_base {
 			$rows .= '</tr>';
 		}
 		$thead = '<thead><tr>' . $columns . '</tr></thead>';
-		$tfoot = '<tfoot><tr><td colspan="5">' . $query->num_rows() . ' entries found</td></tr></tfoot>';
+		$tfoot = '<tfoot><tr><td colspan="5">' . $num_rows . ' entries found</td></tr></tfoot>';
 		$tbody = '<tbody>' . $rows . '</tbody>';
 		
 		$html .= '<table class="data">' .
@@ -285,7 +287,7 @@ class Channels_complex_report extends Nsm_report_base {
 					'</thead>' .
 					'<tfoot>' . 
 						'<tr>' . 
-							'<td colspan="5">' . $query->num_rows() . ' entries found</td>' . 
+							'<td colspan="5">' . $num_rows . ' entries found</td>' . 
 						'</tr>' . 
 					'</tfoot>' .
 					'<tbody>' . 
@@ -300,13 +302,13 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds Comma-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as a CSV
 	 **/
-	public function outputCSV($query)
+	public function outputCSV($results)
 	{
 		$csv = '"ID","Title","Date Created","Status","Channel"';
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . date('d/m/Y', $row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
 		}
 		return $csv;
@@ -316,13 +318,13 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds Tab-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Generated TSV string
 	 **/
-	public function outputTSV($query)
+	public function outputTSV($results)
 	{
 		$tsv = '"ID"'."\t".'"Title"'."\t".'"Date Created"'."\t".'"Status"'."\t".'"Channel"';
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$tsv .= "\n" . 
 					'"' . $row['id'] . '"' . "\t" .
 					'"' . $row['name'] . '"' . "\t" .
@@ -337,10 +339,10 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds an XML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as an XML string
 	 **/
-	public function outputXML($query)
+	public function outputXML($results)
 	{
 		$xml = '<?xml version="1.0"?>';
 		
@@ -350,7 +352,7 @@ class Channels_complex_report extends Nsm_report_base {
 		$columns[] = '<column><id>column_3</id><name><![CDATA[' .'Status'. ']]></name></column>';
 		$columns[] = '<column><id>column_4</id><name><![CDATA[' .'Channel'. ']]></name></column>';
 		
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$row_data = '<row>';
 			$row_data .= 	'<column_0>'.$row['id'].'</column_0>';
 			$row_data .= 	'<column_1>'.'<![CDATA[' . $row['name'] . ']]>'.'</column_1>';

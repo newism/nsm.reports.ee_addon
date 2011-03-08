@@ -169,10 +169,10 @@ class Nsm_report_base {
 	// SQL METHODS
 	
 	/**
-	 * Generates the SQL query string and returns the results as an Active-Record object
+	 * Generates the SQL query string and returns the results as an array
 	 * 
 	 * @access public
-	 * @return object DB Result object
+	 * @return array Array of database results
 	 */
 	public function generateResults()
 	{
@@ -184,7 +184,7 @@ class Nsm_report_base {
 		if ($query == false){
 			return false;
 		}
-		return $query;
+		return $query->result_array();
 	}
 	
 	/**
@@ -245,7 +245,7 @@ class Nsm_report_base {
 			return false;
 		}
 		
-		if($results->num_rows() < 1){
+		if(count($results) < 1){
 			$this->error = "No results found";
 			return false;
 		}
@@ -293,13 +293,13 @@ class Nsm_report_base {
 	 * Renders a View from the report results to display in the browser
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputBrowser($query)
+	public function outputBrowser($results)
 	{
 		$columns = array();
-		$rows = $query->result_array();
+		$rows = $results;
 		foreach ($rows[0] as $column => $data){
 			$columns[] = $column;
 		}
@@ -321,10 +321,10 @@ class Nsm_report_base {
 	 * Builds HTML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputHTML($query)
+	public function outputHTML($results)
 	{
 		$html = "";
 		
@@ -335,7 +335,7 @@ class Nsm_report_base {
 		$columns = array();
 		$rows = array();
 		
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$col_i = 0;
 			$tr = '<tr>';
 			foreach($row as $column => $data){
@@ -349,7 +349,7 @@ class Nsm_report_base {
 			$rows[] = $tr;
 		}
 		$thead = '<thead><tr>' . implode('', $columns) . '</tr></thead>';
-		$tfoot = '<tfoot><tr><td colspan="' .count($columns). '">' . $query->num_rows() . ' entries found</td></tr></tfoot>';
+		$tfoot = '<tfoot><tr><td colspan="' .count($columns). '">' . count($rows) . ' entries found</td></tr></tfoot>';
 		$tbody = '<tbody>' . implode('', $rows) . '</tbody>';
 		
 		$html = '<table class="data">' . $thead . $tfoot . $tbody . '</table>';
@@ -361,14 +361,30 @@ class Nsm_report_base {
 	 * Builds Comma-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param array $results Array of report results.
 	 * @return string Result data represented as a CSV
 	 **/
-	public function outputCSV($query)
+	public function outputCSV($results)
 	{
-		$this->EE->load->dbutil();
 		$csv = "";
-		$csv = $this->EE->dbutil->csv_from_result($query);
+		$cols = array();
+		$rows = array();
+		$delimeter = ",";
+		$newline = "\n";
+		foreach($results as $row_i => $row){
+			$row_data = "";
+			$col_i = 0;
+			foreach($row as $col => $data){
+				if($row_i == 0){
+					$cols[] = '"' . str_replace('"', '""', ($col) ) . '"';
+				}
+				$row_data .= ($col_i == 0 ? '' : $delimeter) .
+				 				'"' . str_replace('"', '""', ($data) ) . '"';
+				$col_i += 1;
+			}
+			$rows[] = $row_data;
+		}
+		$csv = implode($delimeter, $cols) . $newline . implode($newline, $rows);
 		return $csv;
 	}
 	
@@ -376,14 +392,28 @@ class Nsm_report_base {
 	 * Builds Tab-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Generated TSV string
 	 **/
-	public function outputTSV($query)
+	public function outputTSV($results)
 	{
-		$this->EE->load->dbutil();
 		$tsv = "";
-		$tsv = $this->EE->dbutil->csv_from_result($query, "\t");
+		$cols = array();
+		$rows = array();
+		$delimeter = "\t";
+		$newline = "\n";
+		foreach($results as $row_i => $row){
+			$row_data = "";
+			$col_i = 0;
+			foreach($row as $col => $data){
+				if($row_i == 0){ $cols[] = '"' . str_replace('"', '""', ($col) ) . '"'; }
+				$row_data .= ($col_i == 0 ? '' : $delimeter) .
+				 				'"' . str_replace('"', '""', ($data) ) . '"';
+				$col_i += 1;
+			}
+			$rows[] = $row_data;
+		}
+		$tsv = implode($delimeter, $cols) . $newline . implode($newline, $rows);
 		return $tsv;
 	}
 	
@@ -391,13 +421,13 @@ class Nsm_report_base {
 	 * Builds an XML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as an XML string
 	 **/
-	public function outputXML($query)
+	public function outputXML($results)
 	{
 		$xml = '<?xml version="1.0"?>';
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$col_i = 0;
 			$row_data = '<row>';
 			foreach($row as $column => $data){

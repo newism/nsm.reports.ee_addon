@@ -139,10 +139,10 @@ class Channels_simple_report extends Nsm_report_base {
 	}
 
 	/**
-	 * Generates the SQL query string and returns the results as an Active-Record object
+	 * Generates the SQL query string and returns the results as an array
 	 * 
 	 * @access public
-	 * @return object DB Result object
+	 * @return array Array of database results
 	 */
 	public function generateResults()
 	{
@@ -163,7 +163,7 @@ class Channels_simple_report extends Nsm_report_base {
 		if ($query == false){
 			return false;
 		}
-		return $query;
+		return $query->result_array();
 	}
 	
 }
