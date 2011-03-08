@@ -6,7 +6,8 @@
  * @package NsmReports
  * @version 0.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
- * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> 
+ * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
@@ -82,6 +83,16 @@ class Nsm_report_base {
 								);
 	
 	/**
+	 * Default report configuration options with '_output' as a minumum entry
+	 *
+	 * @var array
+	 * @access protected
+	 **/
+	protected $config = array(
+		'_output' => 'browser'
+	);
+	
+	/**
 	 * Stores the generated SQL statement used by the report
 	 *
 	 * @var string
@@ -112,16 +123,6 @@ class Nsm_report_base {
 	 * @access public
 	 **/
 	public $error = false;
-	
-	/**
-	 * Default report configuration options with '_output' as a minumum entry
-	 *
-	 * @var array
-	 * @access protected
-	 **/
-	protected $config = array(
-		'_output' => 'browser'
-	);
 	
 	/**
 	 * PHP5 constructor function.
@@ -272,7 +273,7 @@ class Nsm_report_base {
 				$extension = "xml";
 			break;
 			default:
-				$method = 'output'.$output;
+				$method = 'output_'.$output;
 				if(method_exists($this,$method)){
 					call_user_func(array($this, $method));
 				}else{
