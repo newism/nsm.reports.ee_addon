@@ -82,14 +82,16 @@ class Nsm_reports_model extends CI_Model
 			
 			if(file_exists($this->report_path."/".$folder."/".$folder.EXT)){
 				require($this->report_path."/".$folder."/".$folder.EXT);
-				$class = ucfirst($folder);
-				$reports[$class] = array(
-					'title' => $class::$title,
-					'notes' => $class::$notes,
-					'author' => $class::$author,
-					'docs_url' => $class::$docs_url,
-					'version' => $class::$version,
-					'type' => $class::$type
+				$class_name = ucfirst($folder);
+				$class_obj = new $class_name;
+				$class_info = $class_obj->getInfo();
+				$reports[$class_name] = array(
+					'title' => $class_info['title'],
+					'notes' => $class_info['notes'],
+					'author' => $class_info['author'],
+					'docs_url' => $class_info['docs_url'],
+					'version' => $class_info['version'],
+					'type' => $class_info['type']
 				);
 			}
 		}

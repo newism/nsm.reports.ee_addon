@@ -147,9 +147,12 @@ class Nsm_reports_mcp {
 
 		$report->setConfig($config);
 		$report_config_html = $report->configHTML();
-
+		
+		$report_info = $report->getInfo();
+		$report_info['output_types'] = $report->output_types;
+		
 		$data = array(
-			'report' => $report,
+			'report' => $report_info,
 			'error' => $error,
 			'saved_report_info' => $saved_report_info,
 			'config' => $config,
@@ -170,7 +173,7 @@ class Nsm_reports_mcp {
 				)
 				. $out 
 				. form_close();
-		return $this->_renderLayout("report_config", $out, array('report_title' => $report::$title));
+		return $this->_renderLayout("report_config", $out, array('report_title' => $report_info['title']));
 	}
 	
 	/**
@@ -258,9 +261,9 @@ class Nsm_reports_mcp {
 
 				$email_config = array(
 					'to' => $saved_report->email_address,
-					'subject' => 'Sending Report: '.$report::$title.' using preset '.$saved_report->title.' ('.$saved_report->id.')',
+					'subject' => 'Sending Report: '.$report->$title.' using preset '.$saved_report->title.' ('.$saved_report->id.')',
 					'message' => 'This email was sent from your website using a process URL. '.
-									'Your report '.$report::$title.' using preset '.$saved_report->title.' ('.$saved_report->id.') '.
+									'Your report '.$report->$title.' using preset '.$saved_report->title.' ('.$saved_report->id.') '.
 									'has been generated and ready for download at this location: '.
 									''.$process_url
 				);

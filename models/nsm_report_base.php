@@ -23,64 +23,57 @@ class Nsm_report_base {
 	 * Displays the report name in the control panel
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $title = "";
+	protected $title = "";
 	
 	/**
 	 * Basic description of the report
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $notes = "";
+	protected $notes = "";
 	
 	/**
 	 * Name and/or company of the report's creator
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $author = "";
+	protected $author = "";
 	
 	/**
 	 * A URL to the report's documentation (optional)
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $docs_url = "";
+	protected $docs_url = "";
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $version = "";
+	protected $version = "";
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $type = "";
+	protected $type = "";
 	
 	/**
 	 * Valid report output types
 	 *
 	 * @var array
 	 * @access public
-	 * @static
 	 **/
-	public static $output_types = array(
+	public $output_types = array(
 									'browser' => 'View in browser',
 									'csv' => 'Comma-Seperated Values (CSV)',
 									'tab' => 'Tab-Seperated Values (TSV)',
@@ -93,7 +86,6 @@ class Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $sql = "";
 	
@@ -102,7 +94,6 @@ class Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $report_path = '';
 	
@@ -111,7 +102,6 @@ class Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $cache_path = '';
 	
@@ -120,7 +110,6 @@ class Nsm_report_base {
 	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
-	 * @static
 	 **/
 	public $error = false;
 	
@@ -129,7 +118,6 @@ class Nsm_report_base {
 	 *
 	 * @var array
 	 * @access protected
-	 * @static
 	 **/
 	protected $config = array(
 		'_output' => 'browser'
@@ -489,5 +477,26 @@ class Nsm_report_base {
 		return $status;
 	}
 	
+	
+	
+	/**
+	 * Returns an array of the report's static variables
+	 *
+	 * This method has been added to address limitations in PHP 5.2.x that do not exist in PHP 5.3.x
+	 *
+	 * @access public
+	 * @return array Class static variables
+	 **/
+	public function getInfo()
+	{
+		return array(
+			'title' => $this->title,
+			'notes' => $this->notes,
+			'author' => $this->author,
+			'docs_url' => $this->docs_url,
+			'version' => $this->version,
+			'type' => $this->type
+		);
+	}
 	
 }

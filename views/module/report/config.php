@@ -27,11 +27,11 @@
 		</thead>
 		<tbody>
 			<tr class="even">
-				<th scope="row"><?= $report::$title ?></th>
-				<td><?= $report::$notes ?></td>
-				<td><?= $report::$author ?></td>
-				<td><?= $report::$version ?></td>
-				<td><?php if($report::$docs_url) : ?><a href="<?= $report::$docs_url ?>">Documentation</a><?php endif; ?>&nbsp;</td>
+				<th scope="row"><?= $report['title'] ?></th>
+				<td><?= $report['notes'] ?></td>
+				<td><?= $report['author'] ?></td>
+				<td><?= $report['version'] ?></td>
+				<td><?php if($report['docs_url']) : ?><a href="<?= $report['docs_url'] ?>">Documentation</a><?php endif; ?>&nbsp;</td>
 			</tr>
 		</tbody>
 	</table>
@@ -54,7 +54,7 @@
 		<th scope="row"><label for="nsm_reports-generate-output">Output format</label></th>
 		<td>
 			<select id="nsm_reports-generate-output" name="report[_output]">
-			<?php foreach ($report::$output_types as $type => $type_human) : ?>
+			<?php foreach ($report['output_types'] as $type => $type_human) : ?>
 				<option value="<?= $type ?>"<?=($type==$config['_output']?' selected="selected"':'') ?>><?= $type_human ?></option>
 			<?php endforeach; ?>
 			</select>
