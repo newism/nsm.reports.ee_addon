@@ -40,8 +40,8 @@ class Nsm_reports_mcp {
 	/**
 	 * PHP5 constructor function.
 	 *
-	 * Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings
-	 *   and prepares required file-system paths.
+	 * Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings, 
+	 *   loads date helper and prepares required file-system paths.
 	 *
 	 * If there has been no 'report_path' directory set in the extension settings the 'reports' sub-directory
 	 *   in this add-on is used as a default location.
@@ -55,6 +55,8 @@ class Nsm_reports_mcp {
 		$this->addon_id = strtolower(substr(__CLASS__, 0, -4));
 		$this->cp_url = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->addon_id.AMP;
 		$this->cache_path = APPPATH.'cache/' . $this->addon_id . "/" ;
+		
+		$this->EE->load->helper('date');
 		
 		$NsmReportsExt = new Nsm_reports_ext();
 		$this->settings = $NsmReportsExt->settings;
@@ -266,7 +268,6 @@ class Nsm_reports_mcp {
 				$email_sent = $report->email_report($email_config, array());
 				if( $email_sent == true ){
 					if($saved_report){
-						$this->EE->load->helper('date');
 						$saved_report->lastrun_at = now();
 						$saved_report->run_count = $saved_report->run_count + 1;
 						$saved_report->update();
@@ -339,7 +340,6 @@ class Nsm_reports_mcp {
 			$save_report->setData($data);
 			$action_status = $save_report->update();
 		}else{
-			$this->EE->load->helper('date');
 			$data = array_merge($data, array(
 				'created_at' => now()
 			));
@@ -361,6 +361,9 @@ class Nsm_reports_mcp {
 	 * Displays all saved report presets and displays them as a table.
 	 *
 	 * Method checks that report exists before showing the associated presets.
+	 *
+	 * Saved preset objects are converted into view-friendly arrays.
+	 *
 	 * Form showed on page manages presets to be included in delete command.
 	 *
 	 * @access public
@@ -379,7 +382,22 @@ class Nsm_reports_mcp {
 			foreach($get_saved_reports as $saved_report_key => $saved_report){
 				$report_class = $saved_report->report;
 				if(in_array($report_class, $reports_classes)){
-					$saved_reports[] = $saved_report;
+					$saved_reports[] = array(
+						'id' => $saved_report->id,
+						'title' => $saved_report->title,
+						'description' => $saved_report->description,
+						'access_key' => $saved_report->access_key,
+						'created_at' => $this->EE->localize->set_human_time($saved_report->created_at),
+						'updated_at' => $this->EE->localize->set_human_time($saved_report->updated_at),
+						'lastrun_at' => ($saved_report->lastrun_at > 0 ? $this->EE->localize->set_human_time($saved_report->lastrun_at) : 'Never'),
+						'report_class' => $saved_report->report,
+						'report' => $reports[ $saved_report->report ]['title'],
+						'email_address' => $saved_report->email_address,
+						'output' => $saved_report->output,
+						'config' => $saved_report->config,
+						'active' => $saved_report->active,
+						'run_count' => $saved_report->run_count
+					);
 				}
 			}
 		}

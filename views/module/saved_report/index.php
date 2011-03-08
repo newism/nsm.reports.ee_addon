@@ -8,12 +8,11 @@
  * @package NsmReports
  * @version 1.0.1
  * @author Leevi Graham <http://leevigraham.com.au>
- * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> 
+ * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
- * @todo Display human readable output in table
- * @todo Convert date using CI Methods
  */
 ?>
 <div class="tg">
@@ -41,23 +40,23 @@
 			<?php foreach($saved_reports as $saved_report): ?>
 			<tr>
 				<th scope="row">
-					<a title="Go to report using config ID <?= $saved_report->id ?>" href="<?= $details_url.$saved_report->report.AMP.'save_id='.$saved_report->id ?>">
-						<?= $saved_report->title ?>
+					<a title="Go to report using config ID <?= $saved_report['id'] ?>" href="<?= $details_url.$saved_report['report_class'].AMP.'save_id='.$saved_report['id'] ?>">
+						<?= $saved_report['title'] ?>
 					</a>
 				</th>
-				<td><?= $saved_report->description ?></td>
-				<td><?= $reports[$saved_report->report]['title'] ?></td>
-				<td><?= $saved_report->email_address ?></td>
-				<td><?= $saved_report->output ?></td>
-				<td><?= date('d/m/Y H:i', $saved_report->created_at) ?></td>
-				<td><?= ( $saved_report->lastrun_at > 0 ? date('d/m/Y H:i', $saved_report->lastrun_at) : 'Never' ) ?></td>
-				<td><?= $saved_report->run_count ?></td>
+				<td><?= $saved_report['description'] ?></td>
+				<td><?= $saved_report['report'] ?></td>
+				<td><?= $saved_report['email_address'] ?></td>
+				<td><?= $saved_report['output'] ?></td>
+				<td><?= $saved_report['created_at'] ?></td>
+				<td><?= $saved_report['lastrun_at'] ?></td>
+				<td><?= $saved_report['run_count'] ?></td>
 				<td>
-					<a href="<?= $process_url.$saved_report->id.AMP.'key='.$saved_report->access_key ?>">
+					<a href="<?= $process_url.$saved_report['id'].AMP.'key='.$saved_report['access_key'] ?>">
 						URL
 					</a>
 				</td>
-				<td><input type="checkbox" name="delete[]" value="<?= $saved_report->id ?>" />
+				<td><input type="checkbox" name="delete[]" value="<?= $saved_report['id'] ?>" />
 			</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>
