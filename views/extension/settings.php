@@ -39,7 +39,7 @@ $EE =& get_instance();
 	<?php endif; ?>
 	
 	<div class="tg">
-		<h2>Download configuration</h2>
+		<h2>General settings</h2>
 		<table>
 			<tbody>
 				<tr>
@@ -53,7 +53,15 @@ $EE =& get_instance();
 						<input type="text" name="<?= $input_prefix ?>[report_path]" value="<?= $data['report_path'] ?>"/>
 					</td>
 				</tr>
-				<tr class="even">
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="tg">
+		<h2>Download configuration</h2>
+		<table>
+			<tbody>
+				<tr>
 					<th scope="row">Generated Reports Path 
 						<div class="note">
 							This is the server path that will be used to store generated reports.
@@ -64,7 +72,7 @@ $EE =& get_instance();
 						<input type="text" name="<?= $input_prefix ?>[generated_reports_path]" value="<?= $data['generated_reports_path'] ?>"/>
 					</td>
 				</tr>
-				<tr>
+				<tr class="even">
 					<th scope="row">Which groups are allowed to download reports?</th>
 					<td>
 						<?php foreach($member_groups as $count => $member_group) : 
