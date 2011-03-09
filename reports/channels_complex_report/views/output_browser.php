@@ -32,7 +32,7 @@
 			<tr>
 				<td><?= $item['id'] ?></td>
 				<th scope="row"><a href="<?= $item['entry_url'] ?>"><?= $item['name']; ?></a></th>
-				<td><?= date('d/m/Y', $item['created_at']); ?></td>
+				<td><?= $item['created_at']; ?></td>
 				<td><?= ucwords($item['status']); ?></td>
 				<td><?= $item['channel_name']; ?></td>
 			</tr>

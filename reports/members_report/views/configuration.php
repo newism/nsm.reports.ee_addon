@@ -2,12 +2,12 @@
 /**
  * CONFIGURATION FORM EXAMPLE
  * 
- * This file is used as the Code Igniter View in Channels_complex_report::configHTML()
+ * This file is used as the Code Igniter View in Members_report::configHTML()
  * 
  * This form demonstrates adding a new input field to filter channels by channel_id and status.
  *
  * @package NsmReports
- * @subpackage Channels_complex_report
+ * @subpackage Members_report
  * @version 1.0.1
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
@@ -16,11 +16,25 @@
  */
 ?>
 <tr>
-	<th scope="row">Additional member data</th>
+	<th scope="row">Member data</th>
 	<td>
-		<ul>
+		<?php foreach($member_fields as $field_name => $field_label) : ?>
+				<label>
+					<input
+						type="checkbox" 
+						name="report[member_fields][]"
+						value="<?=$field_name ?>"
+						<?= (in_array($field_name, $config['member_fields']) ?' checked="checked"':''); ?>
+					/>
+					<?=$field_label ?>
+				</label>
+		<?php endforeach; ?>
+	</td>
+</tr>
+<tr>
+	<th scope="row">Custom member data</th>
+	<td>
 		<?php foreach($additional_fields as $field) : ?>
-			<li>
 				<label>
 					<input
 						type="checkbox" 
@@ -30,19 +44,19 @@
 					/>
 					<?=$field['m_field_label'] ?>
 				</label>
-			</li>
 		<?php endforeach; ?>
-		</ul>
 	</td>
 </tr>
 <tr>
-	<th scope="row">Status</th>
+	<th scope="row">Limit</th>
 	<td>
-		<select name="report[status_filter]">
-			<option value=""<?= ($config['status_filter']==''?' selected="selected"':''); ?>>Any</option>
-			<?php foreach($status_options as $row) : ?>
-				<option value="<?=$row['status'] ?>"<?= ($config['status_filter']==$row['status']?' selected="selected"':''); ?>><?=ucwords($row['status']) ?></option>
-			<?php endforeach; ?>
+		<select name="report[row_limit]">
+			<option value="25"<?= ($config['row_limit'] == 25 ? ' selected="selected"' : ''); ?>>25</option>
+			<option value="50"<?= ($config['row_limit'] == 50 ? ' selected="selected"' : ''); ?>>50</option>
+			<option value="100"<?= ($config['row_limit'] == 100 ? ' selected="selected"' : ''); ?>>100</option>
+			<option value="200"<?= ($config['row_limit'] == 200 ? ' selected="selected"' : ''); ?>>200</option>
+			<option value="400"<?= ($config['row_limit'] == 400 ? ' selected="selected"' : ''); ?>>400</option>
+			<option value=""<?= ($config['row_limit'] == '' ? ' selected="selected"' : ''); ?>>None</option>
 		</select>
 	</td>
 </tr>

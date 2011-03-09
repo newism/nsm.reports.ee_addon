@@ -91,9 +91,9 @@ class Members_report extends Nsm_report_base {
 	 **/
 	protected $config = array(
 		'_output' => 'browser',
-		'channel_filter' => false,
+		'member_fields' => array(),
 		'additional_fields' => array(),
-		'status_filter' => false
+		'row_limit' => 25
 	);
 	
 	/**
@@ -149,14 +149,16 @@ class Members_report extends Nsm_report_base {
 	 **/
 	public function configHTML()
 	{
-		/*
-		$channels = $this->EE->db->query('
-			SELECT 
-				`exp_channels`.`channel_id`, 
-				`exp_channels`.`channel_title` AS `title`
-			FROM `exp_channels`
-			ORDER BY `channel_title`'
-		);*/
+		$member_fields = array(
+			'username' => 'Username',
+			'screen_name' => 'Name',
+			'email' => 'Email address',
+			'join_date' => 'Join date',
+			'last_visit' => 'Last visit',
+			'total_entries' => 'Entries',
+			'total_comments' => 'Comments'
+		);
+		
 		$additional_fields = $this->EE->db->query('
 			SELECT
 				`exp_member_fields`.`m_field_id`,
@@ -168,8 +170,8 @@ class Members_report extends Nsm_report_base {
 		return $this->EE->load->_ci_load(array(
 			'_ci_vars' => array(
 				'config' => $this->config,
-				'additional_fields' => $additional_fields->result_array(),
-				'status_options' => array()//$status_options->result_array()
+				'member_fields' => $member_fields,
+				'additional_fields' => $additional_fields->result_array()
 			),
 			'_ci_path' => $this->report_path . "views/configuration.php",
 			'_ci_return' => true
@@ -184,21 +186,35 @@ class Members_report extends Nsm_report_base {
 	 */
 	public function generateResults()
 	{
+		// prepare the class's configuration
 		$config = $this->config;
 		
+		// select member id from the members table
 		$this->EE->db->select('members.`member_id` AS `ID`', false);
-		$this->EE->db->select('`group_id` AS `group_id`', false);
-		$this->EE->db->select('`username` AS `Username`', false);
-		$this->EE->db->select('`screen_name` AS `Name`', false);
-		$this->EE->db->select('`email` AS `Email Address`', false);
-		$this->EE->db->select('`avatar_filename` AS `Avatar`', false);
-		$this->EE->db->select('`total_entries` AS `Entries`', false);
-		$this->EE->db->select('`total_comments` AS `Comments`', false);
-		$this->EE->db->select('`join_date` AS `Joined`', false);
-		$this->EE->db->select('`last_visit` AS `Last visit`', false);
 		$this->EE->db->from('members');
 		
+		// prepare a list of member data columns to build SQL with
+		$member_fields = array(
+			'username' => 'Username',
+			'screen_name' => 'Name',
+			'email' => 'Email address',
+			'join_date' => 'Join date',
+			'last_visit' => 'Last visit',
+			'total_entries' => 'Entries',
+			'total_comments' => 'Comments'
+		);
+		
+		// iterate over the chosen member data columns and add the fields to the CI-AR
+		if(count($config['member_fields']) > 0){
+			foreach($config['member_fields'] as $field_name){
+				$this->EE->db->select('`' . $field_name . '` AS `' . $member_fields[$field_name] . '`', false);
+			}
+		}
+		
+		// now prepare the information required to add the custom member fields to the result-set
 		if(count($config['additional_fields']) > 0){
+			
+			// return a CI-DB result containing the chosen custom member column ids and names
 			$additional_fields = $this->EE->db->query('
 				SELECT 
 					`m_field_id` AS `id`, 
@@ -208,9 +224,11 @@ class Members_report extends Nsm_report_base {
 					(' . implode( ',', $config['additional_fields'] ) . ')
 				');
 			
+			// prepare the database table join in the CI-AR and group by the member id
 			$this->EE->db->join('member_data', 'member_data.member_id = members.member_id', 'left');
 			$this->EE->db->group_by('members.`member_id`');
 			
+			// iterate over the returned custom member fields and add them to the CI-AR
 			foreach($additional_fields->result_array() as $additional_field){
 				$member_data_field = '`m_field_id_'.$additional_field['id'].'` '.
 										'AS `'.$additional_field['label'].'`';
@@ -218,11 +236,41 @@ class Members_report extends Nsm_report_base {
 			}
 		}
 		
+		// add a limit if one is set in the config
+		if($config['row_limit'] > 0){
+			$this->EE->db->limit($config['row_limit']);
+		}
+		
+		// get the data results
 		$query = $this->EE->db->get();
+		
+		// check for a false result and return false if an error was found
 		if ($query == false){
 			return false;
 		}
-		return $query->result_array();
+		
+		// return the results as an array and prepare another array for manipulation
+		$original_results = $query->result_array();
+		$results = array();
+		
+		// iterate over the result set and add them to the new results array
+		foreach ($original_results as $row_i => $entry) {
+			$results[$row_i] = $entry;
+			
+			// if join date was added to the member columns list then alter value to use EE date-time
+			if(in_array('join_date', $config['member_fields'])){
+				$value = $results[$row_i][ $member_fields['join_date'] ];
+				$results[$row_i][ $member_fields['join_date'] ] = $this->EE->localize->set_human_time($value);
+			}
+			
+			// if last visit date was added to the member columns list then alter value to use EE date-time
+			if(in_array('last_visit', $config['member_fields'])){
+				$value = $results[$row_i][ $member_fields['last_visit'] ];
+				$results[$row_i][ $member_fields['last_visit'] ] = $this->EE->localize->set_human_time($value);
+			}
+			
+		}
+		return $results;
 	}
 	
 }
