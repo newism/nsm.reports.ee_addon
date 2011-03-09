@@ -92,6 +92,7 @@ class Members_report extends Nsm_report_base {
 	protected $config = array(
 		'_output' => 'browser',
 		'channel_filter' => false,
+		'additional_fields' => array(),
 		'status_filter' => false
 	);
 	
@@ -155,18 +156,19 @@ class Members_report extends Nsm_report_base {
 				`exp_channels`.`channel_title` AS `title`
 			FROM `exp_channels`
 			ORDER BY `channel_title`'
+		);*/
+		$additional_fields = $this->EE->db->query('
+			SELECT
+				`exp_member_fields`.`m_field_id`,
+				`exp_member_fields`.`m_field_label`
+			FROM `exp_member_fields`
+			ORDER BY `exp_member_fields`.`m_field_order`'
 		);
-		$status_options = $this->EE->db->query('
-			SELECT DISTINCT
-				`exp_channel_titles`.`status`
-			FROM `exp_channel_titles`
-			ORDER BY `exp_channel_titles`.`status`'
-		);
-		*/
+		
 		return $this->EE->load->_ci_load(array(
 			'_ci_vars' => array(
 				'config' => $this->config,
-				'channels' => array(),//$channels->result_array(),
+				'additional_fields' => $additional_fields->result_array(),
 				'status_options' => array()//$status_options->result_array()
 			),
 			'_ci_path' => $this->report_path . "views/configuration.php",
@@ -183,40 +185,40 @@ class Members_report extends Nsm_report_base {
 	public function generateResults()
 	{
 		$config = $this->config;
-		/*
-		$channel_cond = ($config['channel_filter'])
-			? " AND `t`.`channel_id` = '".intval($config['channel_filter'])."'"
-			: false;
-		$status_cond = ($config['status_filter'])
-			? " AND `t`.`status` = '".$config['status_filter']."'"
-			: false;
-		*/
-		$sql = "SELECT
-			`m`.`member_id` AS `member_id`,
-			`m`.`group_id` AS `group_id`,
-			`m`.`username` AS `username`,
-			`m`.`screen_name` AS `screen_name`,
-			`m`.`email` AS `email`,
-			`m`.`avatar_filename` AS `avatar_filename`,
-			`m`.`total_entries` AS `total_entries`,
-			`m`.`total_comments` AS `total_comments`,
-			`m`.`join_date` AS `join_date`,
-			`m`.`last_visit` AS `last_visit`,
-			
-			COUNT(`p`.`purchase_id`) AS `online_purchases`,
-			SUM(`p`.`item_cost`) AS `total_spent`,
-			
-			COUNT(`c`.`entry_id`) AS `enquiries_sent`
-			
-		FROM `exp_members` AS `m`
-		LEFT JOIN `exp_simple_commerce_purchases` AS `p`
-			ON `p`.`member_id` = `m`.`member_id`
-		LEFT JOIN `exp_freeform_entries` AS `c`
-			ON `c`.`author_id` = `m`.`member_id`
-		GROUP BY `m`.`member_id`
-		ORDER BY `m`.`join_date` DESC";
 		
-		$query = $this->EE->db->query($sql);
+		$this->EE->db->select('members.`member_id` AS `ID`', false);
+		$this->EE->db->select('`group_id` AS `group_id`', false);
+		$this->EE->db->select('`username` AS `Username`', false);
+		$this->EE->db->select('`screen_name` AS `Name`', false);
+		$this->EE->db->select('`email` AS `Email Address`', false);
+		$this->EE->db->select('`avatar_filename` AS `Avatar`', false);
+		$this->EE->db->select('`total_entries` AS `Entries`', false);
+		$this->EE->db->select('`total_comments` AS `Comments`', false);
+		$this->EE->db->select('`join_date` AS `Joined`', false);
+		$this->EE->db->select('`last_visit` AS `Last visit`', false);
+		$this->EE->db->from('members');
+		
+		if(count($config['additional_fields']) > 0){
+			$additional_fields = $this->EE->db->query('
+				SELECT 
+					`m_field_id` AS `id`, 
+					`m_field_label` AS `label`
+				FROM `exp_member_fields`
+				WHERE `m_field_id` IN 
+					(' . implode( ',', $config['additional_fields'] ) . ')
+				');
+			
+			$this->EE->db->join('member_data', 'member_data.member_id = members.member_id', 'left');
+			$this->EE->db->group_by('members.`member_id`');
+			
+			foreach($additional_fields->result_array() as $additional_field){
+				$member_data_field = '`m_field_id_'.$additional_field['id'].'` '.
+										'AS `'.$additional_field['label'].'`';
+				$this->EE->db->select($member_data_field, false);
+			}
+		}
+		
+		$query = $this->EE->db->get();
 		if ($query == false){
 			return false;
 		}

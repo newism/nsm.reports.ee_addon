@@ -16,14 +16,23 @@
  */
 ?>
 <tr>
-	<th scope="row">Channel</th>
+	<th scope="row">Additional member data</th>
 	<td>
-		<select name="report[channel_filter]">
-			<option value=""<?= ($config['channel_filter']==''?' selected="selected"':''); ?>>Any</option>
-			<?php foreach($channels as $row) : ?>
-				<option value="<?=$row['channel_id'] ?>"<?= ($config['channel_filter']==$row['channel_id']?' selected="selected"':''); ?>><?=$row['title'] ?></option>
-			<?php endforeach; ?>
-		</select>
+		<ul>
+		<?php foreach($additional_fields as $field) : ?>
+			<li>
+				<label>
+					<input
+						type="checkbox" 
+						name="report[additional_fields][]"
+						value="<?=$field['m_field_id'] ?>"
+						<?= (in_array($field['m_field_id'], $config['additional_fields']) ?' checked="checked"':''); ?>
+					/>
+					<?=$field['m_field_label'] ?>
+				</label>
+			</li>
+		<?php endforeach; ?>
+		</ul>
 	</td>
 </tr>
 <tr>
