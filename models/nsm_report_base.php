@@ -176,42 +176,10 @@ class Nsm_report_base {
 	 */
 	public function generateResults()
 	{
-		$sql = "";
-		$sql = $this->sanitiseSQL($sql);
-		$this->sql = $sql;
-		$this->EE->db->db_debug = false;
-		$query = $this->EE->db->query($this->sql);
-		if ($query == false){
-			return false;
-		}
-		return $query->result_array();
+		return array();
 	}
-	
-	/**
-	 * Cleans incoming SQL query string from any potential issues such as delete, drop, etc commands
-	 *
-	 * @access public
-	 * @param string $dirty_sql SQL query string to be 'cleaned'
-	 * @return string 'Clean' SQL query
-	 **/
-	protected function sanitiseSQL($dirty_sql)
-	{
-		$clean_sql = $dirty_sql;
-		$clean_sql = str_ireplace(
-						array(
-							'update ',
-							'delete ',
-							'insert ',
-							'drop ',
-							'alter ',
-							'truncate '
-						),
-						"",
-						$clean_sql
-					);
-		return $clean_sql;
-	}
-	
+
+
 	// OUTPUT METHODS
 	
 	/**
@@ -239,13 +207,8 @@ class Nsm_report_base {
 		$report_name = strtolower(strtolower(get_class($this))).'_'.date('Ymd_Hi');
 		
 		$results = $this->generateResults();
-
-		if(!$results){
-			$this->error = "Problem with SQL statement";
-			return false;
-		}
 		
-		if(count($results) < 1){
+		if(!$results || count($results) < 1){
 			$this->error = "No results found";
 			return false;
 		}
