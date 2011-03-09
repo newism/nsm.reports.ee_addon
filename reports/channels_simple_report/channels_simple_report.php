@@ -156,10 +156,7 @@ class Channels_simple_report extends Nsm_report_base {
 			ON `c`.`channel_id` = `p`.`channel_id`
 		ORDER BY `p`.`channel_id`";
 		
-		$sql = $this->sanitiseSQL($sql);
-		$this->sql = $sql;
-		$this->EE->db->db_debug = false;
-		$query = $this->EE->db->query($this->sql);
+		$query = $this->EE->db->query($sql);
 		if ($query == false){
 			return false;
 		}

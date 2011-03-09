@@ -190,7 +190,7 @@ class Channels_complex_report extends Nsm_report_base {
 		$status_cond = ($config['status_filter'])
 			? " AND `t`.`status` = '".$config['status_filter']."'"
 			: false;
-		
+
 		$sql = "SELECT
 			`t`.`entry_id` AS `id`,
 			`t`.`title` AS `name`,
@@ -202,16 +202,14 @@ class Channels_complex_report extends Nsm_report_base {
 		FROM `exp_channel_titles` AS `t`
 		LEFT JOIN `exp_channels` AS `c`
 			ON `c`.`channel_id` = `t`.`channel_id`
-		WHERE `t`.`channel_id` > 0 "
-		. $channel_cond . $status_cond .
+		WHERE `t`.`channel_id` > 0 " .
+			$channel_cond . 
+			$status_cond . 
 		"
 		ORDER BY `t`.`channel_id`,
 			`t`.`title`";
 		
-		$sql = $this->sanitiseSQL($sql);
-		$this->sql = $sql;
-		$this->EE->db->db_debug = false;
-		$query = $this->EE->db->query($this->sql);
+		$query = $this->EE->db->query($sql);
 		if ($query == false){
 			return false;
 		}
