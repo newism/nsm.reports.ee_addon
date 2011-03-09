@@ -27,7 +27,7 @@ class Members_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $title = 'Channels: Simple Demo';
+	protected $title = 'Members: Complex Demo';
 	
 	/**
 	 * Basic description of the report
@@ -90,7 +90,9 @@ class Members_report extends Nsm_report_base {
 	 * @access protected
 	 **/
 	protected $config = array(
-		'_output' => 'browser'
+		'_output' => 'browser',
+		'channel_filter' => false,
+		'status_filter' => false
 	);
 	
 	/**
@@ -146,6 +148,7 @@ class Members_report extends Nsm_report_base {
 	 **/
 	public function configHTML()
 	{
+		/*
 		$channels = $this->EE->db->query('
 			SELECT 
 				`exp_channels`.`channel_id`, 
@@ -159,12 +162,12 @@ class Members_report extends Nsm_report_base {
 			FROM `exp_channel_titles`
 			ORDER BY `exp_channel_titles`.`status`'
 		);
-		
+		*/
 		return $this->EE->load->_ci_load(array(
 			'_ci_vars' => array(
 				'config' => $this->config,
-				'channels' => $channels->result_array(),
-				'status_options' => $status_options->result_array()
+				'channels' => array(),//$channels->result_array(),
+				'status_options' => array()//$status_options->result_array()
 			),
 			'_ci_path' => $this->report_path . "views/configuration.php",
 			'_ci_return' => true
@@ -180,31 +183,38 @@ class Members_report extends Nsm_report_base {
 	public function generateResults()
 	{
 		$config = $this->config;
-		
+		/*
 		$channel_cond = ($config['channel_filter'])
 			? " AND `t`.`channel_id` = '".intval($config['channel_filter'])."'"
 			: false;
 		$status_cond = ($config['status_filter'])
 			? " AND `t`.`status` = '".$config['status_filter']."'"
 			: false;
-
+		*/
 		$sql = "SELECT
-			`t`.`entry_id` AS `id`,
-			`t`.`title` AS `name`,
-			`t`.`entry_date` AS `created_at`,
-			`t`.`url_title` AS `url_title`,
-			`t`.`status` AS `status`,
-			`t`.`channel_id` AS `channel_id`,
-			`c`.`channel_title` AS `channel_name`
-		FROM `exp_channel_titles` AS `t`
-		LEFT JOIN `exp_channels` AS `c`
-			ON `c`.`channel_id` = `t`.`channel_id`
-		WHERE `t`.`channel_id` > 0 " .
-			$channel_cond . 
-			$status_cond . 
-		"
-		ORDER BY `t`.`channel_id`,
-			`t`.`title`";
+			`m`.`member_id` AS `member_id`,
+			`m`.`group_id` AS `group_id`,
+			`m`.`username` AS `username`,
+			`m`.`screen_name` AS `screen_name`,
+			`m`.`email` AS `email`,
+			`m`.`avatar_filename` AS `avatar_filename`,
+			`m`.`total_entries` AS `total_entries`,
+			`m`.`total_comments` AS `total_comments`,
+			`m`.`join_date` AS `join_date`,
+			`m`.`last_visit` AS `last_visit`,
+			
+			COUNT(`p`.`purchase_id`) AS `online_purchases`,
+			SUM(`p`.`item_cost`) AS `total_spent`,
+			
+			COUNT(`c`.`entry_id`) AS `enquiries_sent`
+			
+		FROM `exp_members` AS `m`
+		LEFT JOIN `exp_simple_commerce_purchases` AS `p`
+			ON `p`.`member_id` = `m`.`member_id`
+		LEFT JOIN `exp_freeform_entries` AS `c`
+			ON `c`.`author_id` = `m`.`member_id`
+		GROUP BY `m`.`member_id`
+		ORDER BY `m`.`join_date` DESC";
 		
 		$query = $this->EE->db->query($sql);
 		if ($query == false){
