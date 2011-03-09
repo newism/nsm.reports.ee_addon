@@ -122,7 +122,7 @@ Source Location: /models/nsm_reports_model.php<br /><br />
 <td valign="top">
 <h3><a href="#class_vars">Variables</a></h3>
 <ul>
-    <li><a href="../NsmReports/Nsm_reports_model.html#var$folder_path">$folder_path</a></li>
+    <li><a href="../NsmReports/Nsm_reports_model.html#var$report_path">$report_path</a></li>
   </ul>
 </td>
 
@@ -133,7 +133,8 @@ Source Location: /models/nsm_reports_model.php<br /><br />
     <li><a href="../NsmReports/Nsm_reports_model.html#method__construct">__construct</a></li>
     <li><a href="../NsmReports/Nsm_reports_model.html#methodfind">find</a></li>
     <li><a href="../NsmReports/Nsm_reports_model.html#methodfind_all">find_all</a></li>
-    <li><a href="../NsmReports/Nsm_reports_model.html#methodget_folder_path">get_folder_path</a></li>
+    <li><a href="../NsmReports/Nsm_reports_model.html#methodget_report_path">get_report_path</a></li>
+    <li><a href="../NsmReports/Nsm_reports_model.html#methodset_report_path">set_report_path</a></li>
   </ul>
 </td>
 
@@ -161,9 +162,9 @@ Reports model class<br /><br /><p>This class is added to the Code Igniter librar
 <a name="class_vars"></a>
 <h3>Class Variables</h3>
 <div class="tags">
-	<a name="var$folder_path"></a>
+	<a name="var$report_path"></a>
 	<p></p>
-	<h4>$folder_path = <span class="value">&nbsp;''</span></h4>
+	<h4>$report_path = <span class="value">&nbsp;''</span></h4>
 	<p>[line 31]</p>
   File-path of module reports directory<br /><br /><br /><br />
 <h4>Tags:</h4>
@@ -203,7 +204,7 @@ Reports model class<br /><br /><p>This class is added to the Code Igniter librar
     </td></tr></table>
     </td></tr></table><br />
 	
-		PHP5 constructor function.<br /><br /><p>Sets the folder_path of the model during object construction</p><br /><br /><br />
+		PHP5 constructor function.<br /><br /><p>Sets the report_path of the model during object construction to a default location</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -219,7 +220,7 @@ Reports model class<br /><br /><p>This class is added to the Code Igniter librar
   </div>
   <hr />
 	<a name="methodfind"></a>
-	<h3>method find <span class="smalllinenumber">[line 95]</span></h3>
+	<h3>method find <span class="smalllinenumber">[line 109]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -258,7 +259,7 @@ $report)</code>
   </div>
   <hr />
 	<a name="methodfind_all"></a>
-	<h3>method find_all <span class="smalllinenumber">[line 63]</span></h3>
+	<h3>method find_all <span class="smalllinenumber">[line 75]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -285,17 +286,17 @@ $report)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodget_folder_path"></a>
-	<h3>method get_folder_path <span class="smalllinenumber">[line 52]</span></h3>
+	<a name="methodget_report_path"></a>
+	<h3>method get_report_path <span class="smalllinenumber">[line 64]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string get_folder_path(
+		<code>string get_report_path(
 )</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Returns the folder path that the object is using<br /><br /><br /><br />
+		Returns the report path that the object is using<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -312,12 +313,48 @@ $report)</code>
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
+  <hr />
+	<a name="methodset_report_path"></a>
+	<h3>method set_report_path <span class="smalllinenumber">[line 53]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void set_report_path(
+string
+$report_path)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sets the folder path that the object is using<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$report_path</b>&nbsp;&nbsp;</td>
+        <td>The file-path where reports are located</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 07 Mar 2011 17:01:47 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Wed, 09 Mar 2011 13:04:36 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>

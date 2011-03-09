@@ -164,7 +164,7 @@ The Module Control Panel class<br /><br /></div><br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 49]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 52]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -173,7 +173,7 @@ The Module Control Panel class<br /><br /></div><br /><br />
     </td></tr></table>
     </td></tr></table><br />
 	
-		PHP5 constructor function.<br /><br /><p>Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings     and prepares required file-system paths.</p><br /><br /><br />
+		PHP5 constructor function.<br /><br /><p>Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings,    loads date helper and prepares required file-system paths.</p><p>If there has been no 'report_path' directory set in the extension settings the 'reports' sub-directory    in this add-on is used as a default location.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -189,7 +189,7 @@ The Module Control Panel class<br /><br /></div><br /><br />
   </div>
   <hr />
 	<a name="methodconfigure"></a>
-	<h3>method configure <span class="smalllinenumber">[line 98]</span></h3>
+	<h3>method configure <span class="smalllinenumber">[line 112]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -234,7 +234,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methodconfigure_submit"></a>
-	<h3>method configure_submit <span class="smalllinenumber">[line 169]</span></h3>
+	<h3>method configure_submit <span class="smalllinenumber">[line 187]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -262,7 +262,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methoddelete_saved"></a>
-	<h3>method delete_saved <span class="smalllinenumber">[line 397]</span></h3>
+	<h3>method delete_saved <span class="smalllinenumber">[line 430]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -290,7 +290,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methoddelete_saved_submit"></a>
-	<h3>method delete_saved_submit <span class="smalllinenumber">[line 425]</span></h3>
+	<h3>method delete_saved_submit <span class="smalllinenumber">[line 458]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -318,7 +318,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methoddownload_generated_report"></a>
-	<h3>method download_generated_report <span class="smalllinenumber">[line 448]</span></h3>
+	<h3>method download_generated_report <span class="smalllinenumber">[line 481]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -346,7 +346,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methodgenerate"></a>
-	<h3>method generate <span class="smalllinenumber">[line 197]</span></h3>
+	<h3>method generate <span class="smalllinenumber">[line 215]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -374,7 +374,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methodindex"></a>
-	<h3>method index <span class="smalllinenumber">[line 66]</span></h3>
+	<h3>method index <span class="smalllinenumber">[line 80]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -402,7 +402,7 @@ $error = false])</code>
   </div>
   <hr />
 	<a name="methodsave"></a>
-	<h3>method save <span class="smalllinenumber">[line 292]</span></h3>
+	<h3>method save <span class="smalllinenumber">[line 309]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -441,7 +441,7 @@ $save_as_new = false])</code>
   </div>
   <hr />
 	<a name="methodsaved_reports"></a>
-	<h3>method saved_reports <span class="smalllinenumber">[line 356]</span></h3>
+	<h3>method saved_reports <span class="smalllinenumber">[line 375]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -450,7 +450,7 @@ $save_as_new = false])</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Displays all saved report presets and displays them as a table.<br /><br /><p>Method checks that report exists before showing the associated presets.  Form showed on page manages presets to be included in delete command.</p><br /><br /><br />
+		Displays all saved report presets and displays them as a table.<br /><br /><p>Method checks that report exists before showing the associated presets.</p><p>Saved preset objects are converted into view-friendly arrays.</p><p>Form showed on page manages presets to be included in delete command.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -469,7 +469,7 @@ $save_as_new = false])</code>
   </div>
   <hr />
 	<a name="method_renderLayout"></a>
-	<h3>method _renderLayout <span class="smalllinenumber">[line 493]</span></h3>
+	<h3>method _renderLayout <span class="smalllinenumber">[line 526]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -523,7 +523,7 @@ $page_replacements = array()])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 07 Mar 2011 17:01:47 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Wed, 09 Mar 2011 13:04:36 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>

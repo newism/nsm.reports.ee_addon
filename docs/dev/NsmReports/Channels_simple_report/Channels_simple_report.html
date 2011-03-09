@@ -194,7 +194,13 @@ Source Location: /reports/channels_simple_report/channels_simple_report.php<br /
     <a href="../../NsmReports/Nsm_report_base.html#methodgenerateResults">Nsm_report_base::generateResults()</a>
   </dt>
   <dd>
-    Generates the SQL query string and returns the results as an Active-Record object
+    Generates the SQL query string and returns the results as an array
+  </dd>
+    <dt>
+    <a href="../../NsmReports/Nsm_report_base.html#methodgetInfo">Nsm_report_base::getInfo()</a>
+  </dt>
+  <dd>
+    Returns an array of the report's static variables
   </dd>
     <dt>
     <a href="../../NsmReports/Nsm_report_base.html#methodoutputBrowser">Nsm_report_base::outputBrowser()</a>
@@ -227,12 +233,6 @@ Source Location: /reports/channels_simple_report/channels_simple_report.php<br /
     Builds an XML string from report results
   </dd>
     <dt>
-    <a href="../../NsmReports/Nsm_report_base.html#methodsanitiseSQL">Nsm_report_base::sanitiseSQL()</a>
-  </dt>
-  <dd>
-    Cleans incoming SQL query string from any potential issues such as delete, drop, etc commands
-  </dd>
-    <dt>
     <a href="../../NsmReports/Nsm_report_base.html#methodsetConfig">Nsm_report_base::setConfig()</a>
   </dt>
   <dd>
@@ -260,7 +260,7 @@ Source Location: /reports/channels_simple_report/channels_simple_report.php<br /
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 21]<br />
+[line 22]<br />
 Report object<br /><br /></div><br /><br />
 <div class="top">[ <a href="#top">Top</a> ]</div><br />
 
@@ -270,14 +270,14 @@ Report object<br /><br /></div><br /><br />
 <div class="tags">
 	<a name="var$author"></a>
 	<p></p>
-	<h4>static $author = <span class="value">&nbsp;'Iain&nbsp;Saxon&nbsp;-&nbsp;Newism'</span></h4>
-	<p>[line 48]</p>
+	<h4>$author = <span class="value">&nbsp;'Iain&nbsp;Saxon&nbsp;-&nbsp;Newism'</span></h4>
+	<p>[line 46]</p>
   Name and/or company of the report's creator<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -298,8 +298,8 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$cache_path"></a>
 	<p></p>
-	<h4>static $cache_path = <span class="value">&nbsp;''</span></h4>
-	<p>[line 116]</p>
+	<h4>$cache_path = <span class="value">&nbsp;''</span></h4>
+	<p>[line 118]</p>
   The file-path where the report output can be stored on the server<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -326,10 +326,10 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$config"></a>
 	<p></p>
-	<h4>static $config = <span class="value">array(<br>
+	<h4>$config = <span class="value">array(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'_output'&nbsp;=&gt;&nbsp;'browser'<br>
 &nbsp;&nbsp;&nbsp;)</span></h4>
-	<p>[line 134]</p>
+	<p>[line 92]</p>
   Default report configuration options with '_output' as a minumum entry<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -356,14 +356,14 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$docs_url"></a>
 	<p></p>
-	<h4>static $docs_url = <span class="value">&nbsp;'http://google.com'</span></h4>
-	<p>[line 57]</p>
+	<h4>$docs_url = <span class="value">&nbsp;'http://www.newism.com.au'</span></h4>
+	<p>[line 54]</p>
   A URL to the report's documentation (optional)<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -384,8 +384,8 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$error"></a>
 	<p></p>
-	<h4>static $error = <span class="value">&nbsp;false</span></h4>
-	<p>[line 125]</p>
+	<h4>$error = <span class="value">&nbsp;false</span></h4>
+	<p>[line 126]</p>
   Stores any report errors that are encountered and saved at report run<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -415,14 +415,14 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$notes"></a>
 	<p></p>
-	<h4>static $notes = <span class="value">&nbsp;'Demonstrates&nbsp;a&nbsp;simple&nbsp;report&nbsp;example&nbsp;by&nbsp;retrieving&nbsp;all&nbsp;channel&nbsp;titles'</span></h4>
-	<p>[line 39]</p>
+	<h4>$notes = <span class="value">&nbsp;'Demonstrates&nbsp;a&nbsp;simple&nbsp;report&nbsp;example&nbsp;by&nbsp;retrieving&nbsp;all&nbsp;channel&nbsp;titles'</span></h4>
+	<p>[line 38]</p>
   Basic description of the report<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -443,14 +443,14 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$output_types"></a>
 	<p></p>
-	<h4>static $output_types = <span class="value">array(<br>
+	<h4>$output_types = <span class="value">array(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'browser'&nbsp;=&gt;&nbsp;'View&nbsp;in&nbsp;browser',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'csv'&nbsp;=&gt;&nbsp;'Comma-Seperated&nbsp;Values&nbsp;(CSV)',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'tab'&nbsp;=&gt;&nbsp;'Tab-Seperated&nbsp;Values&nbsp;(TSV)',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'html'&nbsp;=&gt;&nbsp;'HyperText&nbsp;Markup&nbsp;Language&nbsp;(HTML)',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'xml'&nbsp;=&gt;&nbsp;'eXtensible&nbsp;Markup&nbsp;Language&nbsp;(XML)'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</span></h4>
-	<p>[line 83]</p>
+	<p>[line 78]</p>
   Valid report output types<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -477,8 +477,8 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$report_path"></a>
 	<p></p>
-	<h4>static $report_path = <span class="value">&nbsp;''</span></h4>
-	<p>[line 107]</p>
+	<h4>$report_path = <span class="value">&nbsp;''</span></h4>
+	<p>[line 110]</p>
   The file-path where the report is located and is used for including report views<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -505,8 +505,8 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$sql"></a>
 	<p></p>
-	<h4>static $sql = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 98]</p>
+	<h4>$sql = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 102]</p>
   Stores the generated SQL statement used by the report<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -533,14 +533,14 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$title"></a>
 	<p></p>
-	<h4>static $title = <span class="value">&nbsp;'Channels:&nbsp;Simple&nbsp;Demo'</span></h4>
+	<h4>$title = <span class="value">&nbsp;'Channels:&nbsp;Simple&nbsp;Demo'</span></h4>
 	<p>[line 30]</p>
   Displays the report name in the control panel<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -561,14 +561,14 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$type"></a>
 	<p></p>
-	<h4>static $type = <span class="value">&nbsp;'simple'</span></h4>
-	<p>[line 75]</p>
+	<h4>$type = <span class="value">&nbsp;'simple'</span></h4>
+	<p>[line 70]</p>
   Report type as either 'simple' or 'complex'<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -589,14 +589,14 @@ Report object<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$version"></a>
 	<p></p>
-	<h4>static $version = <span class="value">&nbsp;'1.0.0'</span></h4>
-	<p>[line 66]</p>
+	<h4>$version = <span class="value">&nbsp;'1.0.1'</span></h4>
+	<p>[line 62]</p>
   Version number of report as a string to preserve decimal points<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -624,7 +624,7 @@ Report object<br /><br /></div><br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 147]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 137]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -649,21 +649,21 @@ Report object<br /><br /></div><br /><br />
   </div>
   <hr />
 	<a name="methodgenerateResults"></a>
-	<h3>method generateResults <span class="smalllinenumber">[line 157]</span></h3>
+	<h3>method generateResults <span class="smalllinenumber">[line 147]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>object DB generateResults(
+		<code>array generateResults(
 )</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Generates the SQL query string and returns the results as an Active-Record object<br /><br /><br /><br />
+		Generates the SQL query string and returns the results as an array<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Result object</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of database results</td>
   </tr>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
@@ -672,7 +672,7 @@ Report object<br /><br /></div><br /><br />
 </div>
 <br /><br />
 
-	Overrides <a href="../../NsmReports/Nsm_report_base.html#methodgenerateResults">Nsm_report_base::generateResults()</a> (Generates the SQL query string and returns the results as an Active-Record object)<br /><br />
+	Overrides <a href="../../NsmReports/Nsm_report_base.html#methodgenerateResults">Nsm_report_base::generateResults()</a> (Generates the SQL query string and returns the results as an array)<br /><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -680,7 +680,7 @@ Report object<br /><br /></div><br /><br />
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 07 Mar 2011 17:01:47 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Wed, 09 Mar 2011 13:04:36 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>

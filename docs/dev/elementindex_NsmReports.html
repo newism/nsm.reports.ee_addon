@@ -304,8 +304,6 @@
 	<div>
 		<h2>f</h2>
 		<dl>
-							<dt><b>$folder_path</b></dt>
-				<dd>in file nsm_reports_model.php, variable <a href="NsmReports/Nsm_reports_model.html#var$folder_path">Nsm_reports_model::$folder_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;File-path of module reports directory</dd>
 							<dt><b>find</b></dt>
 				<dd>in file nsm_reports_model.php, method <a href="NsmReports/Nsm_reports_model.html#methodfind">Nsm_reports_model::find()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Retrieves a report from the reports directory.</dd>
 							<dt><b>findAll</b></dt>
@@ -327,17 +325,19 @@
 		<h2>g</h2>
 		<dl>
 							<dt><b>generate</b></dt>
-				<dd>in file nsm_report_base.php, method <a href="NsmReports/Nsm_report_base.html#methodgenerate">Nsm_report_base::generate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Process report and output an array defining the generated report for later file-based processing</dd>
-							<dt><b>generate</b></dt>
 				<dd>in file mcp.nsm_reports.php, method <a href="NsmReports/Nsm_reports_mcp.html#methodgenerate">Nsm_reports_mcp::generate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates a report result-set and performs an action depending on conditions</dd>
+							<dt><b>generate</b></dt>
+				<dd>in file nsm_report_base.php, method <a href="NsmReports/Nsm_report_base.html#methodgenerate">Nsm_report_base::generate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Process report and output an array defining the generated report for later file-based processing</dd>
 							<dt><b>generateResults</b></dt>
-				<dd>in file nsm_report_base.php, method <a href="NsmReports/Nsm_report_base.html#methodgenerateResults">Nsm_report_base::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an Active-Record object</dd>
-							<dt><b>get_folder_path</b></dt>
-				<dd>in file nsm_reports_model.php, method <a href="NsmReports/Nsm_reports_model.html#methodget_folder_path">Nsm_reports_model::get_folder_path()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns the folder path that the object is using</dd>
+				<dd>in file nsm_report_base.php, method <a href="NsmReports/Nsm_report_base.html#methodgenerateResults">Nsm_report_base::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an array</dd>
+							<dt><b>getInfo</b></dt>
+				<dd>in file nsm_report_base.php, method <a href="NsmReports/Nsm_report_base.html#methodgetInfo">Nsm_report_base::getInfo()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of the report's static variables</dd>
+							<dt><b>get_report_path</b></dt>
+				<dd>in file nsm_reports_model.php, method <a href="NsmReports/Nsm_reports_model.html#methodget_report_path">Nsm_reports_model::get_report_path()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns the report path that the object is using</dd>
 							<dt><b>generateResults</b></dt>
-				<dd>in file channels_complex_report.php, method <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#methodgenerateResults">Channels_complex_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an Active-Record object</dd>
+				<dd>in file channels_complex_report.php, method <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#methodgenerateResults">Channels_complex_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an array</dd>
 							<dt><b>generateResults</b></dt>
-				<dd>in file channels_simple_report.php, method <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#methodgenerateResults">Channels_simple_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an Active-Record object</dd>
+				<dd>in file channels_simple_report.php, method <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#methodgenerateResults">Channels_simple_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an array</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -482,6 +482,8 @@
 				<dd>in file nsm_saved_report.php, variable <a href="NsmReports/Nsm_saved_report.html#var$report">Nsm_saved_report::$report</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The class name of the module that the preset is assigned to</dd>
 							<dt><b>$report_path</b></dt>
 				<dd>in file nsm_report_base.php, variable <a href="NsmReports/Nsm_report_base.html#var$report_path">Nsm_report_base::$report_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The file-path where the report is located and is used for including report views</dd>
+							<dt><b>$report_path</b></dt>
+				<dd>in file nsm_reports_model.php, variable <a href="NsmReports/Nsm_reports_model.html#var$report_path">Nsm_reports_model::$report_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;File-path of module reports directory</dd>
 							<dt><b>$run_count</b></dt>
 				<dd>in file nsm_saved_report.php, variable <a href="NsmReports/Nsm_saved_report.html#var$run_count">Nsm_saved_report::$run_count</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Number of times that the report preset has been run</dd>
 							<dt><b>$report_path</b></dt>
@@ -502,8 +504,6 @@
 				<dd>in file ext.nsm_reports.php, variable <a href="NsmReports/Nsm_reports_ext.html#var$settings_exist">Nsm_reports_ext::$settings_exist</a></dd>
 							<dt><b>$sql</b></dt>
 				<dd>in file nsm_report_base.php, variable <a href="NsmReports/Nsm_report_base.html#var$sql">Nsm_report_base::$sql</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores the generated SQL statement used by the report</dd>
-							<dt><b>sanitiseSQL</b></dt>
-				<dd>in file nsm_report_base.php, method <a href="NsmReports/Nsm_report_base.html#methodsanitiseSQL">Nsm_report_base::sanitiseSQL()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Cleans incoming SQL query string from any potential issues such as delete, drop, etc commands</dd>
 							<dt><b>save</b></dt>
 				<dd>in file mcp.nsm_reports.php, method <a href="NsmReports/Nsm_reports_mcp.html#methodsave">Nsm_reports_mcp::save()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Saves a report configuration as a preset and stores options in the database.</dd>
 							<dt><b>saved_reports</b></dt>
@@ -516,6 +516,8 @@
 				<dd>in file nsm_saved_report.php, method <a href="NsmReports/Nsm_saved_report.html#methodsetData">Nsm_saved_report::setData()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Assigns applicable data from array to the object</dd>
 							<dt><b>settings_form</b></dt>
 				<dd>in file ext.nsm_reports.php, method <a href="NsmReports/Nsm_reports_ext.html#methodsettings_form">Nsm_reports_ext::settings_form()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Render the custom settings form and processes post vars</dd>
+							<dt><b>set_report_path</b></dt>
+				<dd>in file nsm_reports_model.php, method <a href="NsmReports/Nsm_reports_model.html#methodset_report_path">Nsm_reports_model::set_report_path()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Sets the folder path that the object is using</dd>
 							<dt><b>settings.php</b></dt>
 				<dd>procedural page <a href="NsmReports/_views---extension---settings.php.html">settings.php</a></dd>
 							<dt><b>$sql</b></dt>
@@ -609,7 +611,7 @@
 	<a href="elementindex_NsmReports.html#top">top</a><br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 07 Mar 2011 17:01:46 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Wed, 09 Mar 2011 13:04:36 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>
