@@ -229,6 +229,7 @@ class Channels_complex_report extends Nsm_report_base {
 		
 		foreach($results as $entry_i => $entry){
 			$rows[$entry_i] = $entry;
+			$rows[$entry_i]['created_at'] = $this->EE->localize->set_human_time($entry['created_at']);
 			$rows[$entry_i]['entry_url'] = BASE.AMP.'C=content_publish&M=entry_form&channel_id='.$entry['channel_id'].'&entry_id='.$entry['id'];
 		}
 		
@@ -270,7 +271,7 @@ class Channels_complex_report extends Nsm_report_base {
 			$rows .= '<tr>';
 			$rows .= 	'<th scope="row">' . $row['id'] . '</th>';
 			$rows .= 	'<td>' . $row['name'] . '</td>';
-			$rows .= 	'<td>' . date('d/m/Y', $row['created_at']) . '</td>';
+			$rows .= 	'<td>' . $this->EE->localize->set_human_time($row['created_at']) . '</td>';
 			$rows .= 	'<td>' . ucwords($row['status']) . '</td>';
 			$rows .= 	'<td>' . $row['channel_name'] . '</td>';
 			$rows .= '</tr>';
@@ -307,7 +308,7 @@ class Channels_complex_report extends Nsm_report_base {
 	{
 		$csv = '"ID","Title","Date Created","Status","Channel"';
 		foreach($results as $row_i => $row){
-			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . date('d/m/Y', $row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
+			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . $this->EE->localize->set_human_time($row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
 		}
 		return $csv;
 	}
@@ -326,7 +327,7 @@ class Channels_complex_report extends Nsm_report_base {
 			$tsv .= "\n" . 
 					'"' . $row['id'] . '"' . "\t" .
 					'"' . $row['name'] . '"' . "\t" .
-					'"' . date('d/m/Y', $row['created_at']) . '"' . "\t" .
+					'"' . $this->EE->localize->set_human_time($row['created_at']) . '"' . "\t" .
 					'"' . ucwords($row['status']) . '"' . "\t" .
 					'"' . $row['channel_name'] . '"';
 		}
@@ -354,7 +355,7 @@ class Channels_complex_report extends Nsm_report_base {
 			$row_data = '<row>';
 			$row_data .= 	'<column_0>'.$row['id'].'</column_0>';
 			$row_data .= 	'<column_1>'.'<![CDATA[' . $row['name'] . ']]>'.'</column_1>';
-			$row_data .= 	'<column_2>'.'<![CDATA[' . date('d/m/Y',$row['created_at']) . ']]>'.'</column_2>';
+			$row_data .= 	'<column_2>'.'<![CDATA[' . $this->EE->localize->set_human_time($row['created_at']) . ']]>'.'</column_2>';
 			$row_data .= 	'<column_3>'.'<![CDATA[' . ucwords($row['status']) . ']]>'.'</column_3>';
 			$row_data .= 	'<column_4>'.'<![CDATA[' . $row['channel_name'] . ']]>'.'</column_4>';
 			$row_data .= '</row>';
