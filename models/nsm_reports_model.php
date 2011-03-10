@@ -91,7 +91,8 @@ class Nsm_reports_model extends CI_Model
 					'author' => $class_info['author'],
 					'docs_url' => $class_info['docs_url'],
 					'version' => $class_info['version'],
-					'type' => $class_info['type']
+					'type' => $class_info['type'],
+					'output_types' => $class_info['output_types']
 				);
 			}
 		}
