@@ -21,7 +21,6 @@
 			<tr>
 				<th scope="col">Preset Name</th>
 				<th scope="col">Preset Description</th>
-				<th scope="col">Report</th>
 				<th scope="col">Email Address</th>
 				<th scope="col">Format</th>
 				<th scope="col">Date Created</th>
@@ -34,7 +33,7 @@
 		<tbody>
 		<?php if(count($saved_reports) == 0): ?>
 			<tr>
-				<td class="error" colspan="8">No entries found</td>
+				<td class="error" colspan="7">No entries found</td>
 			</tr>
 		<?php else: ?>
 			<?php foreach($saved_reports as $saved_report): ?>
@@ -43,9 +42,9 @@
 					<a title="Go to report using config ID <?= $saved_report['id'] ?>" href="<?= $details_url.$saved_report['report_class'].AMP.'save_id='.$saved_report['id'] ?>">
 						<?= $saved_report['title'] ?>
 					</a>
+					<div class="note"><?= $saved_report['report'] ?></div>
 				</th>
 				<td><?= $saved_report['description'] ?></td>
-				<td><?= $saved_report['report'] ?></td>
 				<td><?= $saved_report['email_address'] ?></td>
 				<td><?= $saved_report['output'] ?></td>
 				<td><?= $saved_report['created_at'] ?></td>
