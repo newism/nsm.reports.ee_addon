@@ -26,7 +26,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access protected
-	 **/
+	 */
 	protected $title = 'Members: Complex Demo';
 	
 	/**
@@ -34,7 +34,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access protected
-	 **/
+	 */
 	protected $notes = 'Demonstrates complex joining of members information and filtering of database results';
 	
 	/**
@@ -42,7 +42,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access protected
-	 **/
+	 */
 	protected $author = 'Iain Saxon - Newism';
 	
 	/**
@@ -50,7 +50,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access protected
-	 **/
+	 */
 	protected $docs_url = 'http://www.newism.com.au';
 	
 	/**
@@ -58,7 +58,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access protected
-	 **/
+	 */
 	protected $version = '1.0.1';
 	
 	/**
@@ -66,7 +66,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access protected
-	 **/
+	 */
 	protected $type = 'complex';
 	
 	/**
@@ -74,7 +74,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var array
 	 * @access public
-	 **/
+	 */
 	public $output_types = array(
 									'browser' => 'View in browser',
 									'csv' => 'Comma-Seperated Values (CSV)',
@@ -88,12 +88,13 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var array
 	 * @access protected
-	 **/
+	 */
 	protected $config = array(
 		'_output' => 'browser',
 		'member_fields' => array(),
 		'additional_fields' => array(),
-		'row_limit' => 25
+		'row_limit' => 25,
+		'order_by' => ''
 	);
 	
 	/**
@@ -101,7 +102,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 **/
+	 */
 	public $sql = "";
 	
 	/**
@@ -109,7 +110,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 **/
+	 */
 	public $report_path = '';
 	
 	/**
@@ -117,7 +118,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 **/
+	 */
 	public $cache_path = '';
 	
 	/**
@@ -125,7 +126,7 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
-	 **/
+	 */
 	public $error = false;
 	
 	/**
@@ -136,7 +137,7 @@ class Members_report extends Nsm_report_base {
 	 * 
 	 * @access public
 	 * @return void
-	 **/
+	 */
 	public function __construct(){
 		parent::__construct();
 	}
@@ -146,18 +147,11 @@ class Members_report extends Nsm_report_base {
 	 *
 	 * @access public
 	 * @return string|bool Configuration HTML or false 
-	 **/
+	 */
 	public function configHTML()
 	{
-		$member_fields = array(
-			'username' => 'Username',
-			'screen_name' => 'Name',
-			'email' => 'Email address',
-			'join_date' => 'Join date',
-			'last_visit' => 'Last visit',
-			'total_entries' => 'Entries',
-			'total_comments' => 'Comments'
-		);
+		
+		$member_fields = $this->getMemberDataFields();
 		
 		$additional_fields = $this->EE->db->query('
 			SELECT
@@ -194,15 +188,7 @@ class Members_report extends Nsm_report_base {
 		$this->EE->db->from('members');
 		
 		// prepare a list of member data columns to build SQL with
-		$member_fields = array(
-			'username' => 'Username',
-			'screen_name' => 'Name',
-			'email' => 'Email address',
-			'join_date' => 'Join date',
-			'last_visit' => 'Last visit',
-			'total_entries' => 'Entries',
-			'total_comments' => 'Comments'
-		);
+		$member_fields = $this->getMemberDataFields();
 		
 		// iterate over the chosen member data columns and add the fields to the CI-AR
 		if(count($config['member_fields']) > 0){
@@ -271,6 +257,82 @@ class Members_report extends Nsm_report_base {
 			
 		}
 		return $results;
+	}
+	
+	/**
+	 * Renders a View from the report results to display in the browser
+	 *
+	 * @access public
+	 * @param object $results Array of report results.
+	 * @return string Result data represented as HTML
+	 */
+	public function outputBrowser($results)
+	{
+		// prepare the class's configuration
+		$config = $this->config;
+		
+		// prepare columns array and row data
+		$columns = array();
+		$rows = $results;
+		
+		// iterate over the first row to get column names
+		foreach ($rows[0] as $column => $data){
+			$columns[] = $column;
+		}
+		
+		// prepare member data fields
+		$member_fields = $this->getMemberDataFields();
+		
+		for( $row_i=0, $row_m=count($rows); $row_i<$row_m; $row_i+=1 ){
+			
+			// if username was added to the member columns list then alter output to inlcude hyperlink
+			if(in_array('username', $config['member_fields'])){
+				$value = $rows[$row_i][ $member_fields['username'] ];
+				$link = BASE.AMP.'C=myaccount'.AMP.'id='.$rows[$row_i]['ID'];
+				$rows[$row_i][ $member_fields['username'] ] = '<a href="'.$link.'">'.$value.'</a>';
+			}
+			
+			// if email address was added to the member columns list then alter output to inlcude hyperlink
+			if(in_array('email', $config['member_fields'])){
+				$value = $rows[$row_i][ $member_fields['email'] ];
+				$link = 'mailto:'.$value;
+				$rows[$row_i][ $member_fields['email'] ] = '<a href="'.$link.'">'.$value.'</a>';
+			}
+			
+		}
+		
+		$data = array(
+			'columns' => $columns,
+			'rows' => $rows,
+			'input_prefix' => __CLASS__
+		);
+		
+		return $this->EE->load->_ci_load(array(
+			'_ci_vars' => $data,
+			'_ci_path' => $this->report_path."/views/output_browser.php",
+			'_ci_return' => true
+		));
+	}
+	
+	
+	/**
+	 * Returns a value-name-pair of all member data fields for use in the report
+	 *
+	 * @access private
+	 * @return array List of member data columns
+	 */
+	private function getMemberDataFields()
+	{
+		$fields = array(
+			'username' => 'Username',
+			'screen_name' => 'Name',
+			'email' => 'Email address',
+			'join_date' => 'Join date',
+			'last_visit' => 'Last visit',
+			'total_entries' => 'Entries',
+			'total_comments' => 'Comments'
+		);
+		return $fields;
 	}
 	
 }
