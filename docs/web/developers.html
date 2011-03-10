@@ -1,0 +1,192 @@
+<h2>NSM Report Class</h2>
+
+<p>The <dfn>Nsm_report_base</dfn> class is the starting point for any report as it is the class that all reports will extend.</p>
+
+<p>It provides the mandatory variables and methods that define a report.</p>
+
+
+<h2>Define your report</h2>
+
+<p>There are a series of protected class variables that need to be set so that users can identify your reports in the Control Panel.</p>
+<ul>
+<li>
+<var>$title</var> - is the name of the report as it will appear to the user.
+</li>
+<li>
+<var>$notes</var> - should contain a short description of what the report does.
+</li>
+<li>
+<var>$author</var> - is the name and/or company of the developer that built the report.
+</li>
+<li>
+<var>$docs_url</var> - can be a hyperlink to the online reports documentation that users can view.
+</li>
+<li>
+<var>$version</var> - is a good place to store the revision number of your report.
+</li>
+<li>
+<var>$type</var> - tells NSM Reports what level of complexity the report should be.
+</li>
+<li>
+<var>$output_types</var> - list the report's allowed generated report formats.
+</li>
+<li>
+<var>$config</var> - is used as the default report configuration when generating a report. The helps preventing errors by specifying the default values first.
+</li>
+</ul>
+
+<p>The other public variables are set later in the report's runtime and no not need to be altered.</p>
+
+<pre><code>protected $title = 'DEMO: Report name';
+protected $notes = 'A short description of what the report does.';
+protected $author = 'Name and/or company of the report developer';
+protected $docs_url = 'http://www.newism.com.au';
+protected $version = '1.2.3';
+protected $type = 'complex';
+public $output_types = array(
+  'browser' => 'View in browser',
+  'csv' => 'Comma-Seperated Values (CSV)',
+  'tab' => 'Tab-Seperated Values (TSV)',
+  'html' => 'HyperText Markup Language (HTML)',
+  'xml' => 'eXtensible Markup Language (XML)'
+);
+protected $config = array(
+  '_output' => 'browser',
+  'channel_filter' => false,
+  'status_filter' => false
+);</code></pre>
+
+<h2>Extending the report</h2>
+
+<p>It is important to always start your constructor method with <dfn>parent::__construct()</dfn> to ensure that the report is initialised the intended way.</p>
+
+<pre><code>public function __construct(){
+  parent::__construct();
+}</code></pre>
+
+
+<h3>A simple example</h3>
+
+<p>A very basic report will extend the <dfn>Nsm_report_base</dfn> class and override the <dfn>generateResults()</dfn> method to assemble a different SQL statement and return the data results as an array.</p>
+
+<pre><code>public function generateResults()
+{
+  $sql = "SELECT
+    `p`.`entry_id` AS `ID`,
+    `p`.`title` AS `Title`,
+    `p`.`url_title` AS `URL Title`,
+    `c`.`channel_title` AS `Channel Name`
+  FROM `exp_channel_titles` AS `p`
+  LEFT JOIN `exp_channels` AS `c`
+    ON `c`.`channel_id` = `p`.`channel_id`
+  ORDER BY `p`.`channel_id`";
+  
+  $query = $this->EE->db->query($sql);
+  if ($query == false){
+    return false;
+  }
+  return $query->result_array();
+}</code></pre>
+
+
+<h3>Complex report extensions</h3>
+
+<h4>Generating your SQL</h4>
+
+<p>A more complex report will use user-input data collected on the report configuration form to build a SQL statement and return an array of data results.</p>
+
+<pre><code>public function generateResults()
+{
+  $config = $this->config;
+  
+  $channel_cond = ($config['channel_filter'])
+    ? " AND `t`.`channel_id` = '".intval($config['channel_filter'])."'"
+    : false;
+  $status_cond = ($config['status_filter'])
+    ? " AND `t`.`status` = '".$config['status_filter']."'"
+    : false;
+  
+  $sql = "SELECT
+    `t`.`entry_id` AS `id`,
+    `t`.`title` AS `name`,
+    `t`.`entry_date` AS `created_at`,
+    `t`.`url_title` AS `url_title`,
+    `t`.`status` AS `status`,
+    `t`.`channel_id` AS `channel_id`,
+    `c`.`channel_title` AS `channel_name`
+  FROM `exp_channel_titles` AS `t`
+  LEFT JOIN `exp_channels` AS `c`
+    ON `c`.`channel_id` = `t`.`channel_id`
+  WHERE `t`.`channel_id` > 0 " . 
+    $channel_cond .
+    $status_cond .
+  "
+  ORDER BY `t`.`channel_id`,
+    `t`.`title`";
+  
+  $query = $this->EE->db->query($sql);
+  if ($query == false){
+    return false;
+  }
+  return $query->result_array();
+}</code></pre>
+
+<h4>Capturing user input</h4>
+
+<p>The power of a complex report comes from this ability to define a configuration form to capture user input in order to generate different report data. It is recommended that you use the <dfn>configHTML()</dfn> method in the example class <dfn>Channels_complex_report</dfn> as a starting point and live example of collecting existing data and passing the information to the <a href="http://codeigniter.com/user_guide/general/views.html">Code-Igniter View</a> loading function.</p>
+
+<pre><code>public function configHTML()
+{
+  $channels = $this->EE->db->query('
+    SELECT 
+      `exp_channels`.`channel_id`, 
+      `exp_channels`.`channel_title` AS `title`
+    FROM `exp_channels`
+    ORDER BY `channel_title`'
+  );
+  $status_options = $this->EE->db->query('
+    SELECT DISTINCT
+      `exp_channel_titles`.`status`
+    FROM `exp_channel_titles`
+    ORDER BY `exp_channel_titles`.`status`'
+  );
+  
+  return $this->EE->load->_ci_load(array(
+    '_ci_vars' => array(
+      'config' => $this->config,
+      'channels' => $channels->result_array(),
+      'status_options' => $status_options->result_array()
+    ),
+    '_ci_path' => $this->report_path . "views/configuration.php",
+    '_ci_return' => true
+  ));
+}</code></pre>
+
+<p>Any information that is collected on the report configuration form is captured and assigned to the report class via the <dfn>setConfig()</dfn> method. This new user input is merged with the class's original configuration details to allow the default values to remain present until overwritten.</p>
+
+<h4>Extending output types</h4>
+
+<p>You can extend a report by adding new output types. Pushing a new entry to the report's <var>$output_types</var> array will provide a new option that can be chosen by the user when a report is generated. You will need to add a new method in your report to process the report data and generate the output for the new <var>$output_type</var> entry. The method needs to be named in a particular way with the prefix <dfn>output_</dfn> followed by the new output type array key.</p>
+
+<pre><code>public $output_types = array(
+  'browser' => 'View in browser',
+  'csv' => 'Comma-Seperated Values (CSV)',
+  'tab' => 'Tab-Seperated Values (TSV)',
+  'html' => 'HyperText Markup Language (HTML)',
+  'xml' => 'eXtensible Markup Language (XML)',
+  'xls' => 'Excel Spreadsheet'
+);
+
+public function output_xls($results)
+{
+  $xls = '"ID","Title","Date Created","Status","Channel"';
+  foreach($results as $row_i => $row){
+    $xls .= "\n" .
+      '"' . $row['id'] . '",' . 
+      '"' . $row['name'] . '",' . 
+      '"' . date('d/m/Y', $row['created_at']) . '",' . 
+      '"' . ucwords($row['status']) . '",' . 
+      '"' . $row['channel_name'] . '"';
+  }
+  return $xls;
+}</code></pre>

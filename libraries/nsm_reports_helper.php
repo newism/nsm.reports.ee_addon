@@ -14,7 +14,7 @@
  * $this->EE->nsm_reports_helper->addCpJs('../lib/jquery.cookie.js');
  * 
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -41,7 +41,7 @@ class Nsm_reports_helper {
 	 * Constructs the class and sets the addon id
 	 */
 	public function __construct(){
-		$this->addon_id = strtolower(substr(__CLASS__, 0, -6));
+		$this->addon_id = strtolower(substr(__CLASS__, 0, -7));
 	}
 
 	/**

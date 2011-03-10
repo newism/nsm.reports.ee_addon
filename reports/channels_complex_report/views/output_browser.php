@@ -8,7 +8,7 @@
  * 
  * @package NsmReports
  * @subpackage Channels_complex_report
- * @version 1.0.0
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
@@ -32,7 +32,7 @@
 			<tr>
 				<td><?= $item['id'] ?></td>
 				<th scope="row"><a href="<?= $item['entry_url'] ?>"><?= $item['name']; ?></a></th>
-				<td><?= date('d/m/Y', $item['created_at']); ?></td>
+				<td><?= $item['created_at']; ?></td>
 				<td><?= ucwords($item['status']); ?></td>
 				<td><?= $item['channel_name']; ?></td>
 			</tr>

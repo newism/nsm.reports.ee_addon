@@ -4,10 +4,11 @@
  * NSM Reports Simple Example Class
  *
  * @package NsmReports
- * @subpackage		Channels_simple_report
- * @version 1.0.0
+ * @subpackage Channels_simple_report
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
- * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> 
+ * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
@@ -24,63 +25,57 @@ class Channels_simple_report extends Nsm_report_base {
 	 * Displays the report name in the control panel
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $title = 'Channels: Simple Demo';
+	protected $title = 'Channels: Simple Demo';
 	
 	/**
 	 * Basic description of the report
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $notes = 'Demonstrates a simple report example by retrieving all channel titles';
+	protected $notes = 'Demonstrates a simple report example by retrieving all channel titles';
 	
 	/**
 	 * Name and/or company of the report's creator
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $author = 'Iain Saxon - Newism';
+	protected $author = 'Iain Saxon - Newism';
 	
 	/**
 	 * A URL to the report's documentation (optional)
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $docs_url = 'http://google.com';
+	protected $docs_url = 'http://www.newism.com.au';
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $version = '1.0.0';
+	protected $version = '1.0.2';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $type = 'simple';
+	protected $type = 'simple';
+	
 	/**
 	 * Valid report output types
 	 *
 	 * @var array
 	 * @access public
-	 * @static
 	 **/
-	public static $output_types = array(
+	public $output_types = array(
 									'browser' => 'View in browser',
 									'csv' => 'Comma-Seperated Values (CSV)',
 									'tab' => 'Tab-Seperated Values (TSV)',
@@ -89,11 +84,20 @@ class Channels_simple_report extends Nsm_report_base {
 								);
 	
 	/**
+	 * Default report configuration options with '_output' as a minumum entry
+	 *
+	 * @var array
+	 * @access protected
+	 **/
+	protected $config = array(
+		'_output' => 'browser'
+	);
+	
+	/**
 	 * Stores the generated SQL statement used by the report
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $sql = "";
 	
@@ -102,7 +106,6 @@ class Channels_simple_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $report_path = '';
 	
@@ -111,7 +114,6 @@ class Channels_simple_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $cache_path = '';
 	
@@ -120,20 +122,8 @@ class Channels_simple_report extends Nsm_report_base {
 	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
-	 * @static
 	 **/
 	public $error = false;
-	
-	/**
-	 * Default report configuration options with '_output' as a minumum entry
-	 *
-	 * @var array
-	 * @access protected
-	 * @static
-	 **/
-	protected $config = array(
-		'_output' => 'browser'
-	);
 	
 	/**
 	 * PHP5 constructor function.
@@ -149,10 +139,10 @@ class Channels_simple_report extends Nsm_report_base {
 	}
 
 	/**
-	 * Generates the SQL query string and returns the results as an Active-Record object
+	 * Generates the SQL query string and returns the results as an array
 	 * 
 	 * @access public
-	 * @return object DB Result object
+	 * @return array Array of database results
 	 */
 	public function generateResults()
 	{
@@ -166,13 +156,11 @@ class Channels_simple_report extends Nsm_report_base {
 			ON `c`.`channel_id` = `p`.`channel_id`
 		ORDER BY `p`.`channel_id`";
 		
-		$sql = $this->sanitiseSQL($sql);
-		$this->sql = $sql;
-		$this->EE->db->db_debug = false;
-		$query = $this->EE->db->query($this->sql);
+		$query = $this->EE->db->query($sql);
 		if ($query == false){
 			return false;
 		}
-		return $query;
+		return $query->result_array();
 	}
+	
 }

@@ -4,7 +4,7 @@
  * NSM Reports CP 
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -40,8 +40,11 @@ class Nsm_reports_mcp {
 	/**
 	 * PHP5 constructor function.
 	 *
-	 * Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings
-	 *    and prepares required file-system paths.
+	 * Prepares instance of ExpressionEngine for object scope, sets addon_id, prepares extension settings, 
+	 *   loads date helper and prepares required file-system paths.
+	 *
+	 * If there has been no 'report_path' directory set in the extension settings the 'reports' sub-directory
+	 *   in this add-on is used as a default location.
 	 *
 	 * @access public
 	 * @return void
@@ -52,9 +55,20 @@ class Nsm_reports_mcp {
 		$this->addon_id = strtolower(substr(__CLASS__, 0, -4));
 		$this->cp_url = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->addon_id.AMP;
 		$this->cache_path = APPPATH.'cache/' . $this->addon_id . "/" ;
-		$this->EE->load->model('nsm_reports_model');
+		
+		$this->EE->load->helper('date');
+		
 		$NsmReportsExt = new Nsm_reports_ext();
 		$this->settings = $NsmReportsExt->settings;
+		$this->report_path = $this->settings['report_path'];
+		
+		$this->EE->load->model('nsm_reports_model');
+		
+		if($this->report_path !== ''){
+			$this->EE->nsm_reports_model->set_report_path($this->report_path);
+		}else{
+			$this->report_path = $this->EE->nsm_reports_model->get_report_path();
+		}
 	}
 	
 	/**
@@ -101,40 +115,44 @@ class Nsm_reports_mcp {
 		if(!$report = $this->EE->nsm_reports_model->find($report_class)){
 			die("No report found");
 		}
-		
-		$default_config = array(
+
+		$config = array(
 			'_output' => 'browser',
 			'_send_to_email_address' => '',
 			'_save_report_name' => '',
 			'_save_report_description' => ''
 		);
-		
+
 		$saved_report_info = false;
-		
+
 		$saved_report_id = $this->EE->input->get('save_id');
 		if($this->EE->input->post('saved_report_id')){
 			$saved_report_id = $this->EE->input->post('saved_report_id');
 		}
+
 		if($saved_report_id > 0){
 			if(!$saved_report = Nsm_saved_report::findById($saved_report_id)){
 				die("No auto report found");
 			}
-			$config = array_merge($default_config, $saved_report->config);
+			$config = array_merge($config, $saved_report->config);
 			$saved_report_info = "Now using saved report configuration '".$saved_report->title."' (ID ".$saved_report->id."). ".
 									"Any changes made to the configuration will not be saved until you change the Action to 'Save' and submit the form.";
 		}
-		
+
 		if($this->EE->input->post('report')){
 			$config = $this->EE->input->post('report');
 		}
-		
+
 		$selected_form_action = $this->EE->input->post('action');
-		
+
 		$report->setConfig($config);
 		$report_config_html = $report->configHTML();
 		
+		$report_info = $report->getInfo();
+		$report_info['output_types'] = $report->output_types;
+		
 		$data = array(
-			'report' => $report,
+			'report' => $report_info,
 			'error' => $error,
 			'saved_report_info' => $saved_report_info,
 			'config' => $config,
@@ -152,10 +170,10 @@ class Nsm_reports_mcp {
 						'report_name'=>$report_class,
 						'saved_report_id'=>$saved_report_id
 					)
-				) . 
-					$out . 
-				form_close();
-		return $this->_renderLayout("report_config", $out, array('report_title' => $report::$title));
+				)
+				. $out 
+				. form_close();
+		return $this->_renderLayout("report_config", $out, array('report_title' => $report_info['title']));
 	}
 	
 	/**
@@ -243,9 +261,9 @@ class Nsm_reports_mcp {
 
 				$email_config = array(
 					'to' => $saved_report->email_address,
-					'subject' => 'Sending Report: '.$report::$title.' using preset '.$saved_report->title.' ('.$saved_report->id.')',
+					'subject' => 'Sending Report: '.$report->$title.' using preset '.$saved_report->title.' ('.$saved_report->id.')',
 					'message' => 'This email was sent from your website using a process URL. '.
-									'Your report '.$report::$title.' using preset '.$saved_report->title.' ('.$saved_report->id.') '.
+									'Your report '.$report->$title.' using preset '.$saved_report->title.' ('.$saved_report->id.') '.
 									'has been generated and ready for download at this location: '.
 									''.$process_url
 				);
@@ -253,7 +271,6 @@ class Nsm_reports_mcp {
 				$email_sent = $report->email_report($email_config, array());
 				if( $email_sent == true ){
 					if($saved_report){
-						$this->EE->load->helper('date');
 						$saved_report->lastrun_at = now();
 						$saved_report->run_count = $saved_report->run_count + 1;
 						$saved_report->update();
@@ -326,7 +343,6 @@ class Nsm_reports_mcp {
 			$save_report->setData($data);
 			$action_status = $save_report->update();
 		}else{
-			$this->EE->load->helper('date');
 			$data = array_merge($data, array(
 				'created_at' => now()
 			));
@@ -348,6 +364,9 @@ class Nsm_reports_mcp {
 	 * Displays all saved report presets and displays them as a table.
 	 *
 	 * Method checks that report exists before showing the associated presets.
+	 *
+	 * Saved preset objects are converted into view-friendly arrays.
+	 *
 	 * Form showed on page manages presets to be included in delete command.
 	 *
 	 * @access public
@@ -359,15 +378,29 @@ class Nsm_reports_mcp {
 		
 		$reports = $this->EE->nsm_reports_model->find_all();
 		$reports_classes = array_keys($reports);
-		
 		$saved_reports = array();
-		
+
 		$get_saved_reports = Nsm_saved_report::findAll();
 		if($get_saved_reports){
 			foreach($get_saved_reports as $saved_report_key => $saved_report){
 				$report_class = $saved_report->report;
 				if(in_array($report_class, $reports_classes)){
-					$saved_reports[] = $saved_report;
+					$saved_reports[] = array(
+						'id' => $saved_report->id,
+						'title' => $saved_report->title,
+						'description' => $saved_report->description,
+						'access_key' => $saved_report->access_key,
+						'created_at' => $this->EE->localize->set_human_time($saved_report->created_at),
+						'updated_at' => $this->EE->localize->set_human_time($saved_report->updated_at),
+						'lastrun_at' => ($saved_report->lastrun_at > 0 ? $this->EE->localize->set_human_time($saved_report->lastrun_at) : 'Never'),
+						'report_class' => $saved_report->report,
+						'report' => $reports[ $saved_report->report ]['title'],
+						'email_address' => $saved_report->email_address,
+						'output' => $reports[ $saved_report->report ]['output_types'][ $saved_report->output ], 
+						'config' => $saved_report->config,
+						'active' => $saved_report->active,
+						'run_count' => $saved_report->run_count
+					);
 				}
 			}
 		}
@@ -508,6 +541,7 @@ class Nsm_reports_mcp {
 		$this->EE->load->library($this->addon_id."_helper");
 		$this->EE->cp->add_to_foot('<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js" charset="utf-8"></script>');
 		$this->EE->nsm_reports_helper->addCpJs('cp.js');
+		// $this->EE->nsm_reports_helper->addCpCss('cp.css');
 
 		return "<div class='mor'>{$out}</div>";
 	}

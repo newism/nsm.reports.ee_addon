@@ -2,12 +2,13 @@
 /**
  * Code Igniter View of report preview page in Control Panel
  *
- * This file is used as the default View for a report preview and is used during the Nsm_report::outputBrowser() method.
+ * This file is used as the default View for a report preview and is used during the Members_report::outputBrowser() method.
  *
  * @package NsmReports
+ * @subpackage Members_report
  * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
- * @author Iain Saxon <iain.saxon@newism.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports

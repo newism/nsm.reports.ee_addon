@@ -5,7 +5,7 @@
  * This file is responsible for displaying the user-configurable settings for the NSM Multi Language extension in the ExpressionEngine control panel.
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
@@ -39,11 +39,30 @@ $EE =& get_instance();
 	<?php endif; ?>
 	
 	<div class="tg">
+		<h2>General settings</h2>
+		<table>
+			<tbody>
+				<tr>
+					<th scope="row">Report path 
+						<div class="note">
+							This is the server path that will be used to store the reports.
+							If this is not set it will default to the 'reports' sub-directory of this add-on.
+						</div>
+					</th>
+					<td>
+						<input type="text" name="<?= $input_prefix ?>[report_path]" value="<?= $data['report_path'] ?>"/>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="tg">
 		<h2>Download configuration</h2>
 		<table>
 			<tbody>
 				<tr>
-					<th scope="row">Generated Reports Path 
+					<th scope="row">Generated reports path 
 						<div class="note">
 							This is the server path that will be used to store generated reports.
 							We suggest that this directory should be outside of the public website directory for security.
@@ -53,8 +72,12 @@ $EE =& get_instance();
 						<input type="text" name="<?= $input_prefix ?>[generated_reports_path]" value="<?= $data['generated_reports_path'] ?>"/>
 					</td>
 				</tr>
-				<tr class="odd">
-					<th scope="row">Which groups are allowed to download reports?</th>
+				<tr class="even">
+					<th scope="row">Download permissions
+						<div class="note">
+							Which member-groups are allowed to download reports?
+						</div>
+					</th>
 					<td>
 						<?php foreach($member_groups as $count => $member_group) : 
 							$member_group_settings = $data["member_groups"][$member_group->group_id];

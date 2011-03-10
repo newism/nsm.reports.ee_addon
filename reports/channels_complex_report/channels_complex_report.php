@@ -4,10 +4,10 @@
  * NSM Reports Complex Example Class
  *
  * @package NsmReports
- * @subpackage		Channels_complex_report
- * @version 1.0.0
- * @author 			Leevi Graham <http://leevigraham.com.au>
- * @author 			Iain Saxon <iain.saxon@newism.com.au>
+ * @subpackage Channels_complex_report
+ * @version 1.0.2
+ * @author Leevi Graham <http://leevigraham.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
@@ -25,64 +25,57 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Displays the report name in the control panel
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $title = 'Channels: Complex Demo';
+	protected $title = 'Channels: Complex Demo';
 	
 	/**
 	 * Basic description of the report
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $notes = 'Demonstrates a complex report example by retrieving all channel titles and providing configuration options to users';
+	protected $notes = 'Demonstrates a complex report example by retrieving all channel titles and providing configuration options to users';
 	
 	/**
 	 * Name and/or company of the report's creator
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $author = 'Iain Saxon - Newism';
+	protected $author = 'Iain Saxon - Newism';
 	
 	/**
 	 * A URL to the report's documentation (optional)
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $docs_url = 'http://google.com';
+	protected $docs_url = 'http://www.newism.com.au';
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $version = '1.0.0';
+	protected $version = '1.0.2';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $type = 'complex';
+	protected $type = 'complex';
 	
 	/**
 	 * Valid report output types
 	 *
 	 * @var array
 	 * @access public
-	 * @static
 	 **/
-	public static $output_types = array(
+	public $output_types = array(
 									'browser' => 'View in browser',
 									'csv' => 'Comma-Seperated Values (CSV)',
 									'tab' => 'Tab-Seperated Values (TSV)',
@@ -91,11 +84,22 @@ class Channels_complex_report extends Nsm_report_base {
 								);
 	
 	/**
+	 * Default report configuration options with '_output' as a minumum entry
+	 *
+	 * @var array
+	 * @access protected
+	 **/
+	protected $config = array(
+		'_output' => 'browser',
+		'channel_filter' => false,
+		'status_filter' => false
+	);
+	
+	/**
 	 * Stores the generated SQL statement used by the report
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $sql = "";
 	
@@ -104,7 +108,6 @@ class Channels_complex_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $report_path = '';
 	
@@ -113,7 +116,6 @@ class Channels_complex_report extends Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $cache_path = '';
 	
@@ -122,22 +124,9 @@ class Channels_complex_report extends Nsm_report_base {
 	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
-	 * @static
 	 **/
 	public $error = false;
 	
-	/**
-	 * Default report configuration options with '_output' as a minumum entry
-	 *
-	 * @var array
-	 * @access protected
-	 * @static
-	 **/
-	protected $config = array(
-		'_output' => 'browser',
-		'channel_filter' => false,
-		'status_filter' => false
-	);
 	
 	/**
 	 * PHP5 constructor function.
@@ -186,10 +175,10 @@ class Channels_complex_report extends Nsm_report_base {
 	}
 	
 	/**
-	 * Generates the SQL query string and returns the results as an Active-Record object
+	 * Generates the SQL query string and returns the results as an array
 	 * 
 	 * @access public
-	 * @return object DB Result object
+	 * @return array Array of database results
 	 */
 	public function generateResults()
 	{
@@ -201,7 +190,7 @@ class Channels_complex_report extends Nsm_report_base {
 		$status_cond = ($config['status_filter'])
 			? " AND `t`.`status` = '".$config['status_filter']."'"
 			: false;
-		
+
 		$sql = "SELECT
 			`t`.`entry_id` AS `id`,
 			`t`.`title` AS `name`,
@@ -213,35 +202,34 @@ class Channels_complex_report extends Nsm_report_base {
 		FROM `exp_channel_titles` AS `t`
 		LEFT JOIN `exp_channels` AS `c`
 			ON `c`.`channel_id` = `t`.`channel_id`
-		WHERE `t`.`channel_id` > 0 "
-		. $channel_cond . $status_cond .
+		WHERE `t`.`channel_id` > 0 " .
+			$channel_cond . 
+			$status_cond . 
 		"
 		ORDER BY `t`.`channel_id`,
 			`t`.`title`";
 		
-		$sql = $this->sanitiseSQL($sql);
-		$this->sql = $sql;
-		$this->EE->db->db_debug = false;
-		$query = $this->EE->db->query($this->sql);
+		$query = $this->EE->db->query($sql);
 		if ($query == false){
 			return false;
 		}
-		return $query;
+		return $query->result_array();
 	}
 	
 	/**
 	 * Renders a View from the report results to display in the browser
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputBrowser($query)
+	public function outputBrowser($results)
 	{
 		$rows = array();
 		
-		foreach($query->result_array() as $entry_i => $entry){
+		foreach($results as $entry_i => $entry){
 			$rows[$entry_i] = $entry;
+			$rows[$entry_i]['created_at'] = $this->EE->localize->set_human_time($entry['created_at']);
 			$rows[$entry_i]['entry_url'] = BASE.AMP.'C=content_publish&M=entry_form&channel_id='.$entry['channel_id'].'&entry_id='.$entry['id'];
 		}
 		
@@ -261,15 +249,17 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds HTML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputHTML($query)
+	public function outputHTML($results)
 	{
 		$html = "";
 		
 		$columns = "";
 		$rows = "";
+		
+		$num_rows = count($results);
 		
 		$columns .= '<th scope="col">ID</th>';
 		$columns .= '<th scope="col">Title</th>';
@@ -277,17 +267,17 @@ class Channels_complex_report extends Nsm_report_base {
 		$columns .= '<th scope="col">Status</th>';
 		$columns .= '<th scope="col">Channel</th>';
 		
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$rows .= '<tr>';
 			$rows .= 	'<th scope="row">' . $row['id'] . '</th>';
 			$rows .= 	'<td>' . $row['name'] . '</td>';
-			$rows .= 	'<td>' . date('d/m/Y', $row['created_at']) . '</td>';
+			$rows .= 	'<td>' . $this->EE->localize->set_human_time($row['created_at']) . '</td>';
 			$rows .= 	'<td>' . ucwords($row['status']) . '</td>';
 			$rows .= 	'<td>' . $row['channel_name'] . '</td>';
 			$rows .= '</tr>';
 		}
 		$thead = '<thead><tr>' . $columns . '</tr></thead>';
-		$tfoot = '<tfoot><tr><td colspan="5">' . $query->num_rows() . ' entries found</td></tr></tfoot>';
+		$tfoot = '<tfoot><tr><td colspan="5">' . $num_rows . ' entries found</td></tr></tfoot>';
 		$tbody = '<tbody>' . $rows . '</tbody>';
 		
 		$html .= '<table class="data">' .
@@ -296,7 +286,7 @@ class Channels_complex_report extends Nsm_report_base {
 					'</thead>' .
 					'<tfoot>' . 
 						'<tr>' . 
-							'<td colspan="5">' . $query->num_rows() . ' entries found</td>' . 
+							'<td colspan="5">' . $num_rows . ' entries found</td>' . 
 						'</tr>' . 
 					'</tfoot>' .
 					'<tbody>' . 
@@ -311,14 +301,14 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds Comma-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as a CSV
 	 **/
-	public function outputCSV($query)
+	public function outputCSV($results)
 	{
 		$csv = '"ID","Title","Date Created","Status","Channel"';
-		foreach($query->result_array() as $row_i => $row){
-			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . date('d/m/Y', $row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
+		foreach($results as $row_i => $row){
+			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . $this->EE->localize->set_human_time($row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
 		}
 		return $csv;
 	}
@@ -327,17 +317,17 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds Tab-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Generated TSV string
 	 **/
-	public function outputTSV($query)
+	public function outputTSV($results)
 	{
 		$tsv = '"ID"'."\t".'"Title"'."\t".'"Date Created"'."\t".'"Status"'."\t".'"Channel"';
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$tsv .= "\n" . 
 					'"' . $row['id'] . '"' . "\t" .
 					'"' . $row['name'] . '"' . "\t" .
-					'"' . date('d/m/Y', $row['created_at']) . '"' . "\t" .
+					'"' . $this->EE->localize->set_human_time($row['created_at']) . '"' . "\t" .
 					'"' . ucwords($row['status']) . '"' . "\t" .
 					'"' . $row['channel_name'] . '"';
 		}
@@ -348,10 +338,10 @@ class Channels_complex_report extends Nsm_report_base {
 	 * Builds an XML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as an XML string
 	 **/
-	public function outputXML($query)
+	public function outputXML($results)
 	{
 		$xml = '<?xml version="1.0"?>';
 		
@@ -361,11 +351,11 @@ class Channels_complex_report extends Nsm_report_base {
 		$columns[] = '<column><id>column_3</id><name><![CDATA[' .'Status'. ']]></name></column>';
 		$columns[] = '<column><id>column_4</id><name><![CDATA[' .'Channel'. ']]></name></column>';
 		
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$row_data = '<row>';
 			$row_data .= 	'<column_0>'.$row['id'].'</column_0>';
 			$row_data .= 	'<column_1>'.'<![CDATA[' . $row['name'] . ']]>'.'</column_1>';
-			$row_data .= 	'<column_2>'.'<![CDATA[' . date('d/m/Y',$row['created_at']) . ']]>'.'</column_2>';
+			$row_data .= 	'<column_2>'.'<![CDATA[' . $this->EE->localize->set_human_time($row['created_at']) . ']]>'.'</column_2>';
 			$row_data .= 	'<column_3>'.'<![CDATA[' . ucwords($row['status']) . ']]>'.'</column_3>';
 			$row_data .= 	'<column_4>'.'<![CDATA[' . $row['channel_name'] . ']]>'.'</column_4>';
 			$row_data .= '</row>';

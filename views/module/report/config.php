@@ -5,7 +5,7 @@
  * This file is used when Nsm_reports_mcp::configure() is called and returns the report details and configuration form to the user.
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
@@ -26,12 +26,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<th scope="row"><?= $report::$title ?></th>
-				<td><?= $report::$notes ?></td>
-				<td><?= $report::$author ?></td>
-				<td><?= $report::$version ?></td>
-				<td><?php if($report::$docs_url) : ?><a href="<?= $report::$docs_url ?>">Documentation</a><?php endif; ?>&nbsp;</td>
+			<tr class="even">
+				<th scope="row"><?= $report['title'] ?></th>
+				<td><?= $report['notes'] ?></td>
+				<td><?= $report['author'] ?></td>
+				<td><?= $report['version'] ?></td>
+				<td><?php if($report['docs_url']) : ?><a href="<?= $report['docs_url'] ?>">Documentation</a><?php endif; ?>&nbsp;</td>
 			</tr>
 		</tbody>
 	</table>
@@ -54,7 +54,7 @@
 		<th scope="row"><label for="nsm_reports-generate-output">Output format</label></th>
 		<td>
 			<select id="nsm_reports-generate-output" name="report[_output]">
-			<?php foreach ($report::$output_types as $type => $type_human) : ?>
+			<?php foreach ($report['output_types'] as $type => $type_human) : ?>
 				<option value="<?= $type ?>"<?=($type==$config['_output']?' selected="selected"':'') ?>><?= $type_human ?></option>
 			<?php endforeach; ?>
 			</select>

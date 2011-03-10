@@ -6,7 +6,8 @@
  * @package NsmReports
  * @version 0.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
- * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au> 
+ * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://expressionengine-addons.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
@@ -23,64 +24,57 @@ class Nsm_report_base {
 	 * Displays the report name in the control panel
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $title = "";
+	protected $title = "";
 	
 	/**
 	 * Basic description of the report
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $notes = "";
+	protected $notes = "";
 	
 	/**
 	 * Name and/or company of the report's creator
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $author = "";
+	protected $author = "";
 	
 	/**
 	 * A URL to the report's documentation (optional)
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $docs_url = "";
+	protected $docs_url = "";
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $version = "";
+	protected $version = "";
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
 	 *
 	 * @var string
-	 * @access public
-	 * @static
+	 * @access protected
 	 **/
-	public static $type = "";
+	protected $type = "";
 	
 	/**
 	 * Valid report output types
 	 *
 	 * @var array
 	 * @access public
-	 * @static
 	 **/
-	public static $output_types = array(
+	public $output_types = array(
 									'browser' => 'View in browser',
 									'csv' => 'Comma-Seperated Values (CSV)',
 									'tab' => 'Tab-Seperated Values (TSV)',
@@ -89,11 +83,20 @@ class Nsm_report_base {
 								);
 	
 	/**
+	 * Default report configuration options with '_output' as a minumum entry
+	 *
+	 * @var array
+	 * @access protected
+	 **/
+	protected $config = array(
+		'_output' => 'browser'
+	);
+	
+	/**
 	 * Stores the generated SQL statement used by the report
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $sql = "";
 	
@@ -102,7 +105,6 @@ class Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $report_path = '';
 	
@@ -111,7 +113,6 @@ class Nsm_report_base {
 	 *
 	 * @var string
 	 * @access public
-	 * @static
 	 **/
 	public $cache_path = '';
 	
@@ -120,20 +121,8 @@ class Nsm_report_base {
 	 *
 	 * @var bool|string By default error is a boolean value and a string if an error is stored
 	 * @access public
-	 * @static
 	 **/
 	public $error = false;
-	
-	/**
-	 * Default report configuration options with '_output' as a minumum entry
-	 *
-	 * @var array
-	 * @access protected
-	 * @static
-	 **/
-	protected $config = array(
-		'_output' => 'browser'
-	);
 	
 	/**
 	 * PHP5 constructor function.
@@ -180,49 +169,17 @@ class Nsm_report_base {
 	// SQL METHODS
 	
 	/**
-	 * Generates the SQL query string and returns the results as an Active-Record object
+	 * Generates the SQL query string and returns the results as an array
 	 * 
 	 * @access public
-	 * @return object DB Result object
+	 * @return array Array of database results
 	 */
 	public function generateResults()
 	{
-		$sql = "";
-		$sql = $this->sanitiseSQL($sql);
-		$this->sql = $sql;
-		$this->EE->db->db_debug = false;
-		$query = $this->EE->db->query($this->sql);
-		if ($query == false){
-			return false;
-		}
-		return $query;
+		return array();
 	}
-	
-	/**
-	 * Cleans incoming SQL query string from any potential issues such as delete, drop, etc commands
-	 *
-	 * @access public
-	 * @param string $dirty_sql SQL query string to be 'cleaned'
-	 * @return string 'Clean' SQL query
-	 **/
-	protected function sanitiseSQL($dirty_sql)
-	{
-		$clean_sql = $dirty_sql;
-		$clean_sql = str_ireplace(
-						array(
-							'update ',
-							'delete ',
-							'insert ',
-							'drop ',
-							'alter ',
-							'truncate '
-						),
-						"",
-						$clean_sql
-					);
-		return $clean_sql;
-	}
-	
+
+
 	// OUTPUT METHODS
 	
 	/**
@@ -250,13 +207,8 @@ class Nsm_report_base {
 		$report_name = strtolower(strtolower(get_class($this))).'_'.date('Ymd_Hi');
 		
 		$results = $this->generateResults();
-
-		if(!$results){
-			$this->error = "Problem with SQL statement";
-			return false;
-		}
 		
-		if($results->num_rows() < 1){
+		if(!$results || count($results) < 1){
 			$this->error = "No results found";
 			return false;
 		}
@@ -284,7 +236,7 @@ class Nsm_report_base {
 				$extension = "xml";
 			break;
 			default:
-				$method = 'output'.$output;
+				$method = 'output_'.$output;
 				if(method_exists($this,$method)){
 					call_user_func(array($this, $method));
 				}else{
@@ -304,13 +256,13 @@ class Nsm_report_base {
 	 * Renders a View from the report results to display in the browser
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputBrowser($query)
+	public function outputBrowser($results)
 	{
 		$columns = array();
-		$rows = $query->result_array();
+		$rows = $results;
 		foreach ($rows[0] as $column => $data){
 			$columns[] = $column;
 		}
@@ -332,10 +284,10 @@ class Nsm_report_base {
 	 * Builds HTML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as HTML
 	 **/
-	public function outputHTML($query)
+	public function outputHTML($results)
 	{
 		$html = "";
 		
@@ -346,7 +298,7 @@ class Nsm_report_base {
 		$columns = array();
 		$rows = array();
 		
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$col_i = 0;
 			$tr = '<tr>';
 			foreach($row as $column => $data){
@@ -360,7 +312,7 @@ class Nsm_report_base {
 			$rows[] = $tr;
 		}
 		$thead = '<thead><tr>' . implode('', $columns) . '</tr></thead>';
-		$tfoot = '<tfoot><tr><td colspan="' .count($columns). '">' . $query->num_rows() . ' entries found</td></tr></tfoot>';
+		$tfoot = '<tfoot><tr><td colspan="' .count($columns). '">' . count($rows) . ' entries found</td></tr></tfoot>';
 		$tbody = '<tbody>' . implode('', $rows) . '</tbody>';
 		
 		$html = '<table class="data">' . $thead . $tfoot . $tbody . '</table>';
@@ -372,14 +324,30 @@ class Nsm_report_base {
 	 * Builds Comma-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param array $results Array of report results.
 	 * @return string Result data represented as a CSV
 	 **/
-	public function outputCSV($query)
+	public function outputCSV($results)
 	{
-		$this->EE->load->dbutil();
 		$csv = "";
-		$csv = $this->EE->dbutil->csv_from_result($query);
+		$cols = array();
+		$rows = array();
+		$delimeter = ",";
+		$newline = "\n";
+		foreach($results as $row_i => $row){
+			$row_data = "";
+			$col_i = 0;
+			foreach($row as $col => $data){
+				if($row_i == 0){
+					$cols[] = '"' . str_replace('"', '""', ($col) ) . '"';
+				}
+				$row_data .= ($col_i == 0 ? '' : $delimeter) .
+				 				'"' . str_replace('"', '""', ($data) ) . '"';
+				$col_i += 1;
+			}
+			$rows[] = $row_data;
+		}
+		$csv = implode($delimeter, $cols) . $newline . implode($newline, $rows);
 		return $csv;
 	}
 	
@@ -387,14 +355,28 @@ class Nsm_report_base {
 	 * Builds Tab-Seperated-Value string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Generated TSV string
 	 **/
-	public function outputTSV($query)
+	public function outputTSV($results)
 	{
-		$this->EE->load->dbutil();
 		$tsv = "";
-		$tsv = $this->EE->dbutil->csv_from_result($query, "\t");
+		$cols = array();
+		$rows = array();
+		$delimeter = "\t";
+		$newline = "\n";
+		foreach($results as $row_i => $row){
+			$row_data = "";
+			$col_i = 0;
+			foreach($row as $col => $data){
+				if($row_i == 0){ $cols[] = '"' . str_replace('"', '""', ($col) ) . '"'; }
+				$row_data .= ($col_i == 0 ? '' : $delimeter) .
+				 				'"' . str_replace('"', '""', ($data) ) . '"';
+				$col_i += 1;
+			}
+			$rows[] = $row_data;
+		}
+		$tsv = implode($delimeter, $cols) . $newline . implode($newline, $rows);
 		return $tsv;
 	}
 	
@@ -402,13 +384,13 @@ class Nsm_report_base {
 	 * Builds an XML string from report results
 	 *
 	 * @access public
-	 * @param object $query Active-Record object of report results.
+	 * @param object $results Array of report results.
 	 * @return string Result data represented as an XML string
 	 **/
-	public function outputXML($query)
+	public function outputXML($results)
 	{
 		$xml = '<?xml version="1.0"?>';
-		foreach($query->result_array() as $row_i => $row){
+		foreach($results as $row_i => $row){
 			$col_i = 0;
 			$row_data = '<row>';
 			foreach($row as $column => $data){
@@ -489,5 +471,27 @@ class Nsm_report_base {
 		return $status;
 	}
 	
+	
+	
+	/**
+	 * Returns an array of the report's static variables
+	 *
+	 * This method has been added to address limitations in PHP 5.2.x that do not exist in PHP 5.3.x
+	 *
+	 * @access public
+	 * @return array Class static variables
+	 **/
+	public function getInfo()
+	{
+		return array(
+			'title' => $this->title,
+			'notes' => $this->notes,
+			'author' => $this->author,
+			'docs_url' => $this->docs_url,
+			'version' => $this->version,
+			'type' => $this->type,
+			'output_types' => $this->output_types
+		);
+	}
 	
 }

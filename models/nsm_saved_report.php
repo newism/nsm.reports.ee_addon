@@ -3,7 +3,7 @@
  * NSM Reports - Saved Configuration Preset
  *
  * @package NsmReports
- * @version 1.0.0
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -402,7 +402,7 @@ class Nsm_saved_report {
 		"lastrun_at" 		=> array('type' => 'INT', 'constraint' => '10'),
 		"report" 			=> array('type' => 'VARCHAR', 'constraint' => '255'),
 		"email_address" 	=> array('type' => 'VARCHAR', 'constraint' => '255'),
-		"output" 			=> array('type' => 'VARCHAR', 'constraint' => '5'),
+		"output" 			=> array('type' => 'VARCHAR', 'constraint' => '255'),
 		"config" 			=> array('type' => 'TEXT'),
 		"chart_data"	 	=> array('type' => 'TINYINT', 'constraint' => '1'),
 		"active"	 		=> array('type' => 'TINYINT', 'constraint' => '1'),
