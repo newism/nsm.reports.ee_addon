@@ -30,17 +30,17 @@
             <br /><br />
                         <b>Files:</b><br />
       	  <div class="package">
-			<a href="NsmReports/_views---module---report---config.php.html">		config.php
-		</a><br>
 			<a href="NsmReports/_config.php.html">		config.php
+		</a><br>
+			<a href="NsmReports/_views---module---report---config.php.html">		config.php
 		</a><br>
 			<a href="NsmReports/_views---module---saved_report---delete.php.html">		delete.php
 		</a><br>
 			<a href="NsmReports/_ext.nsm_reports.php.html">		ext.nsm_reports.php
 		</a><br>
-			<a href="NsmReports/_views---module---report---index.php.html">		index.php
-		</a><br>
 			<a href="NsmReports/_views---module---saved_report---index.php.html">		index.php
+		</a><br>
+			<a href="NsmReports/_views---module---report---index.php.html">		index.php
 		</a><br>
 			<a href="NsmReports/_language---english---lang.nsm_reports.php.html">		lang.nsm_reports.php
 		</a><br>
@@ -75,6 +75,14 @@
 			<a href="NsmReports/Channels_simple_report/_reports---channels_simple_report---channels_simple_report.php.html">		channels_simple_report.php
 		</a><br>
 	  </div><br />
+	subpackage <b>Members_report</b><br>  <div class="package">
+			<a href="NsmReports/Members_report/_reports---members_report---views---configuration.php.html">		configuration.php
+		</a><br>
+			<a href="NsmReports/Members_report/_reports---members_report---members_report.php.html">		members_report.php
+		</a><br>
+			<a href="NsmReports/Members_report/_reports---members_report---views---output_browser.php.html">		output_browser.php
+		</a><br>
+	  </div><br />
       
       
             <b>Classes:</b><br />
@@ -93,6 +101,9 @@
 	    		<a href="NsmReports/Nsm_reports_upd.html">Nsm_reports_upd</a><br />
 	    		<a href="NsmReports/Nsm_report_base.html">Nsm_report_base</a><br />
 	    		<a href="NsmReports/Nsm_saved_report.html">Nsm_saved_report</a><br />
+	  </div>
+  <div class="package">
+	Members_report<br />	    &nbsp;&nbsp;		<a href="NsmReports/Members_report/Members_report.html">Members_report</a><br />
 	  </div>
                 </td>
     <td>
@@ -154,6 +165,8 @@
 				<dd>in file channels_complex_report.php, method <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#method__construct">Channels_complex_report::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;PHP5 constructor function.</dd>
 							<dt><b>__construct</b></dt>
 				<dd>in file channels_simple_report.php, method <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#method__construct">Channels_simple_report::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;PHP5 constructor function.</dd>
+							<dt><b>__construct</b></dt>
+				<dd>in file members_report.php, method <a href="NsmReports/Members_report/Members_report.html#method__construct">Members_report::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;PHP5 constructor function.</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -182,6 +195,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$author">Channels_complex_report::$author</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Name and/or company of the report's creator</dd>
 							<dt><b>$author</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$author">Channels_simple_report::$author</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Name and/or company of the report's creator</dd>
+							<dt><b>$author</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$author">Members_report::$author</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Name and/or company of the report's creator</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -232,6 +247,14 @@
 				<dd>in file channels_simple_report.php, class <a href="NsmReports/Channels_simple_report/Channels_simple_report.html">Channels_simple_report</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Report object</dd>
 							<dt><b>channels_simple_report.php</b></dt>
 				<dd>procedural page <a href="NsmReports/Channels_simple_report/_reports---channels_simple_report---channels_simple_report.php.html">channels_simple_report.php</a></dd>
+							<dt><b>$cache_path</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$cache_path">Members_report::$cache_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The file-path where the report output can be stored on the server</dd>
+							<dt><b>$config</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$config">Members_report::$config</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Default report configuration options with '_output' as a minumum entry</dd>
+							<dt><b>configHTML</b></dt>
+				<dd>in file members_report.php, method <a href="NsmReports/Members_report/Members_report.html#methodconfigHTML">Members_report::configHTML()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns Control Panel HTML to configure report if report type is complex or returns 'false' if simple</dd>
+							<dt><b>configuration.php</b></dt>
+				<dd>procedural page <a href="NsmReports/Members_report/_reports---members_report---views---configuration.php.html">configuration.php</a></dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -276,6 +299,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$docs_url">Channels_complex_report::$docs_url</a><br>&nbsp;&nbsp;&nbsp;&nbsp;A URL to the report's documentation (optional)</dd>
 							<dt><b>$docs_url</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$docs_url">Channels_simple_report::$docs_url</a><br>&nbsp;&nbsp;&nbsp;&nbsp;A URL to the report's documentation (optional)</dd>
+							<dt><b>$docs_url</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$docs_url">Members_report::$docs_url</a><br>&nbsp;&nbsp;&nbsp;&nbsp;A URL to the report's documentation (optional)</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -296,6 +321,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$error">Channels_complex_report::$error</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores any report errors that are encountered and saved at report run</dd>
 							<dt><b>$error</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$error">Channels_simple_report::$error</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores any report errors that are encountered and saved at report run</dd>
+							<dt><b>$error</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$error">Members_report::$error</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores any report errors that are encountered and saved at report run</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -338,6 +365,8 @@
 				<dd>in file channels_complex_report.php, method <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#methodgenerateResults">Channels_complex_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an array</dd>
 							<dt><b>generateResults</b></dt>
 				<dd>in file channels_simple_report.php, method <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#methodgenerateResults">Channels_simple_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an array</dd>
+							<dt><b>generateResults</b></dt>
+				<dd>in file members_report.php, method <a href="NsmReports/Members_report/Members_report.html#methodgenerateResults">Members_report::generateResults()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Generates the SQL query string and returns the results as an array</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -390,6 +419,10 @@
 				<dd>procedural page <a href="NsmReports/_mcp.nsm_reports.php.html">mcp.nsm_reports.php</a></dd>
 							<dt><b>mod.nsm_reports.php</b></dt>
 				<dd>procedural page <a href="NsmReports/_mod.nsm_reports.php.html">mod.nsm_reports.php</a></dd>
+							<dt><b>Members_report</b></dt>
+				<dd>in file members_report.php, class <a href="NsmReports/Members_report/Members_report.html">Members_report</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Report object</dd>
+							<dt><b>members_report.php</b></dt>
+				<dd>procedural page <a href="NsmReports/Members_report/_reports---members_report---members_report.php.html">members_report.php</a></dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -430,6 +463,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$notes">Channels_complex_report::$notes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Basic description of the report</dd>
 							<dt><b>$notes</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$notes">Channels_simple_report::$notes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Basic description of the report</dd>
+							<dt><b>$notes</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$notes">Members_report::$notes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Basic description of the report</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -470,6 +505,12 @@
 				<dd>procedural page <a href="NsmReports/Channels_complex_report/_reports---channels_complex_report---views---output_browser.php.html">output_browser.php</a></dd>
 							<dt><b>$output_types</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$output_types">Channels_simple_report::$output_types</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Valid report output types</dd>
+							<dt><b>$output_types</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$output_types">Members_report::$output_types</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Valid report output types</dd>
+							<dt><b>outputBrowser</b></dt>
+				<dd>in file members_report.php, method <a href="NsmReports/Members_report/Members_report.html#methodoutputBrowser">Members_report::outputBrowser()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Renders a View from the report results to display in the browser</dd>
+							<dt><b>output_browser.php</b></dt>
+				<dd>procedural page <a href="NsmReports/Members_report/_reports---members_report---views---output_browser.php.html">output_browser.php</a></dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -490,6 +531,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$report_path">Channels_complex_report::$report_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The file-path where the report is located and is used for including report views</dd>
 							<dt><b>$report_path</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$report_path">Channels_simple_report::$report_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The file-path where the report is located and is used for including report views</dd>
+							<dt><b>$report_path</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$report_path">Members_report::$report_path</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The file-path where the report is located and is used for including report views</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -524,6 +567,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$sql">Channels_complex_report::$sql</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores the generated SQL statement used by the report</dd>
 							<dt><b>$sql</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$sql">Channels_simple_report::$sql</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores the generated SQL statement used by the report</dd>
+							<dt><b>$sql</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$sql">Members_report::$sql</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Stores the generated SQL statement used by the report</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -548,6 +593,10 @@
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$title">Channels_simple_report::$title</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Displays the report name in the control panel</dd>
 							<dt><b>$type</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$type">Channels_simple_report::$type</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Report type as either 'simple' or 'complex'</dd>
+							<dt><b>$title</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$title">Members_report::$title</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Displays the report name in the control panel</dd>
+							<dt><b>$type</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$type">Members_report::$type</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Report type as either 'simple' or 'complex'</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -586,6 +635,8 @@
 				<dd>in file channels_complex_report.php, variable <a href="NsmReports/Channels_complex_report/Channels_complex_report.html#var$version">Channels_complex_report::$version</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Version number of report as a string to preserve decimal points</dd>
 							<dt><b>$version</b></dt>
 				<dd>in file channels_simple_report.php, variable <a href="NsmReports/Channels_simple_report/Channels_simple_report.html#var$version">Channels_simple_report::$version</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Version number of report as a string to preserve decimal points</dd>
+							<dt><b>$version</b></dt>
+				<dd>in file members_report.php, variable <a href="NsmReports/Members_report/Members_report.html#var$version">Members_report::$version</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Version number of report as a string to preserve decimal points</dd>
 					</dl>
 	</div>
 	<a href="elementindex_NsmReports.html#top">top</a><br>
@@ -611,7 +662,7 @@
 	<a href="elementindex_NsmReports.html#top">top</a><br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Wed, 09 Mar 2011 13:04:36 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Fri, 11 Mar 2011 10:05:48 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>
