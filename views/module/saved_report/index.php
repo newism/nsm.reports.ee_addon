@@ -19,14 +19,14 @@
 	<table class="data">
 		<thead>
 			<tr>
-				<th scope="col">Preset Name</th>
+				<th scope="col" style="width:150px">Preset Name</th>
 				<th scope="col">Preset Description</th>
 				<th scope="col">Email Address</th>
 				<th scope="col">Format</th>
 				<th scope="col">Date Created</th>
 				<th scope="col">Last Run</th>
 				<th scope="col">Run Count</th>
-				<th scope="col">External URL</th>
+				<th scope="col">CRON URL</th>
 				<th scope="col">Delete</th>
 			</tr>
 		</thead>
