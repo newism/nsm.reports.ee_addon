@@ -396,7 +396,7 @@ class Nsm_reports_mcp {
 						'report_class' => $saved_report->report,
 						'report' => $reports[ $saved_report->report ]['title'],
 						'email_address' => $saved_report->email_address,
-						'output' => $saved_report->output,
+						'output' => $reports[ $saved_report->report ]['output_types'][ $saved_report->output ], 
 						'config' => $saved_report->config,
 						'active' => $saved_report->active,
 						'run_count' => $saved_report->run_count
