@@ -14,7 +14,7 @@
  */
 ?>
 <div class="tg">
-	<table class="data">
+	<table class="data col-sortable NSM_Stripeable">
 		<thead>
 			<tr>
 				<th scope="col">Title</th>
