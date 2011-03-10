@@ -489,7 +489,8 @@ class Nsm_report_base {
 			'author' => $this->author,
 			'docs_url' => $this->docs_url,
 			'version' => $this->version,
-			'type' => $this->type
+			'type' => $this->type,
+			'output_types' => $this->output_types
 		);
 	}
 	
