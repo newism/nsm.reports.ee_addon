@@ -30,17 +30,17 @@
             <br /><br />
                         <b>Files:</b><br />
       	  <div class="package">
-			<a href="../NsmReports/_views---module---report---config.php.html">		config.php
-		</a><br>
 			<a href="../NsmReports/_config.php.html">		config.php
+		</a><br>
+			<a href="../NsmReports/_views---module---report---config.php.html">		config.php
 		</a><br>
 			<a href="../NsmReports/_views---module---saved_report---delete.php.html">		delete.php
 		</a><br>
 			<a href="../NsmReports/_ext.nsm_reports.php.html">		ext.nsm_reports.php
 		</a><br>
-			<a href="../NsmReports/_views---module---report---index.php.html">		index.php
-		</a><br>
 			<a href="../NsmReports/_views---module---saved_report---index.php.html">		index.php
+		</a><br>
+			<a href="../NsmReports/_views---module---report---index.php.html">		index.php
 		</a><br>
 			<a href="../NsmReports/_language---english---lang.nsm_reports.php.html">		lang.nsm_reports.php
 		</a><br>
@@ -75,6 +75,14 @@
 			<a href="../NsmReports/Channels_simple_report/_reports---channels_simple_report---channels_simple_report.php.html">		channels_simple_report.php
 		</a><br>
 	  </div><br />
+	subpackage <b>Members_report</b><br>  <div class="package">
+			<a href="../NsmReports/Members_report/_reports---members_report---views---configuration.php.html">		configuration.php
+		</a><br>
+			<a href="../NsmReports/Members_report/_reports---members_report---members_report.php.html">		members_report.php
+		</a><br>
+			<a href="../NsmReports/Members_report/_reports---members_report---views---output_browser.php.html">		output_browser.php
+		</a><br>
+	  </div><br />
       
       
             <b>Classes:</b><br />
@@ -93,6 +101,9 @@
 	    		<a href="../NsmReports/Nsm_reports_upd.html">Nsm_reports_upd</a><br />
 	    		<a href="../NsmReports/Nsm_report_base.html">Nsm_report_base</a><br />
 	    		<a href="../NsmReports/Nsm_saved_report.html">Nsm_saved_report</a><br />
+	  </div>
+  <div class="package">
+	Members_report<br />	    &nbsp;&nbsp;		<a href="../NsmReports/Members_report/Members_report.html">Members_report</a><br />
 	  </div>
                 </td>
     <td>
@@ -145,12 +156,12 @@ Source Location: /models/nsm_report_base.php<br /><br />
     <li><a href="../NsmReports/Nsm_report_base.html#methodemail_report">email_report</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodgenerate">generate</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodgenerateResults">generateResults</a></li>
+    <li><a href="../NsmReports/Nsm_report_base.html#methodgetInfo">getInfo</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodoutputBrowser">outputBrowser</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodoutputCSV">outputCSV</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodoutputHTML">outputHTML</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodoutputTSV">outputTSV</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodoutputXML">outputXML</a></li>
-    <li><a href="../NsmReports/Nsm_report_base.html#methodsanitiseSQL">sanitiseSQL</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodsetConfig">setConfig</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#methodzip_report">zip_report</a></li>
     <li><a href="../NsmReports/Nsm_report_base.html#method__toString">__toString</a></li>
@@ -174,6 +185,10 @@ Source Location: /models/nsm_report_base.php<br /><br />
 <dt><a href="../NsmReports/Channels_simple_report/Channels_simple_report.html">Channels_simple_report</a></dt>
 	<dd>Report object</dd>
 </dl>
+<dl>
+<dt><a href="../NsmReports/Members_report/Members_report.html">Members_report</a></dt>
+	<dd>Report object</dd>
+</dl>
 </div>
 </td>
 
@@ -186,7 +201,7 @@ Source Location: /models/nsm_report_base.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 20]<br />
+[line 21]<br />
 Base model for NSM Reports<br /><br /></div><br /><br />
 <div class="top">[ <a href="#top">Top</a> ]</div><br />
 
@@ -196,14 +211,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 <div class="tags">
 	<a name="var$author"></a>
 	<p></p>
-	<h4>static $author = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 47]</p>
+	<h4>$author = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 45]</p>
   Name and/or company of the report's creator<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -220,8 +235,8 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$cache_path"></a>
 	<p></p>
-	<h4>static $cache_path = <span class="value">&nbsp;''</span></h4>
-	<p>[line 116]</p>
+	<h4>$cache_path = <span class="value">&nbsp;''</span></h4>
+	<p>[line 117]</p>
   The file-path where the report output can be stored on the server<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -244,10 +259,10 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$config"></a>
 	<p></p>
-	<h4>static $config = <span class="value">array(<br>
+	<h4>$config = <span class="value">array(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'_output'&nbsp;=&gt;&nbsp;'browser'<br>
 &nbsp;&nbsp;&nbsp;)</span></h4>
-	<p>[line 134]</p>
+	<p>[line 91]</p>
   Default report configuration options with '_output' as a minumum entry<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -270,14 +285,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$docs_url"></a>
 	<p></p>
-	<h4>static $docs_url = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 56]</p>
+	<h4>$docs_url = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 53]</p>
   A URL to the report's documentation (optional)<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -294,7 +309,7 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$error"></a>
 	<p></p>
-	<h4>static $error = <span class="value">&nbsp;false</span></h4>
+	<h4>$error = <span class="value">&nbsp;false</span></h4>
 	<p>[line 125]</p>
   Stores any report errors that are encountered and saved at report run<br /><br /><br /><br />
 <h4>Tags:</h4>
@@ -321,14 +336,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$notes"></a>
 	<p></p>
-	<h4>static $notes = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 38]</p>
+	<h4>$notes = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 37]</p>
   Basic description of the report<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -345,14 +360,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$output_types"></a>
 	<p></p>
-	<h4>static $output_types = <span class="value">array(<br>
+	<h4>$output_types = <span class="value">array(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'browser'&nbsp;=&gt;&nbsp;'View&nbsp;in&nbsp;browser',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'csv'&nbsp;=&gt;&nbsp;'Comma-Seperated&nbsp;Values&nbsp;(CSV)',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'tab'&nbsp;=&gt;&nbsp;'Tab-Seperated&nbsp;Values&nbsp;(TSV)',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'html'&nbsp;=&gt;&nbsp;'HyperText&nbsp;Markup&nbsp;Language&nbsp;(HTML)',<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'xml'&nbsp;=&gt;&nbsp;'eXtensible&nbsp;Markup&nbsp;Language&nbsp;(XML)'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</span></h4>
-	<p>[line 83]</p>
+	<p>[line 77]</p>
   Valid report output types<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -375,8 +390,8 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$report_path"></a>
 	<p></p>
-	<h4>static $report_path = <span class="value">&nbsp;''</span></h4>
-	<p>[line 107]</p>
+	<h4>$report_path = <span class="value">&nbsp;''</span></h4>
+	<p>[line 109]</p>
   The file-path where the report is located and is used for including report views<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -399,8 +414,8 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$sql"></a>
 	<p></p>
-	<h4>static $sql = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 98]</p>
+	<h4>$sql = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 101]</p>
   Stores the generated SQL statement used by the report<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -423,14 +438,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$title"></a>
 	<p></p>
-	<h4>static $title = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<h4>$title = <span class="value">&nbsp;&quot;&quot;</span></h4>
 	<p>[line 29]</p>
   Displays the report name in the control panel<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -447,14 +462,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$type"></a>
 	<p></p>
-	<h4>static $type = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 74]</p>
+	<h4>$type = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 69]</p>
   Report type as either 'simple' or 'complex'<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -471,14 +486,14 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$version"></a>
 	<p></p>
-	<h4>static $version = <span class="value">&nbsp;&quot;&quot;</span></h4>
-	<p>[line 65]</p>
+	<h4>$version = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 61]</p>
   Version number of report as a string to preserve decimal points<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
   </tr>
 </table>
 </div>
@@ -502,7 +517,7 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 147]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 136]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -531,13 +546,17 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<dt><a href="../NsmReports/Channels_simple_report/Channels_simple_report.html#method__construct">Channels_simple_report::__construct()</a></dt>
 		<dd>PHP5 constructor function.</dd>
 	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#method__construct">Members_report::__construct()</a></dt>
+		<dd>PHP5 constructor function.</dd>
+	</dl>
 	</p>
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodconfigHTML"></a>
-	<h3>method configHTML <span class="smalllinenumber">[line 234]</span></h3>
+	<h3>method configHTML <span class="smalllinenumber">[line 191]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -565,13 +584,17 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<dt><a href="../NsmReports/Channels_complex_report/Channels_complex_report.html#methodconfigHTML">Channels_complex_report::configHTML()</a></dt>
 		<dd>Returns Control Panel HTML to configure report if report type is complex or returns 'false' if simple</dd>
 	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#methodconfigHTML">Members_report::configHTML()</a></dt>
+		<dd>Returns Control Panel HTML to configure report if report type is complex or returns 'false' if simple</dd>
+	</dl>
 	</p>
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methoddownload"></a>
-	<h3>method download <span class="smalllinenumber">[line 437]</span></h3>
+	<h3>method download <span class="smalllinenumber">[line 419]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -607,7 +630,7 @@ $output_type = &quot;csv&quot;])</code>
   </div>
   <hr />
 	<a name="methodemail_report"></a>
-	<h3>method email_report <span class="smalllinenumber">[line 467]</span></h3>
+	<h3>method email_report <span class="smalllinenumber">[line 449]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -652,7 +675,7 @@ $attachments = array()])</code>
   </div>
   <hr />
 	<a name="methodgenerate"></a>
-	<h3>method generate <span class="smalllinenumber">[line 246]</span></h3>
+	<h3>method generate <span class="smalllinenumber">[line 203]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -691,21 +714,21 @@ $output_type = &quot;csv&quot;])</code>
   </div>
   <hr />
 	<a name="methodgenerateResults"></a>
-	<h3>method generateResults <span class="smalllinenumber">[line 188]</span></h3>
+	<h3>method generateResults <span class="smalllinenumber">[line 177]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>object DB generateResults(
+		<code>array generateResults(
 )</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Generates the SQL query string and returns the results as an Active-Record object<br /><br /><br /><br />
+		Generates the SQL query string and returns the results as an array<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Result object</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of database results</td>
   </tr>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
@@ -717,25 +740,57 @@ $output_type = &quot;csv&quot;])</code>
 	<p>Overridden in child classes as:<br />
 		<dl>
 	<dt><a href="../NsmReports/Channels_complex_report/Channels_complex_report.html#methodgenerateResults">Channels_complex_report::generateResults()</a></dt>
-		<dd>Generates the SQL query string and returns the results as an Active-Record object</dd>
+		<dd>Generates the SQL query string and returns the results as an array</dd>
 	</dl>
 		<dl>
 	<dt><a href="../NsmReports/Channels_simple_report/Channels_simple_report.html#methodgenerateResults">Channels_simple_report::generateResults()</a></dt>
-		<dd>Generates the SQL query string and returns the results as an Active-Record object</dd>
+		<dd>Generates the SQL query string and returns the results as an array</dd>
+	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#methodgenerateResults">Members_report::generateResults()</a></dt>
+		<dd>Generates the SQL query string and returns the results as an array</dd>
 	</dl>
 	</p>
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodgetInfo"></a>
+	<h3>method getInfo <span class="smalllinenumber">[line 484]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getInfo(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Returns an array of the report's static variables<br /><br /><p>This method has been added to address limitations in PHP 5.2.x that do not exist in PHP 5.3.x</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Class static variables</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodoutputBrowser"></a>
-	<h3>method outputBrowser <span class="smalllinenumber">[line 310]</span></h3>
+	<h3>method outputBrowser <span class="smalllinenumber">[line 262]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>string outputBrowser(
 object
-$query)</code>
+$results)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -758,6 +813,10 @@ $query)</code>
 	<dt><a href="../NsmReports/Channels_complex_report/Channels_complex_report.html#methodoutputBrowser">Channels_complex_report::outputBrowser()</a></dt>
 		<dd>Renders a View from the report results to display in the browser</dd>
 	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#methodoutputBrowser">Members_report::outputBrowser()</a></dt>
+		<dd>Renders a View from the report results to display in the browser</dd>
+	</dl>
 	</p>
 	
         <h4>Parameters:</h4>
@@ -765,8 +824,8 @@ $query)</code>
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
         <td class="type">object&nbsp;&nbsp;</td>
-        <td><b>$query</b>&nbsp;&nbsp;</td>
-        <td>Active-Record object of report results.</td>
+        <td><b>$results</b>&nbsp;&nbsp;</td>
+        <td>Array of report results.</td>
       </tr>
         </table>
     </div><br />
@@ -774,13 +833,13 @@ $query)</code>
   </div>
   <hr />
 	<a name="methodoutputCSV"></a>
-	<h3>method outputCSV <span class="smalllinenumber">[line 378]</span></h3>
+	<h3>method outputCSV <span class="smalllinenumber">[line 330]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>string outputCSV(
-object
-$query)</code>
+array
+$results)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -809,9 +868,9 @@ $query)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">object&nbsp;&nbsp;</td>
-        <td><b>$query</b>&nbsp;&nbsp;</td>
-        <td>Active-Record object of report results.</td>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$results</b>&nbsp;&nbsp;</td>
+        <td>Array of report results.</td>
       </tr>
         </table>
     </div><br />
@@ -819,13 +878,13 @@ $query)</code>
   </div>
   <hr />
 	<a name="methodoutputHTML"></a>
-	<h3>method outputHTML <span class="smalllinenumber">[line 338]</span></h3>
+	<h3>method outputHTML <span class="smalllinenumber">[line 290]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>string outputHTML(
 object
-$query)</code>
+$results)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -855,8 +914,8 @@ $query)</code>
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
         <td class="type">object&nbsp;&nbsp;</td>
-        <td><b>$query</b>&nbsp;&nbsp;</td>
-        <td>Active-Record object of report results.</td>
+        <td><b>$results</b>&nbsp;&nbsp;</td>
+        <td>Array of report results.</td>
       </tr>
         </table>
     </div><br />
@@ -864,13 +923,13 @@ $query)</code>
   </div>
   <hr />
 	<a name="methodoutputTSV"></a>
-	<h3>method outputTSV <span class="smalllinenumber">[line 393]</span></h3>
+	<h3>method outputTSV <span class="smalllinenumber">[line 361]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>string outputTSV(
 object
-$query)</code>
+$results)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -900,8 +959,8 @@ $query)</code>
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
         <td class="type">object&nbsp;&nbsp;</td>
-        <td><b>$query</b>&nbsp;&nbsp;</td>
-        <td>Active-Record object of report results.</td>
+        <td><b>$results</b>&nbsp;&nbsp;</td>
+        <td>Array of report results.</td>
       </tr>
         </table>
     </div><br />
@@ -909,13 +968,13 @@ $query)</code>
   </div>
   <hr />
 	<a name="methodoutputXML"></a>
-	<h3>method outputXML <span class="smalllinenumber">[line 408]</span></h3>
+	<h3>method outputXML <span class="smalllinenumber">[line 390]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>string outputXML(
 object
-$query)</code>
+$results)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -945,47 +1004,8 @@ $query)</code>
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
         <td class="type">object&nbsp;&nbsp;</td>
-        <td><b>$query</b>&nbsp;&nbsp;</td>
-        <td>Active-Record object of report results.</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodsanitiseSQL"></a>
-	<h3>method sanitiseSQL <span class="smalllinenumber">[line 208]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string sanitiseSQL(
-string
-$dirty_sql)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Cleans incoming SQL query string from any potential issues such as delete, drop, etc commands<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>'Clean' SQL query</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$dirty_sql</b>&nbsp;&nbsp;</td>
-        <td>SQL query string to be 'cleaned'</td>
+        <td><b>$results</b>&nbsp;&nbsp;</td>
+        <td>Array of report results.</td>
       </tr>
         </table>
     </div><br />
@@ -993,7 +1013,7 @@ $dirty_sql)</code>
   </div>
   <hr />
 	<a name="methodsetConfig"></a>
-	<h3>method setConfig <span class="smalllinenumber">[line 174]</span></h3>
+	<h3>method setConfig <span class="smalllinenumber">[line 163]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1029,7 +1049,7 @@ $new_config)</code>
   </div>
   <hr />
 	<a name="methodzip_report"></a>
-	<h3>method zip_report <span class="smalllinenumber">[line 450]</span></h3>
+	<h3>method zip_report <span class="smalllinenumber">[line 432]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1068,7 +1088,7 @@ $generated_report = array()])</code>
   </div>
   <hr />
 	<a name="method__toString"></a>
-	<h3>method __toString <span class="smalllinenumber">[line 162]</span></h3>
+	<h3>method __toString <span class="smalllinenumber">[line 151]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1099,7 +1119,7 @@ $generated_report = array()])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 07 Mar 2011 17:01:47 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Fri, 11 Mar 2011 10:05:49 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>
