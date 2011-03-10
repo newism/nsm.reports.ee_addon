@@ -4,7 +4,7 @@
  * NSM Reports CP 
  *
  * @package NsmReports
- * @version 1.0.1
+ * @version 1.0.2
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -541,6 +541,7 @@ class Nsm_reports_mcp {
 		$this->EE->load->library($this->addon_id."_helper");
 		$this->EE->cp->add_to_foot('<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js" charset="utf-8"></script>');
 		$this->EE->nsm_reports_helper->addCpJs('cp.js');
+		// $this->EE->nsm_reports_helper->addCpCss('cp.css');
 
 		return "<div class='mor'>{$out}</div>";
 	}

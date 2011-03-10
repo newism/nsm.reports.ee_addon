@@ -30,17 +30,17 @@
             <br /><br />
                         <b>Files:</b><br />
       	  <div class="package">
-			<a href="../NsmReports/_views---module---report---config.php.html">		config.php
-		</a><br>
 			<a href="../NsmReports/_config.php.html">		config.php
+		</a><br>
+			<a href="../NsmReports/_views---module---report---config.php.html">		config.php
 		</a><br>
 			<a href="../NsmReports/_views---module---saved_report---delete.php.html">		delete.php
 		</a><br>
 			<a href="../NsmReports/_ext.nsm_reports.php.html">		ext.nsm_reports.php
 		</a><br>
-			<a href="../NsmReports/_views---module---report---index.php.html">		index.php
-		</a><br>
 			<a href="../NsmReports/_views---module---saved_report---index.php.html">		index.php
+		</a><br>
+			<a href="../NsmReports/_views---module---report---index.php.html">		index.php
 		</a><br>
 			<a href="../NsmReports/_language---english---lang.nsm_reports.php.html">		lang.nsm_reports.php
 		</a><br>
@@ -75,6 +75,14 @@
 			<a href="../NsmReports/Channels_simple_report/_reports---channels_simple_report---channels_simple_report.php.html">		channels_simple_report.php
 		</a><br>
 	  </div><br />
+	subpackage <b>Members_report</b><br>  <div class="package">
+			<a href="../NsmReports/Members_report/_reports---members_report---views---configuration.php.html">		configuration.php
+		</a><br>
+			<a href="../NsmReports/Members_report/_reports---members_report---members_report.php.html">		members_report.php
+		</a><br>
+			<a href="../NsmReports/Members_report/_reports---members_report---views---output_browser.php.html">		output_browser.php
+		</a><br>
+	  </div><br />
       
       
             <b>Classes:</b><br />
@@ -93,6 +101,9 @@
 	    		<a href="../NsmReports/Nsm_reports_upd.html">Nsm_reports_upd</a><br />
 	    		<a href="../NsmReports/Nsm_report_base.html">Nsm_report_base</a><br />
 	    		<a href="../NsmReports/Nsm_saved_report.html">Nsm_saved_report</a><br />
+	  </div>
+  <div class="package">
+	Members_report<br />	    &nbsp;&nbsp;		<a href="../NsmReports/Members_report/Members_report.html">Members_report</a><br />
 	  </div>
                 </td>
     <td>
@@ -172,6 +183,10 @@ Source Location: /models/nsm_report_base.php<br /><br />
 </dl>
 <dl>
 <dt><a href="../NsmReports/Channels_simple_report/Channels_simple_report.html">Channels_simple_report</a></dt>
+	<dd>Report object</dd>
+</dl>
+<dl>
+<dt><a href="../NsmReports/Members_report/Members_report.html">Members_report</a></dt>
 	<dd>Report object</dd>
 </dl>
 </div>
@@ -531,6 +546,10 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<dt><a href="../NsmReports/Channels_simple_report/Channels_simple_report.html#method__construct">Channels_simple_report::__construct()</a></dt>
 		<dd>PHP5 constructor function.</dd>
 	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#method__construct">Members_report::__construct()</a></dt>
+		<dd>PHP5 constructor function.</dd>
+	</dl>
 	</p>
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
@@ -563,6 +582,10 @@ Base model for NSM Reports<br /><br /></div><br /><br />
 	<p>Overridden in child classes as:<br />
 		<dl>
 	<dt><a href="../NsmReports/Channels_complex_report/Channels_complex_report.html#methodconfigHTML">Channels_complex_report::configHTML()</a></dt>
+		<dd>Returns Control Panel HTML to configure report if report type is complex or returns 'false' if simple</dd>
+	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#methodconfigHTML">Members_report::configHTML()</a></dt>
 		<dd>Returns Control Panel HTML to configure report if report type is complex or returns 'false' if simple</dd>
 	</dl>
 	</p>
@@ -723,6 +746,10 @@ $output_type = &quot;csv&quot;])</code>
 	<dt><a href="../NsmReports/Channels_simple_report/Channels_simple_report.html#methodgenerateResults">Channels_simple_report::generateResults()</a></dt>
 		<dd>Generates the SQL query string and returns the results as an array</dd>
 	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#methodgenerateResults">Members_report::generateResults()</a></dt>
+		<dd>Generates the SQL query string and returns the results as an array</dd>
+	</dl>
 	</p>
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
@@ -784,6 +811,10 @@ $results)</code>
 	<p>Overridden in child classes as:<br />
 		<dl>
 	<dt><a href="../NsmReports/Channels_complex_report/Channels_complex_report.html#methodoutputBrowser">Channels_complex_report::outputBrowser()</a></dt>
+		<dd>Renders a View from the report results to display in the browser</dd>
+	</dl>
+		<dl>
+	<dt><a href="../NsmReports/Members_report/Members_report.html#methodoutputBrowser">Members_report::outputBrowser()</a></dt>
 		<dd>Renders a View from the report results to display in the browser</dd>
 	</dl>
 	</p>
@@ -1088,7 +1119,7 @@ $generated_report = array()])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Wed, 09 Mar 2011 13:04:36 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		    Documentation generated on Fri, 11 Mar 2011 10:05:49 +1100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	      </div>
       </td></tr></table>
     </td>
