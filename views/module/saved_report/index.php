@@ -16,7 +16,7 @@
  */
 ?>
 <div class="tg">
-	<table class="data">
+	<table class="col-sortable data">
 		<thead>
 			<tr>
 				<th scope="col" style="width:150px">Preset Name</th>
