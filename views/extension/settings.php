@@ -42,7 +42,7 @@ $EE =& get_instance();
 		<h2>General settings</h2>
 		<table>
 			<tbody>
-				<tr>
+				<tr class="even">
 					<th scope="row">Report path 
 						<div class="note">
 							This is the server path that will be used to store the reports.
@@ -61,7 +61,7 @@ $EE =& get_instance();
 		<h2>Download configuration</h2>
 		<table>
 			<tbody>
-				<tr>
+				<tr class="even">
 					<th scope="row">Generated reports path 
 						<div class="note">
 							This is the server path that will be used to store generated reports.
@@ -72,7 +72,7 @@ $EE =& get_instance();
 						<input type="text" name="<?= $input_prefix ?>[generated_reports_path]" value="<?= $data['generated_reports_path'] ?>"/>
 					</td>
 				</tr>
-				<tr class="even">
+				<tr class="odd">
 					<th scope="row">Download permissions
 						<div class="note">
 							Which member-groups are allowed to download reports?

@@ -32,12 +32,12 @@
 		</thead>
 		<tbody>
 		<?php if(count($saved_reports) == 0): ?>
-			<tr>
+			<tr class="even">
 				<td class="alert error" colspan="9">No entries found</td>
 			</tr>
 		<?php else: ?>
-			<?php foreach($saved_reports as $saved_report): ?>
-			<tr>
+			<?php foreach($saved_reports as $key => $saved_report): $row_class = ($key%2) ? 'even' : 'odd' ?>
+			<tr class="<?= $row_class ?>">
 				<th scope="row">
 					<a title="Go to report using config ID <?= $saved_report['id'] ?>" href="<?= $details_url.$saved_report['report_class'].AMP.'save_id='.$saved_report['id'] ?>">
 						<?= $saved_report['title'] ?>
@@ -61,10 +61,10 @@
 		<?php endif; ?>
 		</tbody>
 	</table>
-	
+
 	<div class="actions">
 		<input type="submit" class="submit" value="Delete"/>
 	</div>
-	
+
 </div>
 
