@@ -62,7 +62,7 @@
 		</tbody>
 	</table>
 	
-	<div class="actions">
+	<div class="actions" style="text-align:right">
 		<input type="submit" class="submit" value="Delete"/>
 	</div>
 	
