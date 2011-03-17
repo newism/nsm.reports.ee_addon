@@ -9,7 +9,7 @@
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/nsm-reports
+ * @link http://ee-garage.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/extensions.html
  */
 
@@ -25,7 +25,7 @@ class Nsm_reports_ext
 	public $version			= '1.0.2';
 	public $name			= 'NSM Reports';
 	public $description		= 'Extensible reports module';
-	public $docs_url		= '';
+	public $docs_url		= 'http://ee-garage.com/nsm-reports';
 	public $settings_exist	= TRUE;
 	public $settings		= array();
 
