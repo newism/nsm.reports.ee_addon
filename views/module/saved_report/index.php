@@ -33,7 +33,7 @@
 		<tbody>
 		<?php if(count($saved_reports) == 0): ?>
 			<tr>
-				<td class="error" colspan="7">No entries found</td>
+				<td class="alert error" colspan="9">No entries found</td>
 			</tr>
 		<?php else: ?>
 			<?php foreach($saved_reports as $saved_report): ?>
