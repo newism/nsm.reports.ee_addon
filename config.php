@@ -15,4 +15,4 @@
 $config['name'] 	= "NSM Reports";
 $config["version"] 	= "1.0.2";
 
-$config['nsm_addon_updater']['versions_xml'] = 'http://github.com/newism/nsm.example_addon.ee_addon/raw/master/versions.xml';
+$config['nsm_addon_updater']['versions_xml'] = 'http://ee-garage.com/nsm-reports/release-notes/feed';
