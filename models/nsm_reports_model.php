@@ -80,6 +80,7 @@ class Nsm_reports_model extends CI_Model
 		{
 			if(substr($folder, 0, 1) == "-"){ continue; }
 			
+			$folder = strtolower($folder);
 			if(file_exists($this->report_path."/".$folder."/".$folder.EXT)){
 				require($this->report_path."/".$folder."/".$folder.EXT);
 				$class_name = ucfirst($folder);
@@ -109,9 +110,11 @@ class Nsm_reports_model extends CI_Model
 	 */
 	public function find($report)
 	{
+		$report = strtolower($report);
 		$file_path = $this->report_path."/".$report."/".$report.EXT;
 		if(!$report || !file_exists($file_path)){ return false; }
 		require_once $file_path;
-		return new $report;
+		$class_name = ucfirst($report);
+		return new $class_name;
 	}
 }

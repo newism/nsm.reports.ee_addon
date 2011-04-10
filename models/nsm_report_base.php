@@ -16,6 +16,8 @@
 /**
  * Base model for NSM Reports
  *
+ * Please note: All report classes must be in lower case with capitalised first letter.
+ *
  * @package NsmReports
  */
 class Nsm_report_base {
