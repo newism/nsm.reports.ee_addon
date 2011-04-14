@@ -359,6 +359,10 @@ class Nsm_reports_ext
 		$EE =& get_instance();
 		$settings = FALSE;
 
+		if ( ! function_exists('json_decode')) {
+			$EE->load->library('Services_json');
+		}
+
 		if (
 			// if there are settings in the settings cache
 			isset($this->cache[SITE_ID]['settings']) === TRUE 
@@ -453,7 +457,7 @@ class Nsm_reports_ext
 	{
 		$EE =& get_instance();
 		$data = array(
-			'settings'	=> json_encode($settings),
+			'settings'	=> $EE->javascript->generate_json($settings, true),
 			'addon_id'	=> $this->addon_id,
 			'site_id'	=> SITE_ID
 		);
