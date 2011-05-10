@@ -3,12 +3,12 @@
  * NSM Reports - Saved Configuration Preset
  *
  * @package NsmReports
- * @version 1.0.2
+ * @version 1.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/easysigns-commerce
+ * @link http://ee-garage.com/easysigns-commerce
  * @see http://codeigniter.com/user_guide/general/models.html
  **/
 
@@ -220,10 +220,12 @@ class Nsm_saved_report {
 					}
 				break;
 				case 'config' :
-					$new_value = ( is_array($this->{$key}) ? json_encode($this->{$key}) : $this->{$key});
+					$new_value = (is_array($this->{$key}))
+									? $EE->javascript->generate_json($this->{$key}, true)
+									: $this->{$key};
 				break;
 				default:
-					if(property_exists($this, $key)){
+					if(property_exists($this, $key)) {
 						$new_value = $this->{$key};
 					}
 				break;
@@ -246,11 +248,18 @@ class Nsm_saved_report {
 	 */
 	public function setData($data = array()) {
 		if(count($data) > 0){
+
+			if ( ! function_exists('json_decode')) {
+				$EE->load->library('Services_json');
+			}
+
 			foreach ($data as $key => $value) {
 				if(property_exists($this, $key)){
 					switch($key){
 						case 'config':
-							$new_value = ( !is_array($value) ? json_decode($value, true) : $value);
+							$new_value = (!is_array($value))
+											? json_decode($value, true)
+											: $value;
 						break;
 						default:
 							$new_value = $value;

@@ -3,12 +3,12 @@
  * NSM Reports Model 
  *
  * @package NsmReports
- * @version 1.0.2
+ * @version 1.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/nsm-reports
+ * @link http://ee-garage.com/nsm-reports
  * @see http://codeigniter.com/user_guide/general/models.html
  **/
 
@@ -80,6 +80,7 @@ class Nsm_reports_model extends CI_Model
 		{
 			if(substr($folder, 0, 1) == "-"){ continue; }
 			
+			$folder = strtolower($folder);
 			if(file_exists($this->report_path."/".$folder."/".$folder.EXT)){
 				require($this->report_path."/".$folder."/".$folder.EXT);
 				$class_name = ucfirst($folder);
@@ -109,9 +110,11 @@ class Nsm_reports_model extends CI_Model
 	 */
 	public function find($report)
 	{
+		$report = strtolower($report);
 		$file_path = $this->report_path."/".$report."/".$report.EXT;
 		if(!$report || !file_exists($file_path)){ return false; }
 		require_once $file_path;
-		return new $report;
+		$class_name = ucfirst($report);
+		return new $class_name;
 	}
 }

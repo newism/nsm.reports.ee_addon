@@ -9,12 +9,14 @@
  * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/nsm-reports
+ * @link http://ee-garage.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
  */
 
 /**
  * Base model for NSM Reports
+ *
+ * Please note: All report classes must be in lower case with capitalised first letter.
  *
  * @package NsmReports
  */

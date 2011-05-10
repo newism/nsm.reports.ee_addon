@@ -14,12 +14,12 @@
  * $this->EE->nsm_reports_helper->addCpJs('../lib/jquery.cookie.js');
  * 
  * @package NsmReports
- * @version 1.0.2
+ * @version 1.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/nsm-reports
+ * @link http://ee-garage.com/nsm-reports
  */
 
 /**

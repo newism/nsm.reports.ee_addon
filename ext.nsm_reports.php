@@ -4,12 +4,12 @@
  * NSM Reports Extension
  *
  * @package NsmReports
- * @version 1.0.2
+ * @version 1.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/nsm-reports
+ * @link http://ee-garage.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/extensions.html
  */
 
@@ -22,10 +22,10 @@
  */
 class Nsm_reports_ext
 {
-	public $version			= '1.0.2';
+	public $version			= '1.0.3';
 	public $name			= 'NSM Reports';
 	public $description		= 'Extensible reports module';
-	public $docs_url		= '';
+	public $docs_url		= 'http://ee-garage.com/nsm-reports';
 	public $settings_exist	= TRUE;
 	public $settings		= array();
 
@@ -359,6 +359,10 @@ class Nsm_reports_ext
 		$EE =& get_instance();
 		$settings = FALSE;
 
+		if ( ! function_exists('json_decode')) {
+			$EE->load->library('Services_json');
+		}
+
 		if (
 			// if there are settings in the settings cache
 			isset($this->cache[SITE_ID]['settings']) === TRUE 
@@ -453,7 +457,7 @@ class Nsm_reports_ext
 	{
 		$EE =& get_instance();
 		$data = array(
-			'settings'	=> json_encode($settings),
+			'settings'	=> $EE->javascript->generate_json($settings, true),
 			'addon_id'	=> $this->addon_id,
 			'site_id'	=> SITE_ID
 		);

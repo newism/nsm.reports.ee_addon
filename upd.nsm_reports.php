@@ -4,12 +4,12 @@
  * Install / Uninstall and updates the modules
  *
  * @package NsmReports
- * @version 1.0.2
+ * @version 1.0.3
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
- * @link http://expressionengine-addons.com/nsm-reports
+ * @link http://ee-garage.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html#update_file
  */
 
@@ -26,7 +26,7 @@ class Nsm_reports_upd
 	 * @var string
 	 * @access public
 	 */
-	public $version = '1.0.2';
+	public $version = '1.0.3';
 	
 	/**
 	 * Determines whether module requires a Control Panel to include
@@ -142,7 +142,7 @@ class Nsm_reports_upd
 			foreach($this->models as $model)
 			{
 				if(!class_exists($model)){
-					include( PATH_THIRD . "nsm_reports/models/" . $model .".php");
+					include( PATH_THIRD . "nsm_reports/models/" . strtolower($model) .".php");
 					if(method_exists($model, "createTable")){
 						call_user_func(array("{$model}", 'createTable'));
 					}
