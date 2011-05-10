@@ -221,7 +221,7 @@ class Nsm_saved_report {
 				break;
 				case 'config' :
 					$new_value = (is_array($this->{$key}))
-									? $EE->javascript->generate_json($this->{$key}, true),
+									? $EE->javascript->generate_json($this->{$key}, true)
 									: $this->{$key};
 				break;
 				default:
