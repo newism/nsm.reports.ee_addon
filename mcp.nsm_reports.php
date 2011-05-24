@@ -4,7 +4,7 @@
  * NSM Reports CP 
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -60,7 +60,11 @@ class Nsm_reports_mcp {
 		
 		$NsmReportsExt = new Nsm_reports_ext();
 		$this->settings = $NsmReportsExt->settings;
-		$this->report_path = $this->settings['report_path'];
+		$this->report_path = $this->report_path = (
+													$this->EE->config->slash_item('report_path') ? 
+													$this->EE->config->slash_item('report_path') : 
+													$this->settings['report_path']
+												);
 		
 		$this->EE->load->model('nsm_reports_model');
 		
@@ -220,6 +224,14 @@ class Nsm_reports_mcp {
 		
 		$report_class = $this->EE->input->get('report');
 		
+		$can_download_groups = $this->settings['member_groups'];
+		$group_id = $EE->session->userdata['group_id'];
+		
+		if($can_download_groups[$group_id]['can_download'] == false){
+			$EE->output->fatal_error("You are not logged in to a member group that permits reporting.");
+			exit;
+		}
+		
 		// if $saved_report_id and saved_report_key aren't false then generate report as a 'cron' process
 		if($saved_report_id && $saved_report_key){
 			$saved_report = Nsm_saved_report::findByIdKey($saved_report_id, $saved_report_key);
@@ -240,7 +252,11 @@ class Nsm_reports_mcp {
 			die("No report found");
 		}
 		
-		$report->cache_path = $this->settings['generated_reports_path'];
+		$report->cache_path = (
+								$this->EE->config->slash_item('generated_reports_path') ? 
+								$this->EE->config->slash_item('generated_reports_path') : 
+								$this->settings['generated_reports_path']
+							);
 		$report->setConfig($config);
 		
 		$output_data = $report->generate($output_type);
@@ -405,11 +421,19 @@ class Nsm_reports_mcp {
 			}
 		}
 		
+		if(defined('NSM_SITE_URL')){
+			$site_url = NSM_SITE_URL;
+		}elseif($this->EE->config->slash_item('site_url')){
+			$site_url = $this->EE->config->slash_item('site_url');
+		}else{
+			$site_url = 'http://'.$_SERVER['SERVER_NAME'];
+		}
+		
 		$data = array(
 			'saved_reports' => $saved_reports,
 			'reports' => $reports,
 			'details_url' => BASE.AMP.$this->cp_url.'method=configure&report=',
-			'process_url' => (defined('NSM_SITE_URL') ? NSM_SITE_URL : 'http://'.$_SERVER['SERVER_NAME']) . '/?ACT='. 
+			'process_url' => $site_url . '/?ACT='. 
 								$this->EE->cp->fetch_action_id('Nsm_reports_mcp', 'generate') . 
 								AMP . 'save_id=',
 			'error' => $error
@@ -485,7 +509,7 @@ class Nsm_reports_mcp {
 		$group_id = $EE->session->userdata['group_id'];
 		
 		if($can_download_groups[$group_id]['can_download'] == false){
-			$EE->output->fatal_error("You are not logged in to a member group that permits report.");
+			$EE->output->fatal_error("You are not logged in to a member group that permits reporting.");
 			exit;
 		}
 		

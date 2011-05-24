@@ -4,7 +4,7 @@
  * Install / Uninstall and updates the modules
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -26,7 +26,7 @@ class Nsm_reports_upd
 	 * @var string
 	 * @access public
 	 */
-	public $version = '1.0.3';
+	public $version = '1.0.4';
 	
 	/**
 	 * Determines whether module requires a Control Panel to include
@@ -70,7 +70,8 @@ class Nsm_reports_upd
 	 */
 	private $actions = array(
 		'Nsm_reports_mcp::send_report',
-		'Nsm_reports_mcp::download_generated_report'
+		'Nsm_reports_mcp::download_generated_report',
+		'Nsm_reports_mcp::generate'
 	);
 	
 	/**
