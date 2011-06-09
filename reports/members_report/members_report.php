@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Members_report
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Members_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 */
-	protected $version = '1.0.3';
+	protected $version = '1.0.4';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
@@ -282,13 +282,13 @@ class Members_report extends Nsm_report_base {
 		
 		// prepare member data fields
 		$member_fields = $this->getMemberDataFields();
-		
+		$cp_url = $this->EE->config->item('cp_url');
 		for( $row_i=0, $row_m=count($rows); $row_i<$row_m; $row_i+=1 ){
 			
 			// if username was added to the member columns list then alter output to inlcude hyperlink
 			if(in_array('username', $config['member_fields'])){
 				$value = $rows[$row_i][ $member_fields['username'] ];
-				$link = BASE.AMP.'C=myaccount'.AMP.'id='.$rows[$row_i]['ID'];
+				$link = $cp_url.'?D=cp'.AMP.'C=myaccount'.AMP.'id='.$rows[$row_i]['ID'];
 				$rows[$row_i][ $member_fields['username'] ] = '<a href="'.$link.'">'.$value.'</a>';
 			}
 			

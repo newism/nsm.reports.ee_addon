@@ -3,7 +3,7 @@
  * NSM Reports - Saved Configuration Preset
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -206,6 +206,7 @@ class Nsm_saved_report {
 
 		$EE =& get_instance();
 		$EE->load->helper('date');
+		$EE->load->library('javascript');
 
 		$data = array();
 		foreach (self::$table_fields as $key => $definition) {
