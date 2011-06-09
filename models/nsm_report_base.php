@@ -111,6 +111,14 @@ class Nsm_report_base {
 	public $report_path = '';
 	
 	/**
+	 * The url where the report is located and is used for including report views
+	 *
+	 * @var string
+	 * @access public
+	 **/
+	public $report_url = '';
+	
+	/**
 	 * The file-path where the report output can be stored on the server
 	 *
 	 * @var string
@@ -139,6 +147,7 @@ class Nsm_report_base {
 		$this->EE =& get_instance();
 		$report = strtolower(get_class($this));
 		$this->report_path = PATH_THIRD . "nsm_reports/reports/" . $report . "/";
+		$this->report_url = "";
 		$this->cache_path = APPPATH . "cache/nsm_reports/";
 	}
 	
@@ -433,10 +442,13 @@ class Nsm_report_base {
 	 **/
 	public function zip_report($generated_report = array())
 	{
+		if( ! is_dir($this->cache_path) ){ return false; }
 		$zip_file_path = $this->cache_path . $generated_report['name'] .'.zip';
 		$this->EE->load->library('zip');
 		$this->EE->zip->add_data($generated_report['name'].'.'.$generated_report['extension'], $generated_report['content']);
-		$this->EE->zip->archive($zip_file_path);
+		if( ! $this->EE->zip->archive($zip_file_path) ){
+			return false;
+		}
 		return $zip_file_path;
 	}
 	

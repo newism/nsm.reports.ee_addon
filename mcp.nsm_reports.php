@@ -4,7 +4,7 @@
  * NSM Reports CP 
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -54,13 +54,16 @@ class Nsm_reports_mcp {
 		$this->EE =& get_instance();
 		$this->addon_id = strtolower(substr(__CLASS__, 0, -4));
 		$this->cp_url = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->addon_id.AMP;
-		$this->cache_path = APPPATH.'cache/' . $this->addon_id . "/" ;
 		
 		$this->EE->load->helper('date');
 		
 		$NsmReportsExt = new Nsm_reports_ext();
 		$this->settings = $NsmReportsExt->settings;
-		$this->report_path = $this->settings['report_path'];
+		$this->report_path = $this->report_path = (
+													$this->EE->config->slash_item('report_path') ? 
+													$this->EE->config->slash_item('report_path') : 
+													$this->settings['report_path']
+												);
 		
 		$this->EE->load->model('nsm_reports_model');
 		
@@ -113,7 +116,7 @@ class Nsm_reports_mcp {
 	{
 		$report_class = $this->EE->input->get('report');
 		if(!$report = $this->EE->nsm_reports_model->find($report_class)){
-			die("No report found");
+			die($this->EE->lang->line('nsm_reports_configure_no_report'));
 		}
 
 		$config = array(
@@ -132,11 +135,14 @@ class Nsm_reports_mcp {
 
 		if($saved_report_id > 0){
 			if(!$saved_report = Nsm_saved_report::findById($saved_report_id)){
-				die("No auto report found");
+				die($this->EE->lang->line('nsm_reports_configure_no_preset'));
 			}
 			$config = array_merge($config, $saved_report->config);
-			$saved_report_info = "Now using saved report configuration '".$saved_report->title."' (ID ".$saved_report->id."). ".
-									"Any changes made to the configuration will not be saved until you change the Action to 'Save' and submit the form.";
+			$saved_report_info = sprintf(
+											$this->EE->lang->line('nsm_reports_configure_preset_info'), 
+											$saved_report->title, 
+											$saved_report->id
+										);
 		}
 
 		if($this->EE->input->post('report')){
@@ -214,80 +220,144 @@ class Nsm_reports_mcp {
 	 **/
 	public function generate()
 	{
+		// Use a 'local' copy of the EE instance as this method can be called via an action
+		$EE =& get_instance();
 		// prepare process_url variables
-		$saved_report_id = $this->EE->input->get('save_id');
-		$saved_report_key = $this->EE->input->get('key');
+		$saved_report_id = $EE->input->get('save_id');
+		$saved_report_key = $EE->input->get('key');
 		
-		$report_class = $this->EE->input->get('report');
+		$report_class = $EE->input->get('report');
 		
+		$EE->lang->loadfile('nsm_reports');
+		
+		// This user check has been commented out as a result of a logical choice.
+		// Anyone can generate a report. Only permitted groups can download the report.
+		/*$can_download_groups = $this->settings['member_groups'];
+		$group_id = $this->EE->session->userdata['group_id'];
+		
+		if(!isset($can_download_groups[$group_id]) || $can_download_groups[$group_id]['can_download'] == false){
+			$this->EE->output->fatal_error("You are not logged in to a member group that permits reporting.");
+			exit;
+		}
+		*/
+		$saved_report = false;
 		// if $saved_report_id and saved_report_key aren't false then generate report as a 'cron' process
 		if($saved_report_id && $saved_report_key){
 			$saved_report = Nsm_saved_report::findByIdKey($saved_report_id, $saved_report_key);
 			if(!$saved_report){
-				die("No report found");
+				die($EE->lang->line('nsm_reports_generate_no_preset'));
 			}
 			$report_class = $saved_report->report;
 			$config = $saved_report->config;
 			$output_type = $saved_report->output;
 			$send_to_email_address = $saved_report->email_address;
 		}else{
-			$config = $this->EE->input->post('report');
+			$config = $EE->input->post('report');
 			$output_type = $config['_output'];
 			$send_to_email_address = $config['_send_to_email_address'];
 		}
 		
-		if(!$report = $this->EE->nsm_reports_model->find($report_class)) {
-			die("No report found");
+		$report = $EE->nsm_reports_model->find($report_class);
+		if(!$report) {
+			die($EE->lang->line('nsm_reports_generate_no_report'));
 		}
 		
-		$report->cache_path = $this->settings['generated_reports_path'];
+		$report->cache_path = (
+								$EE->config->slash_item('generated_reports_path') ? 
+								$EE->config->slash_item('generated_reports_path') : 
+								$this->settings['generated_reports_path']
+							);
+		
 		$report->setConfig($config);
+		$report_info = $report->getInfo();
 		
 		$output_data = $report->generate($output_type);
+		
+		/*
+			If sending a report to the browser then
+				- output report to browser
+				- do not generate a report zip
+				- do not send emails
+				- do not force downloads
+			Else
+				- if sending an email then
+				 	- generate a report zip
+					- send an email
+				- if method called via ACT then
+					- check for existing report zip, if not already created then create
+				- else force download
+		*/
 		
 		// is report to be sent to control panel?
 		if($output_type == 'browser'){
 			// send to browser
+			if($EE->input->get('ACT')){
+				die($EE->lang->line('nsm_reports_generate_illegal_output'));
+			}
 			return $this->configure($output_data['content'], $report->error);
 		} else {
 			// report data to be emailed or downloaded
+			
+			// prepare placeholder variable
+			$generated_report_path = null;
+			
 			if($send_to_email_address){
 				// email address supplied so send report as email
 				$generated_report_path = $report->zip_report($output_data);
-
+				if(!$generated_report_path){
+					die($EE->lang->line('nsm_reports_generate_output_fail'));
+				}
 				$process_url = (defined('NSM_SITE_URL') ? NSM_SITE_URL : 'http://'.$_SERVER['SERVER_NAME']) . '/?ACT='. 
-								$this->EE->functions->fetch_action_id('Nsm_reports_mcp', 'download_generated_report') . 
+								$EE->functions->fetch_action_id('Nsm_reports_mcp', 'download_generated_report') . 
 								'&file='. md5(basename($generated_report_path));
-
+			
 				$email_config = array(
-					'to' => $saved_report->email_address,
-					'subject' => 'Sending Report: '.$report->$title.' using preset '.$saved_report->title.' ('.$saved_report->id.')',
-					'message' => 'This email was sent from your website using a process URL. '.
-									'Your report '.$report->$title.' using preset '.$saved_report->title.' ('.$saved_report->id.') '.
-									'has been generated and ready for download at this location: '.
-									''.$process_url
+					'to' => $send_to_email_address,
+					'subject' => sprintf(
+											$EE->lang->line('nsm_reports_generate_send_email_subject'), 
+											$report_info['title'], 
+											( !$saved_report ? 'None' : $saved_report->title ),
+											( !$saved_report ? 'NA' : $saved_report->id )
+										),
+					'message' => sprintf(
+											$EE->lang->line('nsm_reports_generate_send_email_message'), 
+											$report_info['title'], 
+											( !$saved_report ? 'None' : $saved_report->title ),
+											( !$saved_report ? 'NA' : $saved_report->id ),
+											$process_url
+										)
 				);
-
+				
 				$email_sent = $report->email_report($email_config, array());
-				if( $email_sent == true ){
+				if(  $email_sent == true ){
 					if($saved_report){
 						$saved_report->lastrun_at = now();
 						$saved_report->run_count = $saved_report->run_count + 1;
 						$saved_report->update();
-						die("The report was successfully sent to the specified email address.");
+						die($EE->lang->line('nsm_reports_generate_send_email_ok'));
 					}
-					$this->EE->session->set_flashdata('message_success', "The report was successfully emailed to '".$send_to_email_address."'.");
+					//$this->EE->session->set_flashdata('message_success', "The report was successfully emailed to '".$send_to_email_address."'.");
 				}else{
-					if($saved_report){
-						die("There was an error sending the report.");
-					}
-					$this->EE->session->set_flashdata('message_error', "There was an error sending the report.");
+					die($EE->lang->line('nsm_reports_generate_send_email_error'));
+					//$this->EE->session->set_flashdata('message_error', "There was an error sending the report.");
 				}
-				$this->EE->functions->redirect(BASE.AMP.$this->cp_url.'method=configure'.AMP.'report='.$report_class);
+			}
+			
+			if($EE->input->get('ACT')){
+				
+				if($generated_report_path == null){
+					$generated_report_path = $report->zip_report($output_data);
+				}
+				if(!$generated_report_path){
+					die($EE->lang->line('nsm_reports_generate_output_fail'));
+				}
+				
+				die($EE->lang->line('nsm_reports_generate_ok'));
+				//$this->EE->session->set_flashdata('message_success', "The report was successfully generated.");
 
 			} else {
 				// force download of report
-				$this->EE->load->helper('download');
+				$EE->load->helper('download');
 				force_download($output_data['name'].'.'.$output_data['extension'], $output_data['content']);
 			}
 		}
@@ -338,7 +408,7 @@ class Nsm_reports_mcp {
 		
 		if($saved_report_id > 0 && $save_as_new == false){
 			if(!$save_report = Nsm_saved_report::findById($saved_report_id)){
-				die("No saved report found");
+				die($this->EE->lang->line('nsm_reports_save_no_preset'));
 			}
 			$save_report->setData($data);
 			$action_status = $save_report->update();
@@ -352,10 +422,16 @@ class Nsm_reports_mcp {
 		}
 		
 		if($action_status == true){
-			$this->EE->session->set_flashdata('message_success', "The report preset '" .$config['_save_report_name']. "' was successfully saved.");
+			$this->EE->session->set_flashdata(
+												'message_success',
+												sprintf(
+														$this->EE->lang->line('nsm_reports_save_ok'),
+														$config['_save_report_name']
+												)
+											);
 			$this->EE->functions->redirect(BASE.AMP.$this->cp_url.'method=saved_reports');
 		}else{
-			$this->EE->session->set_flashdata('message_error', "There was an error saving the new report preset.");
+			$this->EE->session->set_flashdata('message_failure', $this->EE->lang->line('nsm_reports_save_model_error'));
 			$this->EE->functions->redirect(BASE.AMP.$this->cp_url.'method=index'.AMP.'report='.$report);
 		}
 	}
@@ -378,10 +454,11 @@ class Nsm_reports_mcp {
 		
 		$reports = $this->EE->nsm_reports_model->find_all();
 		$reports_classes = array_keys($reports);
-		$saved_reports = array();
+		$saved_reports = false;
 
 		$get_saved_reports = Nsm_saved_report::findAll();
 		if($get_saved_reports){
+			$saved_reports = array();
 			foreach($get_saved_reports as $saved_report_key => $saved_report){
 				$report_class = $saved_report->report;
 				if(in_array($report_class, $reports_classes)){
@@ -405,11 +482,19 @@ class Nsm_reports_mcp {
 			}
 		}
 		
+		if(defined('NSM_SITE_URL')){
+			$site_url = NSM_SITE_URL;
+		}elseif($this->EE->config->slash_item('site_url')){
+			$site_url = $this->EE->config->slash_item('site_url');
+		}else{
+			$site_url = 'http://'.$_SERVER['SERVER_NAME'];
+		}
+		
 		$data = array(
 			'saved_reports' => $saved_reports,
 			'reports' => $reports,
 			'details_url' => BASE.AMP.$this->cp_url.'method=configure&report=',
-			'process_url' => (defined('NSM_SITE_URL') ? NSM_SITE_URL : 'http://'.$_SERVER['SERVER_NAME']) . '/?ACT='. 
+			'process_url' => $site_url . '/?ACT='. 
 								$this->EE->cp->fetch_action_id('Nsm_reports_mcp', 'generate') . 
 								AMP . 'save_id=',
 			'error' => $error
@@ -431,7 +516,7 @@ class Nsm_reports_mcp {
 	{
 		$saved_report_ids = $this->EE->input->post('delete');
 		if(!$saved_reports = Nsm_saved_report::findByIds($saved_report_ids)){
-			die("No saved reports found");
+			die($this->EE->lang->line('nsm_reports_delete_saved_no_presets'));
 		}
 		
 		$error = "";
@@ -458,11 +543,14 @@ class Nsm_reports_mcp {
 	public function delete_saved_submit()
 	{
 		$saved_report_ids = $this->EE->input->post('delete');
-		$error = "";
+		if(!$saved_report_ids){
+			$this->EE->session->set_flashdata('message_failure', $this->EE->lang->line('nsm_reports_delete_saved_submit_no_ids'));
+			$this->EE->functions->redirect(BASE.AMP.$this->cp_url.'method=saved_reports');
+		}
 		if( Nsm_saved_report::deleteByIds($saved_report_ids) ){
-			$this->EE->session->set_flashdata('message_success', "The saved reports were successfully deleted.");
+			$this->EE->session->set_flashdata('message_success', $this->EE->lang->line('nsm_reports_delete_saved_submit_ok'));
 		}else{
-			$this->EE->session->set_flashdata('message_error', "There was an error deleting the saved reports.");
+			$this->EE->session->set_flashdata('message_failure', $this->EE->lang->line('nsm_reports_delete_saved_submit_error'));
 		}
 		$this->EE->functions->redirect(BASE.AMP.$this->cp_url.'method=saved_reports');
 	}
@@ -481,17 +569,24 @@ class Nsm_reports_mcp {
 	public function download_generated_report()
 	{
 		$EE =& get_instance();
+		$EE->lang->loadfile('nsm_reports');
+		
 		$can_download_groups = $this->settings['member_groups'];
 		$group_id = $EE->session->userdata['group_id'];
 		
 		if($can_download_groups[$group_id]['can_download'] == false){
-			$EE->output->fatal_error("You are not logged in to a member group that permits report.");
+			$EE->output->fatal_error($this->EE->lang->line('nsm_reports_download_generated_report_invalid_group_id'));
 			exit;
 		}
 		
 		$real_file = false;
 		$file_hash = $EE->input->get('file');
 		$file_path = $this->settings['generated_reports_path'];
+		
+		if(!is_dir($file_path)){
+			$EE->output->fatal_error($this->EE->lang->line('nsm_reports_download_generated_report_path_not_exists'));
+			exit;
+		}
 		
 		$EE->load->helper('file');
 		$files = get_filenames($file_path);
@@ -508,7 +603,7 @@ class Nsm_reports_mcp {
 			}
 		}
 		
-		$EE->output->fatal_error("No File Found.");
+		$EE->output->fatal_error($this->EE->lang->line('nsm_reports_download_generated_report_no_file'));
 		exit;
 	}
 	

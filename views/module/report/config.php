@@ -5,7 +5,7 @@
  * This file is used when Nsm_reports_mcp::configure() is called and returns the report details and configuration form to the user.
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
@@ -63,7 +63,7 @@
 			<tr>
 				<th scope="row">
 					<label for="nsm_reports-generate-email">Email report</label>
-					<div class="note">Optional: To send the generated report via email enter an address</div>
+					<div class="note">Optional: To send the generated report via email enter an address.</div>
 				</th>
 				<td>
 					<input type="text" name="report[_send_to_email_address]" id="nsm_reports-generate-email" placeholder="user@domain.com" value="<?= $config['_send_to_email_address'] ?>" />

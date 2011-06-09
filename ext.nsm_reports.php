@@ -4,7 +4,7 @@
  * NSM Reports Extension
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -22,7 +22,7 @@
  */
 class Nsm_reports_ext
 {
-	public $version			= '1.0.3';
+	public $version			= '1.0.4';
 	public $name			= 'NSM Reports';
 	public $description		= 'Extensible reports module';
 	public $docs_url		= 'http://ee-garage.com/nsm-reports';
@@ -37,7 +37,12 @@ class Nsm_reports_ext
 	public $default_site_settings = array(
 		'enabled' => TRUE,
 		'generated_reports_path' => '',
-		'report_path' => ''
+		'report_path' => '',
+		'member_groups' => array(
+			'1' => array(
+				'can_download' => 1
+			)
+		)
 	);
 
 	public $default_channel_settings = array();
@@ -392,6 +397,11 @@ class Nsm_reports_ext
 			else
 			{
 				$settings = $this->_buildDefaultSiteSettings(SITE_ID);
+				// set report class path
+				$settings['report_path'] = dirname(__FILE__).'/reports/';
+				// set generated reports path
+				$settings['generated_reports_path'] = dirname(__FILE__).'/generated_'.rand(0,99).'_'.time().'/';
+				mkdir($settings['generated_reports_path'] . "", 0777, TRUE);
 				$this->_saveSettings($settings);
 			}
 			

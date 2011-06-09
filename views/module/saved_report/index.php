@@ -6,7 +6,7 @@
  *   saved report configurations to the user with a form to choose presets to delete.
  *
  * @package NsmReports
- * @version 1.0.3
+ * @version 1.0.4
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php if(count($saved_reports) == 0): ?>
+		<?php if(!$saved_reports): ?>
 			<tr>
 				<td class="alert error" colspan="9">No entries found</td>
 			</tr>
