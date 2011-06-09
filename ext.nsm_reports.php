@@ -37,7 +37,12 @@ class Nsm_reports_ext
 	public $default_site_settings = array(
 		'enabled' => TRUE,
 		'generated_reports_path' => '',
-		'report_path' => ''
+		'report_path' => '',
+		'member_groups' => array(
+			'1' => array(
+				'can_download' => 1
+			)
+		)
 	);
 
 	public $default_channel_settings = array();
@@ -392,6 +397,11 @@ class Nsm_reports_ext
 			else
 			{
 				$settings = $this->_buildDefaultSiteSettings(SITE_ID);
+				// set report class path
+				$settings['report_path'] = dirname(__FILE__).'/reports/';
+				// set generated reports path
+				$settings['generated_reports_path'] = dirname(__FILE__).'/generated_'.rand(0,99).'_'.time().'/';
+				mkdir($settings['generated_reports_path'] . "", 0777, TRUE);
 				$this->_saveSettings($settings);
 			}
 			

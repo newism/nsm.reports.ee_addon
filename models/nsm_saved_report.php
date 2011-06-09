@@ -206,6 +206,7 @@ class Nsm_saved_report {
 
 		$EE =& get_instance();
 		$EE->load->helper('date');
+		$EE->load->library('javascript');
 
 		$data = array();
 		foreach (self::$table_fields as $key => $definition) {

@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php if(count($saved_reports) == 0): ?>
+		<?php if(!$saved_reports): ?>
 			<tr>
 				<td class="alert error" colspan="9">No entries found</td>
 			</tr>

@@ -442,10 +442,13 @@ class Nsm_report_base {
 	 **/
 	public function zip_report($generated_report = array())
 	{
+		if( ! is_dir($this->cache_path) ){ return false; }
 		$zip_file_path = $this->cache_path . $generated_report['name'] .'.zip';
 		$this->EE->load->library('zip');
 		$this->EE->zip->add_data($generated_report['name'].'.'.$generated_report['extension'], $generated_report['content']);
-		$this->EE->zip->archive($zip_file_path);
+		if( ! $this->EE->zip->archive($zip_file_path) ){
+			return false;
+		}
 		return $zip_file_path;
 	}
 	

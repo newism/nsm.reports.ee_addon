@@ -63,7 +63,7 @@
 			<tr>
 				<th scope="row">
 					<label for="nsm_reports-generate-email">Email report</label>
-					<div class="note">Optional: To send the generated report via email enter an address</div>
+					<div class="note">Optional: To send the generated report via email enter an address.</div>
 				</th>
 				<td>
 					<input type="text" name="report[_send_to_email_address]" id="nsm_reports-generate-email" placeholder="user@domain.com" value="<?= $config['_send_to_email_address'] ?>" />

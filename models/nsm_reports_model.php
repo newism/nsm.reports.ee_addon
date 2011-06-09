@@ -40,7 +40,7 @@ class Nsm_reports_model extends CI_Model
 	 **/
 	public function __construct()
 	{
-		$this->report_path = PATH_THIRD.'nsm_reports/reports';
+		$this->report_path = realpath(dirname(__FILE__).'/../reports');
 	}
 	
 	/**
@@ -112,7 +112,8 @@ class Nsm_reports_model extends CI_Model
 	{
 		$report = strtolower($report);
 		$file_path = $this->report_path."/".$report."/".$report.EXT;
-		if(!$report || !file_exists($file_path)){ return false; }
+		if(!$report){ return false; }
+		if(!file_exists($file_path)){ return false; }
 		require_once $file_path;
 		$class_name = ucfirst($report);
 		return new $class_name;

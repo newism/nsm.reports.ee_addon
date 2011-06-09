@@ -53,7 +53,7 @@ $lang = array(
 	'config_auto_report_page_title' => 'Configure Auto Report',
 	'config_auto_report_nav_title' => 'Configure Auto Report',
 	
-	'delete_auto_report_page_title' => 'Delete Auto Report',
+	'delete_saved_report_page_title' => 'Delete Auto Report',
 	'delete_auto_report_nav_title' => 'Delete Auto Report',
 	
 	'output_page_title' => 'Report output',
@@ -62,5 +62,39 @@ $lang = array(
 	'save_extension_settings' => 'Save extension settings',
 
 	/* Messages / Alerts */
-	'alert.success.extension_settings_saved' 	=> 'Extension settings have been saved.'
+	'alert.success.extension_settings_saved' => 'Extension settings have been saved.',
+	
+	/* Output */
+	'nsm_reports_configure_no_report' => 'No report found',
+	'nsm_reports_configure_no_preset' => 'No report preset found',
+	'nsm_reports_configure_preset_info' => 'Now using saved report configuration \'%1$s\' (ID %2$s). '.
+											'Any changes made to the configuration will not be saved until you change the Action to \'Save\' and submit the form.',
+	
+	'nsm_reports_generate_no_preset' => 'No report preset found',
+	'nsm_reports_generate_no_report' => 'No report found',
+	'nsm_reports_generate_illegal_output' => 'You cannot remote access a report preset that outputs to the browser.',
+	'nsm_reports_generate_output_fail' => 'There was a problem generating the report.',
+	'nsm_reports_generate_send_email_subject' => 'Sending Report: %1$s using preset %2$s (%3$s)',
+	'nsm_reports_generate_send_email_message' => 'This email was sent from your website using a process URL. '.
+												'Your report %1$s using preset %2$s (%3$s) '.
+												'has been generated and ready for download at this location: '.
+												'%4$s',
+	'nsm_reports_generate_send_email_ok' => 'The report was successfully sent to the specified email address.',
+	'nsm_reports_generate_send_email_error' => 'There was an error sending the report.',
+	'nsm_reports_generate_ok' => 'The report was successfully generated.',
+	
+	'nsm_reports_save_no_preset' => 'No saved report found',
+	'nsm_reports_save_ok' => 'The report preset \'%1$s\' was successfully saved.',
+	'nsm_reports_save_model_error' => 'There was an error saving the new report preset.',
+	
+	'nsm_reports_delete_saved_no_presets' => 'No saved reports found',
+	
+	'nsm_reports_delete_saved_submit_no_ids' => 'No report presets were chosen for deletion.',
+	'nsm_reports_delete_saved_submit_ok' => 'The saved reports were successfully deleted.',
+	'nsm_reports_delete_saved_submit_error' => 'There was an error deleting the saved reports.',
+	
+	'nsm_reports_download_generated_report_invalid_group_id' => 'You are not logged in to a member group that permits reporting.',
+	'nsm_reports_download_generated_report_no_file' => 'No file found.',
+	'nsm_reports_download_generated_report_path_not_exists' => 'The generated reports path is not set or does not exist.',
+	
 );
