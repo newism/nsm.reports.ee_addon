@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Members_report
- * @version 1.0.4
+ * @version 1.0.5
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Members_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 */
-	protected $version = '1.0.4';
+	protected $version = '1.0.5';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
