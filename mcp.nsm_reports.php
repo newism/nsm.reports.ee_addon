@@ -620,7 +620,7 @@ class Nsm_reports_mcp {
 	 **/
 	public function _renderLayout($page, $out = FALSE, $page_replacements = array())
 	{
-		$page_title = $this->EE->lang->line("{$page}_page_title");
+		$page_title = $this->EE->lang->line("nsm_reports_{$page}_page_title");
 		foreach ($page_replacements as $key => $value){
 			$page_title = str_replace("{".$key."}", $value, $page_title);
 		}
@@ -629,7 +629,7 @@ class Nsm_reports_mcp {
 
 		$nav = array();
 		foreach ($this->pages as $page) {
-			$nav[lang("{$page}_nav_title")] =  BASE.AMP.$this->cp_url . "method=" . $page;
+			$nav[lang("nsm_reports_{$page}_nav_title")] =  BASE.AMP.$this->cp_url . "method=" . $page;
 		}
 		$this->EE->cp->set_right_nav($nav);
 
