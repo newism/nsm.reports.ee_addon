@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Members_report
- * @version 1.0.4
+ * @version 1.0.5
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Members_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 */
-	protected $version = '1.0.4';
+	protected $version = '1.0.5';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
@@ -161,15 +161,23 @@ class Members_report extends Nsm_report_base {
 			ORDER BY `exp_member_fields`.`m_field_order`'
 		);
 		
-		return $this->EE->load->_ci_load(array(
-			'_ci_vars' => array(
-				'config' => $this->config,
-				'member_fields' => $member_fields,
-				'additional_fields' => $additional_fields->result_array()
-			),
-			'_ci_path' => $this->report_path . "views/configuration.php",
-			'_ci_return' => true
-		));
+		$data = array(
+					'config' => $this->config,
+					'member_fields' => $member_fields,
+					'additional_fields' => $additional_fields->result_array()
+				);
+		
+		if(APP_VER < '2.1.5') {
+			// EE < .2.2.0
+			return $this->EE->load->_ci_load(array(
+				'_ci_vars' => $data,
+				'_ci_path' => $this->report_path . 'views/configuration.php',
+				'_ci_return' => true
+			));
+		}else{
+			$this->EE->load->add_package_path($this->report_path);
+			return $this->EE->load->view('configuration', $data, TRUE);
+		}
 	}
 	
 	/**
@@ -307,11 +315,17 @@ class Members_report extends Nsm_report_base {
 			'input_prefix' => __CLASS__
 		);
 		
-		return $this->EE->load->_ci_load(array(
-			'_ci_vars' => $data,
-			'_ci_path' => $this->report_path."/views/output_browser.php",
-			'_ci_return' => true
-		));
+		if(APP_VER < '2.1.5') {
+			// EE < .2.2.0
+			return $this->EE->load->_ci_load(array(
+				'_ci_vars' => $data,
+				'_ci_path' => $this->report_path . 'views/output_browser.php',
+				'_ci_return' => true
+			));
+		}else{
+			$this->EE->load->add_package_path($this->report_path);
+			return $this->EE->load->view('output_browser', $data, TRUE);
+		}
 	}
 	
 	

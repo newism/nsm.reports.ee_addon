@@ -284,11 +284,17 @@ class Nsm_report_base {
 			'input_prefix' => __CLASS__
 		);
 		
-		return $this->EE->load->_ci_load(array(
-			'_ci_vars' => $data,
-			'_ci_path' => $this->report_path."../../views/module/report/output_browser.php",
-			'_ci_return' => true
-		));
+		if(APP_VER < '2.1.5') {
+			// EE < .2.2.0
+			return $this->EE->load->_ci_load(array(
+				'_ci_vars' => $data,
+				'_ci_path' => PATH_THIRD . 'nsm_reports/views/module/report/output_browser.php',
+				'_ci_return' => true
+			));
+		}else{
+			$this->EE->load->add_package_path(PATH_THIRD . 'nsm_reports');
+			return $this->EE->load->view('module/report/output_browser', $data, TRUE);
+		}
 	}
 	
 	/**
