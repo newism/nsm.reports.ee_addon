@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Channels_complex_report
- * @version 1.0.5
+ * @version 1.0.6
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Channels_complex_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $version = '1.0.5';
+	protected $version = '1.0.6';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
