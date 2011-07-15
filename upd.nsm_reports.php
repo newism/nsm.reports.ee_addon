@@ -69,9 +69,8 @@ class Nsm_reports_upd
 	 * @access private
 	 */
 	private $actions = array(
-		'Nsm_reports_mcp::send_report',
 		'Nsm_reports_mcp::download_generated_report',
-		'Nsm_reports_mcp::generate'
+		'Nsm_reports_mcp::cron_generate'
 	);
 	
 	/**
@@ -166,7 +165,25 @@ class Nsm_reports_upd
 	 */
 	public function update($current = FALSE)
 	{
-		return false;
+		$EE =& get_instance();
+		if($current == $this->version){
+			return false;
+		}
+		if ( ! function_exists('json_decode')){
+			$EE->load->library('Services_json');
+		}
+		if($current < '1.0.6'){
+			$EE->db
+				->where('class', substr(__CLASS__, 0, -4).'_mcp' )
+				->where('method', 'generate' )
+				->update('actions', array('method' => 'cron_generate'));
+			
+		}
+		// Update the extension
+		$EE->db
+			->where('module_name', substr(__CLASS__, 0, -4) )
+			->update('modules', array('module_version' => $this->version));
+		return true;
 	}
 
 	/**
