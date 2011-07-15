@@ -134,13 +134,19 @@ class Nsm_reports_ext
 		$EE =& get_instance();
 		$EE->lang->loadfile($this->addon_id);
 		$EE->load->library($this->addon_id."_helper");
-
+		
+		if( !class_exists('Nsm_reports_mcp') ){
+			include('mcp.nsm_reports.php');
+		}
+		$reports_mcp = new Nsm_reports_mcp();
+		
 		// Create the variable array
 		$vars = array(
 			'addon_id' => $this->addon_id,
 			'error' => FALSE,
 			'input_prefix' => __CLASS__,
 			'message' => FALSE,
+			'report_output_dir' => $reports_mcp->checkGeneratedReportsDirectory()
 		);
 
 		// Are there settings posted from the form?

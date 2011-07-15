@@ -75,6 +75,52 @@ class Nsm_reports_mcp {
 	}
 	
 	/**
+	 * Checks the generated reports path for problems and returns status
+	 *
+	 * @access public
+	 * @return string Returns the Expression Engine processed page View
+	 **/
+	public function checkGeneratedReportsDirectory()
+	{
+		$generated_report_path = $this->settings['generated_reports_path'];
+		//http://local.ee2_3/system/index.php?S=2168a1f3031ac68bc906d98989918333d722da2e&D=cp&C=addons_extensions&M=extension_settings&file=nsm_reports
+		$extension_settings_url = BASE.AMP.'C=addons_extensions'.AMP.'M=extension_settings'.AMP.'file=nsm_reports';
+		// does directory exist?
+		if( ! is_dir($generated_report_path) ){
+			return array(
+						'status' => false,
+						'class' => 'error',
+						'message' => sprintf(
+										$this->EE->lang->line('nsm_reports_messages_generated_report_path_not_exists'),
+										$generated_report_path,
+										$extension_settings_url
+									)
+					);
+		}
+		// does directory have write access?
+		if( ! is_writable($generated_report_path) ){
+			return array(
+						'status' => false,
+						'class' => 'error',
+						'message' => sprintf(
+										$this->EE->lang->line('nsm_reports_messages_generated_report_path_not_writeable'),
+										$generated_report_path,
+										$extension_settings_url
+									)
+					);
+		}
+		
+		return array(
+					'status' => true,
+					'class' => 'ok',
+					'message' => sprintf(
+									$this->EE->lang->line('nsm_reports_messages_generated_report_path_ok'),
+									$generated_report_path
+								)
+				);
+	}
+	
+	/**
 	 * Processes the module's DashBoard page by finding all reports and listing them.
 	 *
 	 * @access public
@@ -92,7 +138,8 @@ class Nsm_reports_mcp {
 
 		$data = array(
 			'cp_url' => BASE.AMP.$this->cp_url,
-			'reports' => $reports
+			'reports' => $reports,
+			'report_output_dir' => $this->checkGeneratedReportsDirectory()
 		);
 
 		$out = $this->EE->load->view("module/report/index", $data, TRUE);
@@ -166,7 +213,8 @@ class Nsm_reports_mcp {
 			'report_config_html' => $report_config_html,
 			'preview_html' => $preview_html,
 			'selected_form_action' => $selected_form_action,
-			'saved_reports_url' => BASE . AMP . $this->cp_url . AMP .'method=saved_reports'
+			'saved_reports_url' => BASE . AMP . $this->cp_url .'method=saved_reports',
+			'report_output_dir' => $this->checkGeneratedReportsDirectory()
 		);
 
 		$out = $this->EE->load->view('module/report/config', $data, TRUE);

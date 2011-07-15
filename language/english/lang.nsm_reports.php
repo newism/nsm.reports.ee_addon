@@ -57,7 +57,15 @@ $lang = array(
 	'nsm_reports_delete_auto_report_nav_title' => 'Delete Auto Report',
 	
 	'nsm_reports_output_page_title' => 'Report output',
-
+	
+	'nsm_reports_messages_generated_report_path_ok' => 'The generated reports path <strong>%1$s</strong> is ready for use.',
+	'nsm_reports_messages_generated_report_path_not_exists' => 'The generated reports path <strong>%1$s</strong> does not exist. '.
+																'Please make sure that this directory exists and has sufficient file permissions to write files.'.
+																'This directory can be changed in the <a href="%2$s">extension settings</a> for this module.',
+	'nsm_reports_messages_generated_report_path_not_writeable' => 'The generated reports path <strong>%1$s</strong> needs sufficient file permissions to save reports. '.
+																	'Please check the file permissions for this directory. '.
+																	'This directory can be changed in the <a href="%2$s">extension settings</a> for this module.',
+	
 	/* Extension */
 	'save_extension_settings' => 'Save extension settings',
 
