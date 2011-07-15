@@ -4,7 +4,7 @@
  * NSM Reports Extension
  *
  * @package NsmReports
- * @version 1.0.5
+ * @version 1.0.6
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -22,7 +22,7 @@
  */
 class Nsm_reports_ext
 {
-	public $version			= '1.0.5';
+	public $version			= '1.0.6';
 	public $name			= 'NSM Reports';
 	public $description		= 'Extensible reports module';
 	public $docs_url		= 'http://ee-garage.com/nsm-reports';
