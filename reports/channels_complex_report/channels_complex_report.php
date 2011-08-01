@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Channels_complex_report
- * @version 1.0.6
+ * @version 1.0.7
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Channels_complex_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $version = '1.0.6';
+	protected $version = '1.0.7';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
@@ -92,7 +92,9 @@ class Channels_complex_report extends Nsm_report_base {
 	protected $config = array(
 		'_output' => 'browser',
 		'channel_filter' => false,
-		'status_filter' => false
+		'status_filter' => false,
+		'date_filter' => false,
+		'date_filter_mode' => false
 	);
 	
 	/**
@@ -169,6 +171,27 @@ class Channels_complex_report extends Nsm_report_base {
 					'status_options' => $status_options->result_array()
 				);
 		
+		$this->EE->cp->add_js_script(array('ui' => 'datepicker'));
+		$this->EE->cp->add_to_foot('<link rel="stylesheet" href="'.BASE.AMP.'C=css'.AMP.'M=datepicker" type="text/css" media="screen" />');
+		
+		$default_date = $this->EE->localize->set_localized_time() * 1000;
+		$current_time = date("' H:i'", gmt_to_local(now()));
+		
+		$behaviours = <<<BEHAVIOURS
+<script type="text/javascript">
+/* <![CDATA[ */
+$(function(){
+	$("#report_config_new_review_date").datepicker({ 
+		dateFormat: $.datepicker.W3C + {$current_time},
+		defaultDate: new Date({$default_date})
+	});
+});
+/* ]]> */
+</script>
+BEHAVIOURS;
+		
+		$this->EE->cp->add_to_foot($behaviours);
+		
 		if(APP_VER < '2.1.5') {
 			// EE < .2.2.0
 			return $this->EE->load->_ci_load(array(
@@ -192,11 +215,25 @@ class Channels_complex_report extends Nsm_report_base {
 	{
 		$config = $this->config;
 		
+		$entry_date_modes = array(
+			'after' => ">",
+			'before' => "<",
+			'equal' => "=",
+			'not' => "<>"
+		);
+		
 		$channel_cond = ($config['channel_filter'])
 			? " AND `t`.`channel_id` = '".intval($config['channel_filter'])."'"
 			: false;
 		$status_cond = ($config['status_filter'])
 			? " AND `t`.`status` = '".$config['status_filter']."'"
+			: false;
+		
+		
+		$this->EE->load->helper('date');
+		$date_cond = ($config['date_filter_mode'])
+			? " AND `t`.`entry_date` ".$entry_date_modes[$config['date_filter_mode']].
+				" '".local_to_gmt(human_to_unix($config['date_filter']))."'"
 			: false;
 
 		$sql = "SELECT
@@ -213,6 +250,7 @@ class Channels_complex_report extends Nsm_report_base {
 		WHERE `t`.`channel_id` > 0 " .
 			$channel_cond . 
 			$status_cond . 
+			$date_cond .
 		"
 		ORDER BY `t`.`channel_id`,
 			`t`.`title`";

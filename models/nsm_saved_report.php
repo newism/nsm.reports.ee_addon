@@ -3,7 +3,7 @@
  * NSM Reports - Saved Configuration Preset
  *
  * @package NsmReports
- * @version 1.0.6
+ * @version 1.0.7
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
