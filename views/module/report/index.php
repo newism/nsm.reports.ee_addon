@@ -5,7 +5,7 @@
  * This file is used when Nsm_reports_mcp::index() is called and returns a table of all reports found in reports directory to the user.
  *
  * @package NsmReports
- * @version 1.0.6
+ * @version 1.0.7
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
