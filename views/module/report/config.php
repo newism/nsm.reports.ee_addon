@@ -5,7 +5,7 @@
  * This file is used when Nsm_reports_mcp::configure() is called and returns the report details and configuration form to the user.
  *
  * @package NsmReports
- * @version 1.0.4
+ * @version 1.0.6
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
@@ -13,7 +13,12 @@
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
  */
 ?>
-<div class="tg">
+
+<?php if(!$report_output_dir['status']) : ?>
+	<div class="alert <?= $report_output_dir['class'] ?>"><?= $report_output_dir['message'] ?></div>
+<?php endif; ?>
+	
+<div class="tg">	
 	<h2>Report details</h2>
 	<table class="data">
 		<thead>

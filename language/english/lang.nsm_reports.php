@@ -4,7 +4,7 @@
  * NSM Reports Language File
  *
  * @package NsmReports
- * @version 1.0.4
+ * @version 1.0.6
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -25,39 +25,47 @@ $lang = array(
 	'nsm_reports_module_name' => 'NSM Reports',
 	'nsm_reports_module_description' => 'Extensible reports module',
 
-	'index_page_title' => 'Reports',
-	'index_nav_title' => 'Reports',
-	'index_nav_title' => 'Reports',
+	'nsm_reports_index_page_title' => 'Reports',
+	'nsm_reports_index_nav_title' => 'Reports',
+	'nsm_reports_index_nav_title' => 'Reports',
 	
-	'create_report_nav_title' => 'Create report',
-	'create_report_page_title' => 'Create report',
+	'nsm_reports_create_report_nav_title' => 'Create report',
+	'nsm_reports_create_report_page_title' => 'Create report',
 	
-	'report_config_page_title' => '{report_title}',
-	'report_config_nav_title' => 'Report',
+	'nsm_reports_report_config_page_title' => '{report_title}',
+	'nsm_reports_report_config_nav_title' => 'Report',
 	
-	'details_simple_page_title' => 'Report Details: {report_title}',
-	'details_simple_nav_title' => 'Details',
+	'nsm_reports_details_simple_page_title' => 'Report Details: {report_title}',
+	'nsm_reports_details_simple_nav_title' => 'Details',
 
-	'delete_simple_page_title' => 'Delete Report: {report_title}',
-	'delete_simple_nav_title' => 'Delete',
+	'nsm_reports_delete_simple_page_title' => 'Delete Report: {report_title}',
+	'nsm_reports_delete_simple_nav_title' => 'Delete',
 	
-	'upload_simple_page_title' => 'Upload Report',
-	'upload_simple_nav_title' => 'Upload Report',
+	'nsm_reports_upload_simple_page_title' => 'Upload Report',
+	'nsm_reports_upload_simple_nav_title' => 'Upload Report',
 	
-	'saved_reports_page_title' => 'Saved reports',
-	'saved_reports_nav_title' => 'Saved reports',
+	'nsm_reports_saved_reports_page_title' => 'Saved reports',
+	'nsm_reports_saved_reports_nav_title' => 'Saved reports',
 	
-	'details_auto_report_page_title' => 'Auto Report Details',
-	'details_auto_report_nav_title' => 'Auto Report Details',
+	'nsm_reports_details_auto_report_page_title' => 'Auto Report Details',
+	'nsm_reports_details_auto_report_nav_title' => 'Auto Report Details',
 	
-	'config_auto_report_page_title' => 'Configure Auto Report',
-	'config_auto_report_nav_title' => 'Configure Auto Report',
+	'nsm_reports_config_auto_report_page_title' => 'Configure Auto Report',
+	'nsm_reports_config_auto_report_nav_title' => 'Configure Auto Report',
 	
-	'delete_saved_report_page_title' => 'Delete Auto Report',
-	'delete_auto_report_nav_title' => 'Delete Auto Report',
+	'nsm_reports_delete_saved_report_page_title' => 'Delete Auto Report',
+	'nsm_reports_delete_auto_report_nav_title' => 'Delete Auto Report',
 	
-	'output_page_title' => 'Report output',
-
+	'nsm_reports_output_page_title' => 'Report output',
+	
+	'nsm_reports_messages_generated_report_path_ok' => 'The generated reports path <strong>%1$s</strong> is ready for use.',
+	'nsm_reports_messages_generated_report_path_not_exists' => 'The generated reports path <strong>%1$s</strong> does not exist. '.
+																'Please make sure that this directory exists and has sufficient file permissions to write files.'.
+																'This directory can be changed in the <a href="%2$s">extension settings</a> for this module.',
+	'nsm_reports_messages_generated_report_path_not_writeable' => 'The generated reports path <strong>%1$s</strong> needs sufficient file permissions to save reports. '.
+																	'Please check the file permissions for this directory. '.
+																	'This directory can be changed in the <a href="%2$s">extension settings</a> for this module.',
+	
 	/* Extension */
 	'save_extension_settings' => 'Save extension settings',
 

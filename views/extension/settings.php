@@ -5,7 +5,7 @@
  * This file is responsible for displaying the user-configurable settings for the NSM Multi Language extension in the ExpressionEngine control panel.
  *
  * @package NsmReports
- * @version 1.0.4
+ * @version 1.0.6
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
@@ -38,6 +38,10 @@ $EE =& get_instance();
 		<div class="alert success"><?php print($message); ?></div>
 	<?php endif; ?>
 	
+	<?php if(!$report_output_dir['status']) : ?>
+		<div class="alert <?= $report_output_dir['class'] ?>"><?= $report_output_dir['message'] ?></div>
+	<?php endif; ?>
+	
 	<div class="tg">
 		<h2>General settings</h2>
 		<table>
@@ -56,7 +60,6 @@ $EE =& get_instance();
 			</tbody>
 		</table>
 	</div>
-	
 	<div class="tg">
 		<h2>Download configuration</h2>
 		<table>

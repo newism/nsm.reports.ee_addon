@@ -5,14 +5,20 @@
  * This file is used when Nsm_reports_mcp::index() is called and returns a table of all reports found in reports directory to the user.
  *
  * @package NsmReports
- * @version 1.0.4
+ * @version 1.0.6
  * @author Leevi Graham <http://leevigraham.com.au>
- * @author Iain Saxon <iain.saxon@newism.com.au> * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
+ * @author Iain Saxon <iain.saxon@newism.com.au>
+ * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
  * @license Commercial - please see LICENSE file included with this distribution
  * @link http://ee-garage.com/nsm-reports
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
  */
 ?>
+
+<?php if(!$report_output_dir['status']) : ?>
+	<div class="alert <?= $report_output_dir['class'] ?>"><?= $report_output_dir['message'] ?></div>
+<?php endif; ?>
+
 <div class="tg">
 	<table class="data col-sortable NSM_Stripeable">
 		<thead>
