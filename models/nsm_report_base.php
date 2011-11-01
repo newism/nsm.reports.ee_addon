@@ -177,6 +177,11 @@ class Nsm_report_base {
 		$this->config = array_merge($this->config, $new_config);
 	}
 	
+	public function getConfig()
+	{
+		return $this->config;
+	}
+	
 	// SQL METHODS
 	
 	/**

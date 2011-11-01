@@ -77,7 +77,7 @@
 			<tr>
 				<th scope="row">Action</th>
 				<td>
-					<select id="nsm_reports-generate-report-action" name="action">
+					<select id="nsm_reports-generate-report-action" name="report__action">
 						<option id="nsm_reports-generate-report-action-generate" value="generate">Generate report</option>
 						<?php if($saved_report_id) : ?>
 							<option id="nsm_reports-generate-report-action-save" value="save"<?= ($selected_form_action == 'save' ? ' selected="selected"' : '') ?>>Update saved preset</option>

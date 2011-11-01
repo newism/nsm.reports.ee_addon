@@ -37,6 +37,21 @@ class Nsm_reports_mcp {
 	 **/
 	private $pages = array("index", "saved_reports");
 	
+	public $report = array(
+		'name' => false,
+		'action' => false,
+		'save_id' => false,
+		'save_key' => false,
+		'config' => array()
+	);
+	
+	public $default_report_config = array(
+		'_output' => 'browser',
+		'_send_to_email_address' => '',
+		'_save_report_name' => '',
+		'_save_report_description' => ''
+	);
+	
 	/**
 	 * PHP5 constructor function.
 	 *
@@ -54,7 +69,7 @@ class Nsm_reports_mcp {
 		$this->EE =& get_instance();
 		$this->addon_id = strtolower(substr(__CLASS__, 0, -4));
 		$this->cp_url = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->addon_id.AMP;
-		
+		$this->report = $this->prepareReportConfig();
 		$this->EE->load->helper('date');
 		
 		$NsmReportsExt = new Nsm_reports_ext();
@@ -72,6 +87,72 @@ class Nsm_reports_mcp {
 		}else{
 			$this->report_path = $this->EE->nsm_reports_model->get_report_path();
 		}
+	}
+	
+	
+	/**
+	 * Reads incoming post / get variables and stores them in an array
+	 *
+	 * @access public
+	 * @return array Returns the new array
+	 **/
+	public function prepareReportConfig()
+	{
+		$config = array();
+		$report_config = array(
+			'report' => array()
+		);
+		$get_post = array_merge(
+			array_keys($_GET),
+			array_keys($_POST)
+		);
+		//$config['report__name'] = $this->EE->input->get_post('report_name');
+		foreach($get_post as $get_key){
+			if( strpos($get_key, 'report__') !== false){
+				$config[$get_key] = $this->EE->input->get_post($get_key);
+			}
+		}
+		if( count($config) > 0 ){
+			$report_config = $this->nifty_splitty_magicky_goodness($config);
+		}
+		$report_config = array_merge(
+			$this->report,
+			$report_config['report'],
+			( is_array($this->EE->input->get_post('report')) 
+			 	? $this->EE->input->get_post('report')
+				: array()
+			)
+		);
+		return $report_config;
+	}
+	
+	// http://stackoverflow.com/questions/3114212/php-populating-a-nested-array-from-flat-scalar-values
+	// http://stackoverflow.com/users/168868/charles
+	function nifty_splitty_magicky_goodness($input) {
+	// Start out with an empty array.
+	    $data = array();
+	    foreach($input as $k => $v) {
+	    // This turns 'a.b' into array('a', 'b')
+	        $key_parts = explode('__', $k);
+	    // Here's the magic.  PHP references aren't to values, but to
+	    // the variables that contain the values.  This lets us point at
+	    // array keys without a problem.  Sometimes this gets in the way...
+	        $ref = &$data;
+	        foreach($key_parts as $part) {
+	        // If we didn't already turn the thing we're refering to into an array, do so.
+	            if(!is_array($ref))
+	                $ref = array();
+	        // If the key doesn't exist in our reference, create it as an empty array
+	            if(!array_key_exists($part, $ref))
+	                $ref[$part] = array();
+	        // Reset the reference to our new array.
+	            $ref = &$ref[$part];
+	        }
+	    // Now that we're pointing deep into the nested array, we can
+	    // set the inner-most value to what it should be.
+	        $ref = $v;
+	    }
+	    return $data;
 	}
 	
 	/**
@@ -132,7 +213,7 @@ class Nsm_reports_mcp {
 		
 		if($reports){
 			foreach ($reports as $key => &$report){
-				$report['config_url'] = BASE.AMP.$this->cp_url.'method=mcp_configure'.AMP.'report='.$key;
+				$report['config_url'] = BASE.AMP.$this->cp_url.'method=mcp_configure'.AMP.'report__name='.$key;
 			}
 		}
 
@@ -183,30 +264,25 @@ class Nsm_reports_mcp {
 	 **/
 	public function configure($preview_html = false, $error = false)
 	{
-		$report_class = $this->EE->input->get('report');
+		$report_class = $this->report['name'];
 		if(!$report = $this->EE->nsm_reports_model->find($report_class)){
 			return array(
 						'status' => false,
 						'message' => $this->EE->lang->line('nsm_reports_configure_no_report')
 				);
 		}
-
-		$config = array(
-			'_output' => 'browser',
-			'_send_to_email_address' => '',
-			'_save_report_name' => '',
-			'_save_report_description' => ''
+		
+		$config = array_merge(
+			$this->default_report_config,
+			$this->report['config']
 		);
 
 		$saved_report_info = false;
 
-		$saved_report_id = $this->EE->input->get('save_id');
-		if($this->EE->input->post('saved_report_id')){
-			$saved_report_id = $this->EE->input->post('saved_report_id');
-		}
+		$saved_report_id = $this->report['save_id'];
 
 		if($saved_report_id > 0){
-			if(!$saved_report = Nsm_saved_report::findById($saved_report_id)){
+			if( ! $saved_report = Nsm_saved_report::findById($saved_report_id)){
 				return array(
 							'status' => false,
 							'message' => $this->EE->lang->line('nsm_reports_configure_no_preset')
@@ -220,11 +296,7 @@ class Nsm_reports_mcp {
 										);
 		}
 
-		if($this->EE->input->post('report')){
-			$config = $this->EE->input->post('report');
-		}
-
-		$selected_form_action = $this->EE->input->post('action');
+		$selected_form_action = $this->report['action'];
 
 		$report->setConfig($config);
 		$report_config_html = $report->configHTML();
@@ -246,11 +318,11 @@ class Nsm_reports_mcp {
 		);
 
 		$out = $this->EE->load->view('module/report/config', $data, TRUE);
-		$out = form_open($this->cp_url.'method=configure_submit'.AMP.'report='.$report_class,
+		$out = form_open($this->cp_url.'method=configure_submit'.AMP.'report__name='.$report_class,
 					array(),
 					array(
-						'report_name'=>$report_class,
-						'saved_report_id'=>$saved_report_id
+						'report__name'=>$report_class,
+						'save_id'=>$saved_report_id
 					)
 				)
 				. $out 
@@ -268,8 +340,7 @@ class Nsm_reports_mcp {
 	 **/
 	public function configure_submit()
 	{
-		$action = $this->EE->input->post('action');
-		switch($action){
+		switch($this->report['action']){
 			case 'generate':
 				return $this->mcp_generate();
 			break;
@@ -341,10 +412,10 @@ class Nsm_reports_mcp {
 		// Use a 'local' copy of the EE instance as this method can be called via an action
 		$EE =& get_instance();
 		// prepare process_url variables
-		$saved_report_id = $EE->input->get('save_id');
-		$saved_report_key = $EE->input->get('key');
+		$save_id = $this->report['save_id'];
+		$save_key = $this->report['save_key'];
 		
-		$report_class = $EE->input->get('report');
+		$report_class = $this->report['name'];
 		
 		$EE->lang->loadfile('nsm_reports');
 		
@@ -358,10 +429,18 @@ class Nsm_reports_mcp {
 			exit;
 		}
 		*/
+		$report = $EE->nsm_reports_model->find($report_class);
+		if(!$report) {
+			return array(
+						'status' => false,
+						'message' => $EE->lang->line('nsm_reports_generate_no_report')
+					);
+		}
+		
 		$saved_report = false;
 		// if $saved_report_id and saved_report_key aren't false then generate report as a 'cron' process
-		if($saved_report_id && $saved_report_key){
-			$saved_report = Nsm_saved_report::findByIdKey($saved_report_id, $saved_report_key);
+		if($save_id && $save_key){
+			$saved_report = Nsm_saved_report::findByIdKey($save_id, $save_key);
 			if(!$saved_report){
 				return array(
 							'status' => false,
@@ -373,17 +452,12 @@ class Nsm_reports_mcp {
 			$output_type = $saved_report->output;
 			$send_to_email_address = $saved_report->email_address;
 		}else{
-			$config = $EE->input->post('report');
+			$config = array_merge(
+				$this->default_report_config,
+				$this->report['config']
+			);
 			$output_type = $config['_output'];
 			$send_to_email_address = $config['_send_to_email_address'];
-		}
-		
-		$report = $EE->nsm_reports_model->find($report_class);
-		if(!$report) {
-			return array(
-						'status' => false,
-						'message' => $EE->lang->line('nsm_reports_generate_no_report')
-					);
 		}
 		
 		$report->cache_path = (
@@ -521,9 +595,9 @@ class Nsm_reports_mcp {
 	public function save($save_as_new = false)
 	{
 		
-		$report = $this->EE->input->post('report_name');
-		$config = $this->EE->input->post('report');
-		$saved_report_id = $this->EE->input->post('saved_report_id');
+		$report = $this->report['name'];
+		$config = $this->report['config'];
+		$save_id = $this->report['save_id'];
 		
 		/* 
 			Perform form validation here.
@@ -548,8 +622,8 @@ class Nsm_reports_mcp {
 			'active' => 1
 		);
 		
-		if($saved_report_id > 0 && $save_as_new == false){
-			if(!$save_report = Nsm_saved_report::findById($saved_report_id)){
+		if($save_id > 0 && $save_as_new == false){
+			if(!$save_report = Nsm_saved_report::findById($save_id)){
 				return array(
 							'status' => false,
 							'message' => $this->EE->lang->line('nsm_reports_save_no_preset')
