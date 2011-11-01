@@ -117,12 +117,14 @@ class Nsm_reports_mcp {
 		}
 		$report_config = array_merge(
 			$this->report,
-			$report_config['report'],
-			( is_array($this->EE->input->get_post('report')) 
-			 	? $this->EE->input->get_post('report')
-				: array()
-			)
+			$report_config['report']
 		);
+		if(is_array($this->EE->input->get_post('report'))){
+			$report_config['config'] = array_merge(
+				$report_config['config'],
+				$this->EE->input->get_post('report')
+			);
+		}
 		return $report_config;
 	}
 	
@@ -465,7 +467,7 @@ class Nsm_reports_mcp {
 								$EE->config->slash_item('generated_reports_path') : 
 								$this->settings['generated_reports_path']
 							);
-		
+
 		$report->setConfig($config);
 		$report_info = $report->getInfo();
 		
