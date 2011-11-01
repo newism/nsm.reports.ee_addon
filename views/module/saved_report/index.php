@@ -39,7 +39,7 @@
 			<?php foreach($saved_reports as $key => $saved_report): $row_class = ($key%2) ? 'even' : 'odd' ?>
 			<tr class="<?= $row_class ?>">
 				<th scope="row">
-					<a title="Go to report using config ID <?= $saved_report['id'] ?>" href="<?= $details_url.$saved_report['report_class'].AMP.'save_id='.$saved_report['id'] ?>">
+					<a title="Go to report using config ID <?= $saved_report['id'] ?>" href="<?= $details_url.$saved_report['report_class'].AMP.'report__save_id='.$saved_report['id'] ?>">
 						<?= $saved_report['title'] ?>
 					</a>
 					<div class="note"><?= $saved_report['report'] ?></div>

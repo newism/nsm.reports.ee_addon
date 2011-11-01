@@ -324,7 +324,7 @@ class Nsm_reports_mcp {
 					array(),
 					array(
 						'report__name'=>$report_class,
-						'save_id'=>$saved_report_id
+						'report__save_id'=>$saved_report_id
 					)
 				)
 				. $out 
@@ -714,10 +714,10 @@ class Nsm_reports_mcp {
 		$data = array(
 			'saved_reports' => $saved_reports,
 			'reports' => $reports,
-			'details_url' => BASE.AMP.$this->cp_url.'method=mcp_configure&report=',
+			'details_url' => BASE.AMP.$this->cp_url.'method=mcp_configure&report__name=',
 			'process_url' => $site_url . '/?ACT='. 
 								$this->EE->cp->fetch_action_id('Nsm_reports_mcp', 'cron_generate') . 
-								AMP . 'save_id=',
+								AMP . 'report__save_id=',
 			'error' => $error
 		);
 
