@@ -68,17 +68,19 @@ class Nsm_reports_mcp {
 	{
 		$this->EE =& get_instance();
 		$this->addon_id = strtolower(substr(__CLASS__, 0, -4));
-		$this->cp_url = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->addon_id.AMP;
+		$this->cp_url = 'C=addons_modules'.AMP.
+						'M=show_module_cp'.AMP.
+						'module='.$this->addon_id.AMP;
 		$this->report = $this->prepareReportConfig();
 		$this->EE->load->helper('date');
 		
 		$NsmReportsExt = new Nsm_reports_ext();
 		$this->settings = $NsmReportsExt->settings;
 		$this->report_path = $this->report_path = (
-													$this->EE->config->slash_item('report_path') ? 
-													$this->EE->config->slash_item('report_path') : 
-													$this->settings['report_path']
-												);
+			$this->EE->config->slash_item('report_path')
+			? $this->EE->config->slash_item('report_path') 
+			: $this->settings['report_path']
+		);
 		
 		$this->EE->load->model('nsm_reports_model');
 		
@@ -167,40 +169,54 @@ class Nsm_reports_mcp {
 	{
 		$generated_report_path = $this->settings['generated_reports_path'];
 		//http://local.ee2_3/system/index.php?S=2168a1f3031ac68bc906d98989918333d722da2e&D=cp&C=addons_extensions&M=extension_settings&file=nsm_reports
-		$extension_settings_url = BASE.AMP.'C=addons_extensions'.AMP.'M=extension_settings'.AMP.'file=nsm_reports';
+		$extension_settings_url = (
+			BASE.AMP.
+			'C=addons_extensions'.AMP.
+			'M=extension_settings'.AMP.
+			'file=nsm_reports'
+		);
 		// does directory exist?
 		if( ! is_dir($generated_report_path) ){
 			return array(
-						'status' => false,
-						'class' => 'error',
-						'message' => sprintf(
-										$this->EE->lang->line('nsm_reports_messages_generated_report_path_not_exists'),
-										$generated_report_path,
-										$extension_settings_url
-									)
-					);
+				'status' => false,
+				'class' => 'error',
+				'message' => sprintf(
+					$this->EE->lang->line(
+						'nsm_reports_messages_generated_report_'.
+						'path_not_exists'
+					),
+					$generated_report_path,
+					$extension_settings_url
+				)
+			);
 		}
 		// does directory have write access?
 		if( ! is_writable($generated_report_path) ){
 			return array(
-						'status' => false,
-						'class' => 'error',
-						'message' => sprintf(
-										$this->EE->lang->line('nsm_reports_messages_generated_report_path_not_writeable'),
-										$generated_report_path,
-										$extension_settings_url
-									)
-					);
+				'status' => false,
+				'class' => 'error',
+				'message' => sprintf(
+					$this->EE->lang->line(
+						'nsm_reports_messages_generated_report_'.
+						'path_not_writeable'
+					),
+					$generated_report_path,
+					$extension_settings_url
+				)
+			);
 		}
 		
 		return array(
-					'status' => true,
-					'class' => 'ok',
-					'message' => sprintf(
-									$this->EE->lang->line('nsm_reports_messages_generated_report_path_ok'),
-									$generated_report_path
-								)
-				);
+			'status' => true,
+			'class' => 'ok',
+			'message' => sprintf(
+				$this->EE->lang->line(
+					'nsm_reports_messages_generated_report_'.
+					'path_ok'
+				),
+				$generated_report_path
+			)
+		);
 	}
 	
 	/**
@@ -215,7 +231,11 @@ class Nsm_reports_mcp {
 		
 		if($reports){
 			foreach ($reports as $key => &$report){
-				$report['config_url'] = BASE.AMP.$this->cp_url.'method=mcp_configure'.AMP.'report__name='.$key;
+				$report['config_url'] = (
+					BASE.AMP.
+					$this->cp_url.
+					'method=mcp_configure'.AMP.
+					'report__name='.$key);
 			}
 		}
 
@@ -244,7 +264,14 @@ class Nsm_reports_mcp {
 		$configuration = $this->configure($preview_html, $error);
 		// if config is an array there's been an error
 		if(is_array($configuration)){
-			$this->EE->session->set_flashdata('message_'.($configuration['status'] ? 'success' : 'failure'), $configuration['message']);
+			$this->EE->session->set_flashdata(
+				'message_'.(
+					$configuration['status'] 
+					? 'success' 
+					: 'failure'
+				),
+				$configuration['message']
+			);
 			$this->EE->functions->redirect( $_SERVER['REQUEST_URI'] );
 		}else{
 			return $configuration;
