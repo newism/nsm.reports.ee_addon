@@ -78,8 +78,8 @@ class Nsm_report_base {
 	 **/
 	public $output_types = array(
 									'browser' => 'View in browser',
-									'csv' => 'Comma-Seperated Values (CSV)',
-									'tab' => 'Tab-Seperated Values (TSV)',
+									'csv' => 'Comma-Separated Values (CSV)',
+									'tab' => 'Tab-Separated Values (TSV)',
 									'html' => 'HyperText Markup Language (HTML)',
 									'xml' => 'eXtensible Markup Language (XML)'
 								);
