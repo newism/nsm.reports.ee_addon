@@ -252,9 +252,10 @@ class Nsm_report_base {
 				$extension = "xml";
 			break;
 			default:
-				$method = 'output_'.$output;
-				if(method_exists($this,$method)){
-					call_user_func(array($this, $method));
+				$method = 'output_'.$output_type;
+				$extension = $output_type;
+				if(method_exists($this, $method)){
+					$output = call_user_func(array($this, $method));
 				}else{
 					$this->error = "No valid output type specified";
 					return false;
