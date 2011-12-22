@@ -4,7 +4,7 @@
  * Install / Uninstall and updates the modules
  *
  * @package NsmReports
- * @version 1.0.7
+ * @version 1.0.8
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -26,7 +26,7 @@ class Nsm_reports_upd
 	 * @var string
 	 * @access public
 	 */
-	public $version = '1.0.7';
+	public $version = '1.0.8';
 	
 	/**
 	 * Determines whether module requires a Control Panel to include
