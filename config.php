@@ -12,7 +12,14 @@
  * @link http://ee-garage.com/nsm-reports
  */
 
-$config['name'] 	= "NSM Reports";
-$config["version"] 	= "1.0.7";
+
+if(!defined('NSM_REPORTS_VERSION')) {
+	define('NSM_REPORTS_VERSION', '1.0.7');
+	define('NSM_REPORTS_NAME', 'NSM Reports');
+	define('NSM_REPORTS_ADDON_ID', 'nsm_reports');
+}
+
+$config['name'] 	= NSM_REPORTS_NAME;
+$config["version"] 	= NSM_REPORTS_VERSION;
 
 $config['nsm_addon_updater']['versions_xml'] = 'http://ee-garage.com/nsm-reports/release-notes/feed';
