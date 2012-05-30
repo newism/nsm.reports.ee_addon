@@ -115,7 +115,7 @@ class Nsm_reports_mcp {
 			}
 		}
 		if( count($config) > 0 ){
-			$report_config = $this->nifty_splitty_magicky_goodness($config);
+			$report_config = $this->processIncomingConfig($config);
 		}
 		$report_config = array_merge(
 			$this->report,
@@ -130,33 +130,23 @@ class Nsm_reports_mcp {
 		return $report_config;
 	}
 	
-	// http://stackoverflow.com/questions/3114212/php-populating-a-nested-array-from-flat-scalar-values
-	// http://stackoverflow.com/users/168868/charles
-	function nifty_splitty_magicky_goodness($input) {
-	// Start out with an empty array.
-	    $data = array();
-	    foreach($input as $k => $v) {
-	    // This turns 'a.b' into array('a', 'b')
-	        $key_parts = explode('__', $k);
-	    // Here's the magic.  PHP references aren't to values, but to
-	    // the variables that contain the values.  This lets us point at
-	    // array keys without a problem.  Sometimes this gets in the way...
-	        $ref = &$data;
-	        foreach($key_parts as $part) {
-	        // If we didn't already turn the thing we're refering to into an array, do so.
-	            if(!is_array($ref))
+	public function processIncomingConfig($array) {
+	    $output = array();
+	    foreach ($array as $key => $value) {
+	        $key_parts = explode('__', $key);
+	        $ref = &$output;
+	        foreach ($key_parts as $part) {
+	            if (!is_array($ref)) {
 	                $ref = array();
-	        // If the key doesn't exist in our reference, create it as an empty array
-	            if(!array_key_exists($part, $ref))
+				}
+	            if (!array_key_exists($part, $ref)) {
 	                $ref[$part] = array();
-	        // Reset the reference to our new array.
+				}
 	            $ref = &$ref[$part];
 	        }
-	    // Now that we're pointing deep into the nested array, we can
-	    // set the inner-most value to what it should be.
-	        $ref = $v;
+	        $ref = $value;
 	    }
-	    return $data;
+	    return $output;
 	}
 	
 	/**
@@ -168,7 +158,6 @@ class Nsm_reports_mcp {
 	public function checkGeneratedReportsDirectory()
 	{
 		$generated_report_path = $this->settings['generated_reports_path'];
-		//http://local.ee2_3/system/index.php?S=2168a1f3031ac68bc906d98989918333d722da2e&D=cp&C=addons_extensions&M=extension_settings&file=nsm_reports
 		$extension_settings_url = (
 			BASE.AMP.
 			'C=addons_extensions'.AMP.
@@ -176,7 +165,7 @@ class Nsm_reports_mcp {
 			'file=nsm_reports'
 		);
 		// does directory exist?
-		if( ! is_dir($generated_report_path) ){
+		if (! is_dir($generated_report_path)) {
 			return array(
 				'status' => false,
 				'class' => 'error',
@@ -191,7 +180,7 @@ class Nsm_reports_mcp {
 			);
 		}
 		// does directory have write access?
-		if( ! is_writable($generated_report_path) ){
+		if (! is_writable($generated_report_path)){
 			return array(
 				'status' => false,
 				'class' => 'error',
