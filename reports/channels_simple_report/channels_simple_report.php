@@ -43,7 +43,7 @@ class Channels_simple_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $author = 'Iain Saxon - Newism';
+	protected $author = 'Iain Saxon @ Newism';
 	
 	/**
 	 * A URL to the report's documentation (optional)
@@ -51,7 +51,7 @@ class Channels_simple_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $docs_url = 'http://www.newism.com.au';
+	protected $docs_url = 'http://ee-garage.com/nsm-reports/user-guide';
 	
 	/**
 	 * Version number of report as a string to preserve decimal points
