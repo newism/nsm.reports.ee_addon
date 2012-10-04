@@ -1,5 +1,7 @@
 <?php if (! defined('BASEPATH')) die('No direct script access allowed');
 
+require PATH_THIRD.'nsm_reports/config.php';
+
 /**
  * NSM Reports Tag methods
  *

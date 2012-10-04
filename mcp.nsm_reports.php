@@ -1,4 +1,6 @@
-<?php
+<?php if (! defined('BASEPATH')) die('No direct script access allowed');
+
+require PATH_THIRD.'nsm_reports/config.php';
 
 /**
  * NSM Reports CP 
@@ -13,9 +15,8 @@
  * @see http://expressionengine.com/public_beta/docs/development/modules.html#control_panel_file
  */
  
-if (!defined('BASEPATH')) {
-	exit('No direct script access allowed');
-}
+
+
 
 /**
  * Load required classes
@@ -386,17 +387,17 @@ class Nsm_reports_mcp
 			'report_output_dir'		=> $this->checkGeneratedReportsDirectory()
 		);
 
-		$out = $this->EE->load->view('module/report/config', $data, TRUE);
-		$out = form_open(
-					$this->cp_url.'method=configure_submit'.AMP.'report__name='.$report_class,
-					array(),
-					array(
-						'report__name'=>$report_class,
-						'report__save_id'=>$saved_report_id
-					)
-				);
-		$out .= $out 
-		$out .= form_close();
+		$view	= $this->EE->load->view('module/report/config', $data, TRUE);
+		$out	= form_open(
+						$this->cp_url.'method=configure_submit'.AMP.'report__name='.$report_class,
+						array(),
+						array(
+							'report__name'=>$report_class,
+							'report__save_id'=>$saved_report_id
+						)
+					);
+		$out	.= $view;
+		$out	.= form_close();
 		
 		return $this->_renderLayout(
 			"report_config",

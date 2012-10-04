@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (! defined('BASEPATH')) die('No direct script access allowed');
+
+require PATH_THIRD.'nsm_reports/config.php';
 
 /**
  * NSM Reports Extension

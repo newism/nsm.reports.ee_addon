@@ -1,5 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+require PATH_THIRD.'nsm_reports/config.php';
+
 /**
  * Install / Uninstall and updates the modules
  *
