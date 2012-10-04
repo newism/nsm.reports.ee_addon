@@ -163,7 +163,20 @@ class Nsm_report_base {
 	{
 		return $this->title;
 	}
-	
+
+	/**
+	 * Sets report path
+	 *
+	 * @access public
+	 * @param string $path New report path
+	 * @return object This instance
+	 **/
+	public function setReportPath($path)
+	{
+		$this->report_path = $path;
+		return $this;
+	}
+		
 	/**
 	 * Merges incoming configuration options with default options and sets the report config
 	 *

@@ -95,6 +95,7 @@ class Nsm_reports_model extends CI_Model
 					'type' => $class_info['type'],
 					'output_types' => $class_info['output_types']
 				);
+				$class_obj->setReportPath($this->report_path."/".$folder."/");
 			}
 		}
 		return $reports;
@@ -115,7 +116,9 @@ class Nsm_reports_model extends CI_Model
 		if(!$report){ return false; }
 		if(!file_exists($file_path)){ return false; }
 		require_once $file_path;
-		$class_name = ucfirst($report);
-		return new $class_name;
+		$class_name	= ucfirst($report);
+		$class_obj	= new $class_name;
+		$class_obj->setReportPath($this->report_path."/".$report."/");
+		return $class_obj;
 	}
 }
