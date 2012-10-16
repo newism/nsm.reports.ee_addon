@@ -14,7 +14,7 @@
  * @see http://expressionengine.com/public_beta/docs/development/modules.html
  */
 ?>
-<div class="tg">
+<div class="tg" style="overflow-x: auto;">
 	<h2>Preview</h2>
 	<table class="data col_sortable NSM_Stripeable">
 		<thead>
