@@ -533,4 +533,14 @@ class Nsm_report_base {
 		);
 	}
 	
+	/**
+	 * Check to see if report can be displayed or run
+	 *
+	 * @return boolean Report can/cannot be shown
+	 */
+	public function isAccessible()
+	{
+		return true;
+	}
+	
 }

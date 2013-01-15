@@ -85,6 +85,10 @@ class Nsm_reports_model extends CI_Model
 				require($this->report_path."/".$folder."/".$folder.EXT);
 				$class_name = ucfirst($folder);
 				$class_obj = new $class_name;
+				// can the report be shown?
+				if ($class_obj->isAccessible() == false) {
+					continue;
+				}
 				$class_info = $class_obj->getInfo();
 				$reports[$class_name] = array(
 					'title' => $class_info['title'],
@@ -118,6 +122,10 @@ class Nsm_reports_model extends CI_Model
 		require_once $file_path;
 		$class_name	= ucfirst($report);
 		$class_obj	= new $class_name;
+		// can the report be shown?
+		if ($class_obj->isAccessible() == false) {
+			get_instance()->output->fatal_error('You cannot use this report.');
+		}
 		$class_obj->setReportPath($this->report_path."/".$report."/");
 		return $class_obj;
 	}
