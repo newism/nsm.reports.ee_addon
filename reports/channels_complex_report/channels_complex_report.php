@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Channels_complex_report
- * @version 1.0.8
+ * @version 1.0.9
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Channels_complex_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 **/
-	protected $version = '1.0.8';
+	protected $version = '1.0.9';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
@@ -174,8 +174,9 @@ class Channels_complex_report extends Nsm_report_base {
 		$this->EE->cp->add_js_script(array('ui' => 'datepicker'));
 		$this->EE->cp->add_to_foot('<link rel="stylesheet" href="'.BASE.AMP.'C=css'.AMP.'M=datepicker" type="text/css" media="screen" />');
 		
-		$default_date = $this->EE->localize->set_localized_time() * 1000;
-		$current_time = date("' H:i'", gmt_to_local(now()));
+		$default_date = gmt_to_local(now());
+		$current_time = date("' H:i'", $default_date);
+        $dateString = date('Y-m-d', $default_date);
 		
 		$behaviours = <<<BEHAVIOURS
 <script type="text/javascript">
@@ -183,7 +184,7 @@ class Channels_complex_report extends Nsm_report_base {
 $(function(){
 	$("#report_config_new_review_date").datepicker({ 
 		dateFormat: $.datepicker.W3C + {$current_time},
-		defaultDate: new Date({$default_date})
+		defaultDate: new Date('{$dateString}')
 	});
 });
 /* ]]> */
@@ -275,7 +276,7 @@ BEHAVIOURS;
 		
 		foreach($results as $entry_i => $entry){
 			$rows[$entry_i] = $entry;
-			$rows[$entry_i]['created_at'] = $this->EE->localize->set_human_time($entry['created_at']);
+			$rows[$entry_i]['created_at'] = $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $entry['created_at']);
 			$rows[$entry_i]['entry_url'] = BASE.AMP.'C=content_publish&M=entry_form&channel_id='.$entry['channel_id'].'&entry_id='.$entry['id'];
 		}
 		
@@ -323,7 +324,7 @@ BEHAVIOURS;
 			$rows .= '<tr>';
 			$rows .= 	'<th scope="row">' . $row['id'] . '</th>';
 			$rows .= 	'<td>' . $row['name'] . '</td>';
-			$rows .= 	'<td>' . $this->EE->localize->set_human_time($row['created_at']) . '</td>';
+			$rows .= 	'<td>' . $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $row['created_at']) . '</td>';
 			$rows .= 	'<td>' . ucwords($row['status']) . '</td>';
 			$rows .= 	'<td>' . $row['channel_name'] . '</td>';
 			$rows .= '</tr>';
@@ -360,7 +361,7 @@ BEHAVIOURS;
 	{
 		$csv = '"ID","Title","Date Created","Status","Channel"';
 		foreach($results as $row_i => $row){
-			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . $this->EE->localize->set_human_time($row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
+			$csv .= "\n" . '"'. $row['id'] . '","' . $row['name'] . '","' . $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $row['created_at']) . '","' . ucwords($row['status']) . '","' . $row['channel_name'] . '"';
 		}
 		return $csv;
 	}
@@ -379,7 +380,7 @@ BEHAVIOURS;
 			$tsv .= "\n" . 
 					'"' . $row['id'] . '"' . "\t" .
 					'"' . $row['name'] . '"' . "\t" .
-					'"' . $this->EE->localize->set_human_time($row['created_at']) . '"' . "\t" .
+					'"' . $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $row['created_at']) . '"' . "\t" .
 					'"' . ucwords($row['status']) . '"' . "\t" .
 					'"' . $row['channel_name'] . '"';
 		}
@@ -407,7 +408,7 @@ BEHAVIOURS;
 			$row_data = '<row>';
 			$row_data .= 	'<column_0>'.$row['id'].'</column_0>';
 			$row_data .= 	'<column_1>'.'<![CDATA[' . $row['name'] . ']]>'.'</column_1>';
-			$row_data .= 	'<column_2>'.'<![CDATA[' . $this->EE->localize->set_human_time($row['created_at']) . ']]>'.'</column_2>';
+			$row_data .= 	'<column_2>'.'<![CDATA[' . $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $row['created_at']) . ']]>'.'</column_2>';
 			$row_data .= 	'<column_3>'.'<![CDATA[' . ucwords($row['status']) . ']]>'.'</column_3>';
 			$row_data .= 	'<column_4>'.'<![CDATA[' . $row['channel_name'] . ']]>'.'</column_4>';
 			$row_data .= '</row>';
