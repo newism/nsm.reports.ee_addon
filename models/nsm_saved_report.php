@@ -3,7 +3,7 @@
  * NSM Reports - Saved Configuration Preset
  *
  * @package NsmReports
- * @version 1.0.8
+ * @version 1.0.9
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -222,7 +222,7 @@ class Nsm_saved_report {
 				break;
 				case 'config' :
 					$new_value = (is_array($this->{$key}))
-									? $EE->javascript->generate_json($this->{$key}, true)
+									? json_encode($this->{$key})
 									: $this->{$key};
 				break;
 				default:

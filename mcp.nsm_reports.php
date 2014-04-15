@@ -4,7 +4,7 @@
  * NSM Reports CP 
  *
  * @package NsmReports
- * @version 1.0.8
+ * @version 1.0.9
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism <http://newism.com.au>
@@ -612,8 +612,8 @@ class Nsm_reports_mcp {
 						'title' => $saved_report->title,
 						'description' => $saved_report->description,
 						'access_key' => $saved_report->access_key,
-						'created_at' => $this->EE->localize->set_human_time($saved_report->created_at),
-						'updated_at' => $this->EE->localize->set_human_time($saved_report->updated_at),
+						'created_at' => $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $saved_report->created_at),
+						'updated_at' => $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $saved_report->updated_at),
 						'lastrun_at' => ($saved_report->lastrun_at > 0 ? $this->EE->localize->set_human_time($saved_report->lastrun_at) : 'Never'),
 						'report_class' => $saved_report->report,
 						'report' => $reports[ $saved_report->report ]['title'],
@@ -772,7 +772,7 @@ class Nsm_reports_mcp {
 		foreach ($page_replacements as $key => $value){
 			$page_title = str_replace("{".$key."}", $value, $page_title);
 		}
-		$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line($page_title));
+		$this->EE->view->cp_page_title = $this->EE->lang->line($page_title);
 		$this->EE->cp->set_breadcrumb(BASE.AMP.$this->cp_url, $this->EE->lang->line('nsm_reports_module_name'));
 
 		$nav = array();
