@@ -83,7 +83,6 @@ class Nsm_reports_mcp {
 	public function checkGeneratedReportsDirectory()
 	{
 		$generated_report_path = $this->settings['generated_reports_path'];
-		//http://local.ee2_3/system/index.php?S=2168a1f3031ac68bc906d98989918333d722da2e&D=cp&C=addons_extensions&M=extension_settings&file=nsm_reports
 		$extension_settings_url = BASE.AMP.'C=addons_extensions'.AMP.'M=extension_settings'.AMP.'file=nsm_reports';
 		// does directory exist?
 		if( ! is_dir($generated_report_path) ){
@@ -614,7 +613,7 @@ class Nsm_reports_mcp {
 						'access_key' => $saved_report->access_key,
 						'created_at' => $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $saved_report->created_at),
 						'updated_at' => $this->EE->localize->format_date('%Y-%m-%d %H:%i:%s', $saved_report->updated_at),
-						'lastrun_at' => ($saved_report->lastrun_at > 0 ? $this->EE->localize->set_human_time($saved_report->lastrun_at) : 'Never'),
+						'lastrun_at' => ($saved_report->lastrun_at > 0 ? $this->EE->localize->human_time($saved_report->lastrun_at) : 'Never'),
 						'report_class' => $saved_report->report,
 						'report' => $reports[ $saved_report->report ]['title'],
 						'email_address' => $saved_report->email_address,

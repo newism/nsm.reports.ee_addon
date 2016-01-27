@@ -254,13 +254,13 @@ class Members_report extends Nsm_report_base {
 			// if join date was added to the member columns list then alter value to use EE date-time
 			if(in_array('join_date', $config['member_fields'])){
 				$value = $results[$row_i][ $member_fields['join_date'] ];
-				$results[$row_i][ $member_fields['join_date'] ] = $this->EE->localize->set_human_time($value);
+				$results[$row_i][ $member_fields['join_date'] ] = $this->EE->localize->human_time($value);
 			}
 			
 			// if last visit date was added to the member columns list then alter value to use EE date-time
 			if(in_array('last_visit', $config['member_fields'])){
 				$value = $results[$row_i][ $member_fields['last_visit'] ];
-				$results[$row_i][ $member_fields['last_visit'] ] = $this->EE->localize->set_human_time($value);
+				$results[$row_i][ $member_fields['last_visit'] ] = $this->EE->localize->human_time($value);
 			}
 			
 		}
