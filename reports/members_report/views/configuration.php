@@ -8,7 +8,7 @@
  *
  * @package NsmReports
  * @subpackage Members_report
- * @version 1.0.9
+ * @version 1.0.10
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au>
  * @copyright Copyright (c) 2007-2010 Newism
