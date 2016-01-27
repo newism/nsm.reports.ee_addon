@@ -5,7 +5,7 @@
  *
  * @package NsmReports
  * @subpackage Members_report
- * @version 1.0.9
+ * @version 1.0.10
  * @author Leevi Graham <http://leevigraham.com.au>
  * @author Iain Saxon <iain.saxon@newism.com.au> 
  * @copyright Copyright (c) 2007-2011 Newism <http://newism.com.au>
@@ -59,7 +59,7 @@ class Members_report extends Nsm_report_base {
 	 * @var string
 	 * @access protected
 	 */
-	protected $version = '1.0.9';
+	protected $version = '1.0.10';
 	
 	/**
 	 * Report type as either 'simple' or 'complex'
@@ -254,13 +254,13 @@ class Members_report extends Nsm_report_base {
 			// if join date was added to the member columns list then alter value to use EE date-time
 			if(in_array('join_date', $config['member_fields'])){
 				$value = $results[$row_i][ $member_fields['join_date'] ];
-				$results[$row_i][ $member_fields['join_date'] ] = $this->EE->localize->set_human_time($value);
+				$results[$row_i][ $member_fields['join_date'] ] = $this->EE->localize->human_time($value);
 			}
 			
 			// if last visit date was added to the member columns list then alter value to use EE date-time
 			if(in_array('last_visit', $config['member_fields'])){
 				$value = $results[$row_i][ $member_fields['last_visit'] ];
-				$results[$row_i][ $member_fields['last_visit'] ] = $this->EE->localize->set_human_time($value);
+				$results[$row_i][ $member_fields['last_visit'] ] = $this->EE->localize->human_time($value);
 			}
 			
 		}
